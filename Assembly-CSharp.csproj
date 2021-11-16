@@ -56,14 +56,10 @@
     <Compile Include="Assets/Scripts/DrawLine.cs" />
     <Compile Include="Assets/ColorPickerTriangle/Example/example.cs" />
     <Compile Include="Assets/ColorPickerTriangle/Scripts/ColorPickerTriangle.cs" />
-    <Compile Include="Assets/FlexibleColorPicker/Scripts/FlexibleColorPicker.cs" />
-    <Compile Include="Assets/FlexibleColorPicker/Scripts/FCP_SpriteMeshEditor.cs" />
-    <Compile Include="Assets/FlexibleColorPicker/ExampleScene/FCP_ExampleScript.cs" />
     <Compile Include="Assets/Scripts/ColorManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/ColorPickerTriangle/Shaders/VertexColor.shader" />
-    <None Include="Assets/FlexibleColorPicker/Materials/FCP_Gradient.shader" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
