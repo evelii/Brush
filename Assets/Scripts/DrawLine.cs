@@ -29,6 +29,7 @@ public class DrawLine : MonoBehaviour
             currLine.positionCount = numClicks + 1;
             currLine.SetPosition(numClicks, curPos);
             numClicks++;
+            lastPos = curPos;
         }
 
         currLine.material.color = ColorManager.Instance.GetColor();
