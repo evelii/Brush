@@ -1,0 +1,39 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ColorManager : MonoBehaviour
+{
+
+    public GameObject ColorPickedPrefab;
+    private ColorPickerTriangle CP;
+    private GameObject go;
+    public static ColorManager Instance;
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            go = (GameObject)Instantiate(ColorPickedPrefab, transform.position + Vector3.left * 1.4f + Vector3.forward * 1.2f, Quaternion.identity);
+            go.transform.localScale = Vector3.one * 1.5f;
+            go.transform.LookAt(Camera.main.transform);
+            CP = go.GetComponent<ColorPickerTriangle>();
+        }
+    }
+
+    void OnDestroy()
+    {
+        if (Instance == this) Instance = null;
+    }
+
+    //public void Update()
+    //{
+    //    Debug.Log("Color is " + GetColor());
+    //}
+
+    public Color GetColor()
+    {
+        return CP.TheColor;
+    }
+}
