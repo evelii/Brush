@@ -2,9 +2,10 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/DrawLine.cs">
     <Files>
       <File FileName="Assets/ColorPickerTriangle/Scripts/ColorPickerTriangle.cs" Line="15" Column="35" />
-      <File FileName="Assets/ColorPickerTriangle/Example/example.cs" Line="9" Column="4" />
-      <File FileName="Assets/Scripts/ColorManager.cs" Line="18" Column="126" />
-      <File FileName="Assets/Scripts/DrawLine.cs" Line="28" Column="17" />
+      <File FileName="Assets/ColorPickerTriangle/Example/example.cs" />
+      <File FileName="Assets/Scripts/ColorManager.cs" />
+      <File FileName="Assets/Scripts/DrawLine.cs" Line="32" Column="30" />
+      <File FileName="Assets/Scripts/LineDrawer.cs" Line="51" Column="10" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -26,7 +27,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="9ceaede0-8951-4026-8e55-f766dcb44bad" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="b2e1da52-796b-49e8-a398-0d409e0695ff" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

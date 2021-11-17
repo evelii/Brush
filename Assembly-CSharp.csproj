@@ -57,6 +57,7 @@
     <Compile Include="Assets/ColorPickerTriangle/Example/example.cs" />
     <Compile Include="Assets/ColorPickerTriangle/Scripts/ColorPickerTriangle.cs" />
     <Compile Include="Assets/Scripts/ColorManager.cs" />
+    <Compile Include="Assets/Scripts/LineDrawer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/ColorPickerTriangle/Shaders/VertexColor.shader" />
