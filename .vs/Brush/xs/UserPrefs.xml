@@ -1,33 +1,17 @@
 ﻿<Properties StartupConfiguration="{3ABA823B-8C2A-4926-463E-BB0DA48C0615}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/DrawLine.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Tubes/DrawTubes.cs">
     <Files>
-      <File FileName="Assets/ColorPickerTriangle/Scripts/ColorPickerTriangle.cs" Line="15" Column="35" />
-      <File FileName="Assets/ColorPickerTriangle/Example/example.cs" />
+      <File FileName="Assets/Scripts/LineDrawer.cs" Line="45" Column="16" />
+      <File FileName="Assets/ColorPickerTriangle/Scripts/ColorPickerTriangle.cs" />
       <File FileName="Assets/Scripts/ColorManager.cs" />
-      <File FileName="Assets/Scripts/DrawLine.cs" Line="32" Column="30" />
-      <File FileName="Assets/Scripts/LineDrawer.cs" Line="51" Column="10" />
+      <File FileName="Assets/Scripts/DrawLine.cs" />
+      <File FileName="Assets/Scripts/Tubes/TubeStroke.cs" Line="55" Column="31" />
+      <File FileName="Assets/Scripts/Tubes/DrawTubes.cs" Line="65" Column="21" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="Brush" expanded="True">
-            <Node name="Assets" expanded="True">
-              <Node name="ColorPickerTriangle" expanded="True">
-                <Node name="Example" expanded="True" />
-                <Node name="Scripts" expanded="True" />
-              </Node>
-              <Node name="Scripts" expanded="True">
-                <Node name="DrawLine.cs" selected="True" />
-              </Node>
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="b2e1da52-796b-49e8-a398-0d409e0695ff" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="84672116-8fff-48bc-b9bd-d932ed4f3dd9" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

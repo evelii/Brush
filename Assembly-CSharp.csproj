@@ -53,14 +53,32 @@
     <UnityVersion>2020.3.21f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Assets/Scripts/DrawLine.cs" />
-    <Compile Include="Assets/ColorPickerTriangle/Example/example.cs" />
-    <Compile Include="Assets/ColorPickerTriangle/Scripts/ColorPickerTriangle.cs" />
     <Compile Include="Assets/Scripts/ColorManager.cs" />
+    <Compile Include="Assets/ColorPickerTriangle/Scripts/ColorPickerTriangle.cs" />
     <Compile Include="Assets/Scripts/LineDrawer.cs" />
+    <Compile Include="Assets/ColorPickerTriangle/Example/example.cs" />
+    <Compile Include="Assets/Scripts/DrawLine.cs" />
+    <Compile Include="Assets/TubeRenderer/Examples/Assets/Digestion.cs" />
+    <Compile Include="Assets/TubeRenderer/Runtime/TubeRenderer.cs" />
+    <Compile Include="Assets/TubeRenderer/Examples/Assets/Shared/ExampleHelpers.cs" />
+    <Compile Include="Assets/TubeRenderer/Examples/Assets/Shared/CameraMan.cs" />
+    <Compile Include="Assets/TubeRenderer/Runtime/Internals/RenderPipelineHelpers.cs" />
+    <Compile Include="Assets/TubeRenderer/Examples/Assets/Spline.cs" />
+    <Compile Include="Assets/TubeRenderer/Examples/Assets/Starfish.cs" />
+    <Compile Include="Assets/TubeRenderer/Examples/Assets/Slide.cs" />
+    <Compile Include="Assets/TubeRenderer/Examples/Assets/Skin.cs" />
+    <Compile Include="Assets/TubeRenderer/Examples/Assets/Paw.cs" />
+    <Compile Include="Assets/TubeRenderer/Examples/Assets/Invertebrate.cs" />
+    <Compile Include="Assets/TubeRenderer/Examples/Assets/Herd.cs" />
+    <Compile Include="Assets/TubeRenderer/Examples/Assets/Flower.cs" />
+    <Compile Include="Assets/TubeRenderer/Examples/Assets/Volume.cs" />
+    <Compile Include="Assets/TubeRenderer/Runtime/SplineMaker.cs" />
+    <Compile Include="Assets/Scripts/Tubes/TubeStroke.cs" />
+    <Compile Include="Assets/Scripts/Tubes/DrawTubes.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/ColorPickerTriangle/Shaders/VertexColor.shader" />
+    <None Include="Assets/TubeRenderer/Runtime/Internals/Resources/StandardVertexColor.shader" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

@@ -140,6 +140,7 @@ public class ColorPickerTriangle : MonoBehaviour {
         }
     }
 
+    // this method is called when TheColor is updated
     private void SetColor()
     {
         float h, v, s;

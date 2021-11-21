@@ -42,7 +42,7 @@ public class LineDrawer : MonoBehaviour
         // returns true always if the mouse button is being pressed
         if (Input.GetMouseButton(0))
         {
-            Debug.DrawRay(Camera.main.ScreenToWorldPoint(Input.mousePosition), GetMousePosition(), Color.red);
+            // Debug.DrawRay(Camera.main.ScreenToWorldPoint(Input.mousePosition), GetMousePosition(), Color.red);
             timer -= Time.deltaTime;
             if (timer <= 0)
             {
