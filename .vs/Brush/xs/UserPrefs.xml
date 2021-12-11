@@ -1,12 +1,12 @@
 ﻿<Properties StartupConfiguration="{3ABA823B-8C2A-4926-463E-BB0DA48C0615}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/ColorManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Tubes/DrawTubes.cs">
     <Files>
       <File FileName="Assets/ColorPickerTriangle/Scripts/ColorPickerTriangle.cs" Line="112" Column="22" />
       <File FileName="Assets/Scripts/ColorManager.cs" Line="20" Column="72" />
-      <File FileName="Assets/Scripts/DrawLine.cs" />
-      <File FileName="Assets/Scripts/Tubes/TubeStroke.cs" />
-      <File FileName="Assets/Scripts/LineDrawer.cs" />
-      <File FileName="Assets/Scripts/Tubes/DrawTubes.cs" />
+      <File FileName="Assets/Scripts/DrawLine.cs" Line="35" Column="1" />
+      <File FileName="Assets/Scripts/Tubes/TubeStroke.cs" Line="43" Column="22" />
+      <File FileName="Assets/Scripts/Tubes/DrawTubes.cs" Line="30" Column="12" />
+      <File FileName="Assets/Scripts/LineDrawer.cs" Line="11" Column="5" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

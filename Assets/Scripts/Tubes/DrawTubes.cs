@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using TubeRendererInternals;
-using System;
 
 public enum StrokeState
 {
@@ -31,14 +27,14 @@ public class DrawTubes : MonoBehaviour
 
     public bool bounce;
    
-    void Start()
+    public void Start()
     { 
         state = StrokeState.WAITING;
         canDraw = true;
         bounce = false;
     }
 
-    void Update()
+    public void Update()
     {
 
         // when a new dragging on the cursor, create a new tube
@@ -89,7 +85,7 @@ public class DrawTubes : MonoBehaviour
         Debug.Log(tube.radius);
     }
 
-    void FixedUpdate()
+    public void FixedUpdate()
     {
         if (state == StrokeState.DRAW)
         {
@@ -137,8 +133,8 @@ public class DrawTubes : MonoBehaviour
     {
         _currentObject.AddComponent<Rigidbody>();
         Collider collider = _currentObject.AddComponent<SphereCollider>();
-        collider.material.bounciness = 2.0f;
-        bounce = false;
+        collider.material.bounciness = 1.0f;
+        bounce = false;  // necessary components have been added, so turned off the bool
     }
 
 
