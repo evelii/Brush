@@ -1,17 +1,17 @@
 ﻿<Properties StartupConfiguration="{3ABA823B-8C2A-4926-463E-BB0DA48C0615}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Tubes/DrawTubes.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/ColorManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/LineDrawer.cs" Line="45" Column="16" />
-      <File FileName="Assets/ColorPickerTriangle/Scripts/ColorPickerTriangle.cs" />
-      <File FileName="Assets/Scripts/ColorManager.cs" />
+      <File FileName="Assets/ColorPickerTriangle/Scripts/ColorPickerTriangle.cs" Line="112" Column="22" />
+      <File FileName="Assets/Scripts/ColorManager.cs" Line="20" Column="72" />
       <File FileName="Assets/Scripts/DrawLine.cs" />
-      <File FileName="Assets/Scripts/Tubes/TubeStroke.cs" Line="55" Column="31" />
-      <File FileName="Assets/Scripts/Tubes/DrawTubes.cs" Line="65" Column="21" />
+      <File FileName="Assets/Scripts/Tubes/TubeStroke.cs" />
+      <File FileName="Assets/Scripts/LineDrawer.cs" />
+      <File FileName="Assets/Scripts/Tubes/DrawTubes.cs" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="84672116-8fff-48bc-b9bd-d932ed4f3dd9" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="b6e8964e-73f7-4129-a99e-f76e1b3517f5" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
