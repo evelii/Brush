@@ -22,16 +22,15 @@ public class DrawTubes : MonoBehaviour
 
     public StrokeState state;
     public bool canDraw;
-    private GameObject _currentObject;
     private TubeStroke _currentTubeStroke;
 
-    public bool bounce;
-   
+    public AddAnimation addAnimation;
+
     public void Start()
     { 
         state = StrokeState.WAITING;
         canDraw = true;
-        bounce = false;
+        //addAnimation = new AddAnimation();
     }
 
     public void Update()
@@ -54,7 +53,6 @@ public class DrawTubes : MonoBehaviour
 
         if (state == StrokeState.START_STROKE)
         {
-            Debug.Log("create new tube");
             _createNewTube();
             state = StrokeState.DRAW;
             _currentTubeStroke.AddPoint(cursor.position);
@@ -65,24 +63,24 @@ public class DrawTubes : MonoBehaviour
             if (!canDraw) state = StrokeState.WAITING;
         }
 
-        if (bounce)
-        {
-            addBouncingEffect();
-        }
+        //if (bounce) addAnimation.bounce = true;
+        //if (movement) addAnimation.movement = true;
     }
 
     private void _createNewTube()
     {
+        gameObject.transform.position = cursor.transform.position;
         GameObject go = new GameObject("TubeStroke");
         go.transform.parent = transform;
-        _currentObject = go;
+        addAnimation._currentObject = go;
+        //_squashParent = new GameObject(string.Format("_squash_{0}", name)).transform;
+        //_originalScale = _currentObject.transform.localScale;
         _currentTubeStroke = go.AddComponent<TubeStroke>();
 
         TubeRenderer tube = go.AddComponent<TubeRenderer>();
         tube.MarkDynamic();
         go.GetComponent<MeshRenderer>().material.color = ColorManager.Instance.GetColor();
         tube.radius = strokeRadius;
-        Debug.Log(tube.radius);
     }
 
     public void FixedUpdate()
@@ -127,14 +125,6 @@ public class DrawTubes : MonoBehaviour
     void invoke()
     {
         canAdd = true;
-    }
-
-    private void addBouncingEffect()
-    {
-        _currentObject.AddComponent<Rigidbody>();
-        Collider collider = _currentObject.AddComponent<SphereCollider>();
-        collider.material.bounciness = 1.0f;
-        bounce = false;  // necessary components have been added, so turned off the bool
     }
 
 
