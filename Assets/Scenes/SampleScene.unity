@@ -317,7 +317,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 685610041}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.12, y: 6.39, z: 0}
+  m_LocalPosition: {x: -0.86, y: 9.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -532,7 +532,8 @@ MonoBehaviour:
   bounce: 0
   movement: 0
   animatedObject: {fileID: 2033916451}
-  moveSpeed: 10
+  moveSpeed: 8
+  rotationSpeed: 5
   path: {fileID: 41646995}
 --- !u!4 &1336290717
 Transform:
@@ -702,6 +703,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2033916453}
   - component: {fileID: 2033916452}
+  - component: {fileID: 2033916454}
   m_Layer: 0
   m_Name: Tubes
   m_TagString: Untagged
@@ -737,9 +739,29 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2033916451}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 3.0747976, z: -0.76508486}
+  m_LocalScale: {x: 0.5730502, y: 0.5730502, z: 0.5730502}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2033916454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2033916451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c164a20ad38a09647a5ea7638ec1fd69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableSquash: 1
+  maxSquash: 2
+  enableStretch: 1
+  maxStretch: 1.5
+  mode: 0
+  springHalfLife: 0.01
+  minSpeedThreshold: 1
+  maxSpeedThreshold: 10

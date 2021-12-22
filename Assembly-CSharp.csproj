@@ -57,11 +57,13 @@
     <Compile Include="Assets/Scripts/ColorManager.cs" />
     <Compile Include="Assets/TubeRenderer/Examples/Assets/Spline.cs" />
     <Compile Include="Assets/TubeRenderer/Examples/Assets/Flower.cs" />
+    <Compile Include="Assets/Scripts/PathFollower.cs" />
     <Compile Include="Assets/TubeRenderer/Examples/Assets/Herd.cs" />
     <Compile Include="Assets/ColorPickerTriangle/Scripts/ColorPickerTriangle.cs" />
     <Compile Include="Assets/TubeRenderer/Examples/Assets/Starfish.cs" />
     <Compile Include="Assets/Scripts/LineDrawer.cs" />
     <Compile Include="Assets/TubeRenderer/Examples/Assets/Skin.cs" />
+    <Compile Include="Assets/Scripts/AddAnimation.cs" />
     <Compile Include="Assets/ColorPickerTriangle/Example/example.cs" />
     <Compile Include="Assets/TubeRenderer/Runtime/SplineMaker.cs" />
     <Compile Include="Assets/TubeRenderer/Examples/Assets/Shared/ExampleHelpers.cs" />
@@ -75,12 +77,24 @@
     <Compile Include="Assets/TubeRenderer/Examples/Assets/Volume.cs" />
     <Compile Include="Assets/Scripts/DrawLine.cs" />
     <Compile Include="Assets/TubeRenderer/Examples/Assets/Slide.cs" />
-    <Compile Include="Assets/Scripts/PathFollower.cs" />
-    <Compile Include="Assets/Scripts/AddAnimation.cs" />
+    <Compile Include="Assets/SquashAndStretch/Examples/Common/GradientBackground.cs" />
+    <Compile Include="Assets/SquashAndStretch/Examples/Satellites/Satellite.cs" />
+    <Compile Include="Assets/SquashAndStretch/Examples/MouseDrag/MouseDragObject.cs" />
+    <Compile Include="Assets/SquashAndStretch/Examples/Satellites/Planet.cs" />
+    <Compile Include="Assets/SquashAndStretch/Examples/BouncingObjects/BouncingObjectSpawner.cs" />
+    <Compile Include="Assets/SquashAndStretch/Examples/BouncingObjects/BouncingObject.cs" />
+    <Compile Include="Assets/SquashAndStretch/Examples/Common/MousePositionDrag.cs" />
+    <Compile Include="Assets/SquashAndStretch/Examples/Common/GradientSprite.cs" />
+    <Compile Include="Assets/SquashAndStretch/Examples/FallingStars/StarSpawner.cs" />
+    <Compile Include="Assets/SquashAndStretch/Examples/Common/MouseRotationDrag.cs" />
+    <Compile Include="Assets/SquashAndStretch/Examples/FallingStars/FallingStar.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets/SquashAndStretch/README.txt" />
     <None Include="Assets/ColorPickerTriangle/Shaders/VertexColor.shader" />
     <None Include="Assets/TubeRenderer/Runtime/Internals/Resources/StandardVertexColor.shader" />
+    <None Include="Assets/SquashAndStretch/Examples/Common/GradientBackground.shader" />
+    <None Include="Assets/SquashAndStretch/Examples/Common/GradientSprite.shader" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -685,6 +699,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="SquashAndStretchKit.csproj">
+      <Project>{E961B5F0-DD91-9857-57EC-FF023A05CC46}</Project>
+      <Name>SquashAndStretchKit</Name>
+    </ProjectReference>
+    <ProjectReference Include="SquashAndStretchKit.Editor.csproj">
+      <Project>{0CA0AD35-E4F5-4829-3E82-672B857A15FF}</Project>
+      <Name>SquashAndStretchKit.Editor</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

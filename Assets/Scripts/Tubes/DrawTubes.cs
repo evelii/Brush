@@ -72,7 +72,7 @@ public class DrawTubes : MonoBehaviour
         gameObject.transform.position = cursor.transform.position;
         GameObject go = new GameObject("TubeStroke");
         go.transform.parent = transform;
-        addAnimation._currentObject = go;
+        addAnimation._currentObject = gameObject;
         //_squashParent = new GameObject(string.Format("_squash_{0}", name)).transform;
         //_originalScale = _currentObject.transform.localScale;
         _currentTubeStroke = go.AddComponent<TubeStroke>();

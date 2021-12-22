@@ -19,7 +19,7 @@ public class AddAnimation : MonoBehaviour
 
     public GameObject animatedObject; // the object which moves along the path
     public float moveSpeed; // the speed when moving along the path
-    float timer; // default time
+    public float rotationSpeed;
     int curIdx;
     Vector3 startPos;
     static Vector3 currentPosHolder;
@@ -102,20 +102,25 @@ public class AddAnimation : MonoBehaviour
 
     void checkPos()
     {
-        timer = 0;
         if (curIdx < pos.Length) currentPosHolder = pos[curIdx];
-        startPos = animatedObject.transform.position;
+        //startPos = animatedObject.transform.position;
     }
 
+    /**
+     * record timestamps and corresponding positions for both the movement path and the speed
+     * 
+     */
     private void followMovementPath()
     {
-        timer += Time.deltaTime * moveSpeed;
-        if (animatedObject.transform.position != currentPosHolder)
+        float distance = Vector3.Distance(currentPosHolder, animatedObject.transform.position);
+        animatedObject.transform.position = Vector3.MoveTowards(animatedObject.transform.position, currentPosHolder, Time.deltaTime * moveSpeed);
+
+        var rotation = Quaternion.LookRotation(currentPosHolder - animatedObject.transform.position);
+        animatedObject.transform.rotation = Quaternion.Slerp(animatedObject.transform.rotation, rotation, Time.deltaTime * rotationSpeed);
+
+        if (distance <= 1.0f)
         {
-            animatedObject.transform.position = Vector3.Lerp(startPos, currentPosHolder, timer);
-        } else
-        {
-            curIdx++;
+            curIdx+=5;
             checkPos();
         }
     }

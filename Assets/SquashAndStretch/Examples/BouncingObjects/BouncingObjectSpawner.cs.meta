@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 342c8ce753834434598e6e835057c367
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - m_bouncingBall: {fileID: 1387610538470890, guid: 8d32c52eb17f2354dbf65e5637566add,
+      type: 3}
+  - m_bouncingCube: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
