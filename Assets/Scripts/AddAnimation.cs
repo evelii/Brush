@@ -6,12 +6,9 @@ using UnityEngine;
 public class AddAnimation : MonoBehaviour
 {
     public GameObject _currentObject;
-    private Transform _squashParent;
-    
-    private Vector3 _originalScale;
+    public GameObject _parentObject;
 
     public bool bounce;
-    private bool ss; // Stretch and Squash
     private bool movementPrepare;
     public bool movement;
 
@@ -28,7 +25,6 @@ public class AddAnimation : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ss = false;
         movementPrepare = false;
     }
 
@@ -49,42 +45,63 @@ public class AddAnimation : MonoBehaviour
 
     public void FixedUpdate()
     {
-        if (ss)
-        {
-            _currentObject.transform.parent = transform;
-            _currentObject.transform.localPosition = Vector3.zero;
-            _currentObject.transform.localScale = _originalScale;
-            _currentObject.transform.localRotation = Quaternion.identity;
-
-            transform.localScale = Vector3.one;
-
-            Rigidbody _rigidbody = _currentObject.GetComponent<Rigidbody>();
-            var velocity = _rigidbody.velocity; // falling down: speed value is negative
-
-            if (velocity.sqrMagnitude > 0.01f)
-            {
-                _squashParent.rotation = Quaternion.FromToRotation(Vector3.right, velocity);
-            }
-
-            //Debug.LogError(velocity.magnitude);
-
-            var scaleX = 1.0f + (velocity.magnitude * 0.1f);
-            var scaleY = 1.0f / scaleX;
-
-            transform.localScale = new Vector3(scaleX, scaleY, 1.0f);
-            //_currentObject.transform.parent = _squashParent;
-            //transform.localScale = new Vector3(scaleX, scaleY, 1.0f);
-        }
+        
     }
 
     private void addBouncingEffect()
     {
-        _currentObject.AddComponent<Rigidbody>();
-        Collider collider = _currentObject.AddComponent<SphereCollider>();
+        _parentObject.AddComponent<Rigidbody>();
+        Collider collider = _currentObject.AddComponent<BoxCollider>();
         collider.material.bounciness = 1.0f;
+        FitColliderToChildren(_parentObject);
         bounce = false;  // necessary components have been added, so turned off the bool
-        //ss = true;
     }
+
+    private void FitColliderToChildren(GameObject parentObj)
+    {
+        BoxCollider bc = parentObj.GetComponent<BoxCollider>();
+        Bounds bounds = new Bounds(Vector3.zero, Vector3.zero); // center, size
+        bool hasBounds = false;
+        Renderer[] renderers = parentObj.GetComponentsInChildren<Renderer>();
+        foreach (Renderer render in renderers)
+        {
+            if (hasBounds)
+            {
+                bounds.Encapsulate(render.bounds);
+            }
+            else
+            {
+                bounds = render.bounds;
+                hasBounds = true;
+            }
+        }
+        if (hasBounds)
+        {
+            bc.center = bounds.center - parentObj.transform.position;
+            bc.size = bounds.size;
+        }
+        else
+        {
+            bc.size = bc.center = Vector3.zero;
+            bc.size = Vector3.zero;
+        }
+    }
+
+    //private void addBouncingEffect()
+    //{
+    //    _currentObject.AddComponent<Rigidbody>();
+    //    Collider collider = _currentObject.AddComponent<SphereCollider>();
+    //    collider.material.bounciness = 1.0f;
+    //    SquashAndStretchKit.SquashAndStretch tem = _currentObject.AddComponent<SquashAndStretchKit.SquashAndStretch>();
+    //    tem.enableSquash = true;
+    //    tem.enableStretch = true;
+    //    tem.maxSpeedThreshold = 20;
+    //    tem.minSpeedThreshold = 1;
+    //    tem.maxSquash = 1.6f;
+    //    tem.maxStretch = 1.5f;
+
+    //    bounce = false;  // necessary components have been added, so turned off the bool
+    //}
 
     void movementInit()
     {

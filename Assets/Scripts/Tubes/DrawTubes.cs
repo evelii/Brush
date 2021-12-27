@@ -30,12 +30,10 @@ public class DrawTubes : MonoBehaviour
     { 
         state = StrokeState.WAITING;
         canDraw = true;
-        //addAnimation = new AddAnimation();
     }
 
     public void Update()
     {
-
         // when a new dragging on the cursor, create a new tube
         if (Input.GetMouseButton(0))
         {
@@ -62,9 +60,6 @@ public class DrawTubes : MonoBehaviour
         {
             if (!canDraw) state = StrokeState.WAITING;
         }
-
-        //if (bounce) addAnimation.bounce = true;
-        //if (movement) addAnimation.movement = true;
     }
 
     private void _createNewTube()
@@ -72,9 +67,7 @@ public class DrawTubes : MonoBehaviour
         gameObject.transform.position = cursor.transform.position;
         GameObject go = new GameObject("TubeStroke");
         go.transform.parent = transform;
-        addAnimation._currentObject = gameObject;
-        //_squashParent = new GameObject(string.Format("_squash_{0}", name)).transform;
-        //_originalScale = _currentObject.transform.localScale;
+        addAnimation._currentObject = go;
         _currentTubeStroke = go.AddComponent<TubeStroke>();
 
         TubeRenderer tube = go.AddComponent<TubeRenderer>();
@@ -82,6 +75,21 @@ public class DrawTubes : MonoBehaviour
         go.GetComponent<MeshRenderer>().material.color = ColorManager.Instance.GetColor();
         tube.radius = strokeRadius;
     }
+
+    //private void _createNewTube()
+    //{
+    //    //gameObject.transform.position = cursor.transform.position;
+    //    GameObject go = new GameObject("TubeStroke");
+    //    //gameObject.transform.parent = transform;
+    //    //go.transform.position = cursor.transform.position;
+    //    addAnimation._currentObject = go;
+    //    _currentTubeStroke = go.AddComponent<TubeStroke>();
+
+    //    TubeRenderer tube = go.AddComponent<TubeRenderer>();
+    //    tube.MarkDynamic();
+    //    go.GetComponent<MeshRenderer>().material.color = ColorManager.Instance.GetColor();
+    //    tube.radius = strokeRadius;
+    //}
 
     public void FixedUpdate()
     {
