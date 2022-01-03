@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AddAnimation : MonoBehaviour
@@ -38,9 +36,20 @@ public class AddAnimation : MonoBehaviour
 
         if (movement)
         {
-            movementInit();
-            followMovementPath();
+            //movementInit();
+            //followMovementPath();
         }
+
+        if (movement)
+        {
+            movementInit();
+            test();
+        }
+
+        //if (movement)
+        //{
+        //    followMovementPath1();
+        //}
     }
 
     public void FixedUpdate()
@@ -103,6 +112,14 @@ public class AddAnimation : MonoBehaviour
     //    bounce = false;  // necessary components have been added, so turned off the bool
     //}
 
+    private void followMovementPath1()
+    {
+        pos = path.getPathPoints();
+        iTween.MoveTo(_parentObject, iTween.Hash("path", pos,
+     "orienttopath", true, "looktime", 0.2f, "speed", moveSpeed));
+        movement = false;
+    }
+
     void movementInit()
     {
         if (movementPrepare) return;
@@ -120,6 +137,7 @@ public class AddAnimation : MonoBehaviour
     void checkPos()
     {
         if (curIdx < pos.Length) currentPosHolder = pos[curIdx];
+        else curIdx = 0;
         //startPos = animatedObject.transform.position;
     }
 
@@ -135,10 +153,54 @@ public class AddAnimation : MonoBehaviour
         var rotation = Quaternion.LookRotation(currentPosHolder - animatedObject.transform.position);
         animatedObject.transform.rotation = Quaternion.Slerp(animatedObject.transform.rotation, rotation, Time.deltaTime * rotationSpeed);
 
-        if (distance <= 1.0f)
+        if (distance <= 0.1f)
         {
-            curIdx+=5;
+            curIdx += 1;
             checkPos();
         }
+    }
+
+    float percentsPerSecond = 0.3f; // %2 of the path moved per second
+    float currentPathPercent = 0.0f; //min 0, max 1
+
+    private void test()
+    {
+        if (currentPathPercent >= 1)
+        {
+            movement = false;
+            currentPathPercent = 0;
+        }
+
+        currentPathPercent += percentsPerSecond * Time.deltaTime;
+        //iTween.PutOnPath(animatedObject, pos, currentPathPercent);
+        float distance = Vector3.Distance(currentPosHolder, animatedObject.transform.position);
+        Vector3 tarPos = Interp(pos, currentPathPercent);
+        animatedObject.transform.position = Vector3.MoveTowards(animatedObject.transform.position, tarPos, moveSpeed);
+        var rotation = Quaternion.LookRotation(currentPosHolder - animatedObject.transform.position);
+        animatedObject.transform.rotation = Quaternion.Slerp(animatedObject.transform.rotation, rotation, Time.deltaTime * rotationSpeed);
+        if (distance <= 0.1f)
+        {
+            curIdx += 1;
+            checkPos();
+        }
+    }
+
+    private static Vector3 Interp(Vector3[] pts, float t)
+    {
+        int numSections = pts.Length - 3;
+        int currPt = Mathf.Min(Mathf.FloorToInt(t * (float)numSections), numSections - 1);
+        float u = t * (float)numSections - (float)currPt;
+
+        Vector3 a = pts[currPt];
+        Vector3 b = pts[currPt + 1];
+        Vector3 c = pts[currPt + 2];
+        Vector3 d = pts[currPt + 3];
+
+        return .5f * (
+            (-a + 3f * b - 3f * c + d) * (u * u * u)
+            + (2f * a - 5f * b + 4f * c - d) * (u * u)
+            + (-a + c) * u
+            + 2f * b
+        );
     }
 }

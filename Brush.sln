@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SquashAndStretchKit", "SquashAndStretchKit.csproj", "{E961B5F0-DD91-9857-57EC-FF023A05CC46}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-firstpass", "Assembly-CSharp-firstpass.csproj", "{14633D9A-A0D4-AFCC-EF70-4A3408160393}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{FFCA6B33-600C-EF59-E02B-41BCB84B8E43}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SquashAndStretchKit.Editor", "SquashAndStretchKit.Editor.csproj", "{0CA0AD35-E4F5-4829-3E82-672B857A15FF}"
@@ -23,6 +25,10 @@ Global
 		{E961B5F0-DD91-9857-57EC-FF023A05CC46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E961B5F0-DD91-9857-57EC-FF023A05CC46}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E961B5F0-DD91-9857-57EC-FF023A05CC46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14633D9A-A0D4-AFCC-EF70-4A3408160393}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14633D9A-A0D4-AFCC-EF70-4A3408160393}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14633D9A-A0D4-AFCC-EF70-4A3408160393}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14633D9A-A0D4-AFCC-EF70-4A3408160393}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FFCA6B33-600C-EF59-E02B-41BCB84B8E43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FFCA6B33-600C-EF59-E02B-41BCB84B8E43}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FFCA6B33-600C-EF59-E02B-41BCB84B8E43}.Release|Any CPU.ActiveCfg = Release|Any CPU

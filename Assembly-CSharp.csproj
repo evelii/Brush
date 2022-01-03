@@ -53,10 +53,13 @@
     <UnityVersion>2020.3.21f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Assets/SquashAndStretch/Examples/Common/GradientBackground.cs" />
     <Compile Include="Assets/TubeRenderer/Examples/Assets/Shared/CameraMan.cs" />
     <Compile Include="Assets/Scripts/ColorManager.cs" />
+    <Compile Include="Assets/SquashAndStretch/Examples/MouseDrag/MouseDragObject.cs" />
     <Compile Include="Assets/TubeRenderer/Examples/Assets/Spline.cs" />
     <Compile Include="Assets/TubeRenderer/Examples/Assets/Flower.cs" />
+    <Compile Include="Assets/SquashAndStretch/Examples/BouncingObjects/BouncingObjectSpawner.cs" />
     <Compile Include="Assets/Scripts/PathFollower.cs" />
     <Compile Include="Assets/TubeRenderer/Examples/Assets/Herd.cs" />
     <Compile Include="Assets/ColorPickerTriangle/Scripts/ColorPickerTriangle.cs" />
@@ -64,30 +67,28 @@
     <Compile Include="Assets/Scripts/LineDrawer.cs" />
     <Compile Include="Assets/TubeRenderer/Examples/Assets/Skin.cs" />
     <Compile Include="Assets/Scripts/AddAnimation.cs" />
+    <Compile Include="Assets/SquashAndStretch/Examples/BouncingObjects/BouncingObject.cs" />
     <Compile Include="Assets/ColorPickerTriangle/Example/example.cs" />
     <Compile Include="Assets/TubeRenderer/Runtime/SplineMaker.cs" />
     <Compile Include="Assets/TubeRenderer/Examples/Assets/Shared/ExampleHelpers.cs" />
+    <Compile Include="Assets/SquashAndStretch/Examples/FallingStars/FallingStar.cs" />
     <Compile Include="Assets/Scripts/Tubes/DrawTubes.cs" />
     <Compile Include="Assets/TubeRenderer/Examples/Assets/Digestion.cs" />
+    <Compile Include="Assets/SquashAndStretch/Examples/Satellites/Satellite.cs" />
     <Compile Include="Assets/Scripts/Tubes/TubeStroke.cs" />
     <Compile Include="Assets/TubeRenderer/Runtime/Internals/RenderPipelineHelpers.cs" />
     <Compile Include="Assets/TubeRenderer/Examples/Assets/Paw.cs" />
     <Compile Include="Assets/TubeRenderer/Examples/Assets/Invertebrate.cs" />
+    <Compile Include="Assets/SquashAndStretch/Examples/Common/MousePositionDrag.cs" />
+    <Compile Include="Assets/SquashAndStretch/Examples/Common/MouseRotationDrag.cs" />
     <Compile Include="Assets/TubeRenderer/Runtime/TubeRenderer.cs" />
     <Compile Include="Assets/TubeRenderer/Examples/Assets/Volume.cs" />
     <Compile Include="Assets/Scripts/DrawLine.cs" />
     <Compile Include="Assets/TubeRenderer/Examples/Assets/Slide.cs" />
-    <Compile Include="Assets/SquashAndStretch/Examples/Common/GradientBackground.cs" />
-    <Compile Include="Assets/SquashAndStretch/Examples/Satellites/Satellite.cs" />
-    <Compile Include="Assets/SquashAndStretch/Examples/MouseDrag/MouseDragObject.cs" />
-    <Compile Include="Assets/SquashAndStretch/Examples/Satellites/Planet.cs" />
-    <Compile Include="Assets/SquashAndStretch/Examples/BouncingObjects/BouncingObjectSpawner.cs" />
-    <Compile Include="Assets/SquashAndStretch/Examples/BouncingObjects/BouncingObject.cs" />
-    <Compile Include="Assets/SquashAndStretch/Examples/Common/MousePositionDrag.cs" />
     <Compile Include="Assets/SquashAndStretch/Examples/Common/GradientSprite.cs" />
+    <Compile Include="Assets/SquashAndStretch/Examples/Satellites/Planet.cs" />
     <Compile Include="Assets/SquashAndStretch/Examples/FallingStars/StarSpawner.cs" />
-    <Compile Include="Assets/SquashAndStretch/Examples/Common/MouseRotationDrag.cs" />
-    <Compile Include="Assets/SquashAndStretch/Examples/FallingStars/FallingStar.cs" />
+    <Compile Include="Assets/Scripts/iTweenScript.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/SquashAndStretch/README.txt" />
@@ -699,6 +700,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{14633D9A-A0D4-AFCC-EF70-4A3408160393}</Project>
+      <Name>Assembly-CSharp-firstpass</Name>
+    </ProjectReference>
     <ProjectReference Include="SquashAndStretchKit.csproj">
       <Project>{E961B5F0-DD91-9857-57EC-FF023A05CC46}</Project>
       <Name>SquashAndStretchKit</Name>
