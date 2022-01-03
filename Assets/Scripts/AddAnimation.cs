@@ -16,7 +16,6 @@ public class AddAnimation : MonoBehaviour
     public float moveSpeed; // the speed when moving along the path
     public float rotationSpeed;
     int curIdx;
-    Vector3 startPos;
     static Vector3 currentPosHolder;
     public PathFollower path;
 
@@ -36,20 +35,9 @@ public class AddAnimation : MonoBehaviour
 
         if (movement)
         {
-            //movementInit();
-            //followMovementPath();
-        }
-
-        if (movement)
-        {
             movementInit();
-            test();
+            followMovementPath();
         }
-
-        //if (movement)
-        //{
-        //    followMovementPath1();
-        //}
     }
 
     public void FixedUpdate()
@@ -112,14 +100,6 @@ public class AddAnimation : MonoBehaviour
     //    bounce = false;  // necessary components have been added, so turned off the bool
     //}
 
-    private void followMovementPath1()
-    {
-        pos = path.getPathPoints();
-        iTween.MoveTo(_parentObject, iTween.Hash("path", pos,
-     "orienttopath", true, "looktime", 0.2f, "speed", moveSpeed));
-        movement = false;
-    }
-
     void movementInit()
     {
         if (movementPrepare) return;
@@ -136,59 +116,52 @@ public class AddAnimation : MonoBehaviour
 
     void checkPos()
     {
-        if (curIdx < pos.Length) currentPosHolder = pos[curIdx];
-        else curIdx = 0;
-        //startPos = animatedObject.transform.position;
-    }
-
-    /**
-     * record timestamps and corresponding positions for both the movement path and the speed
-     * 
-     */
-    private void followMovementPath()
-    {
-        float distance = Vector3.Distance(currentPosHolder, animatedObject.transform.position);
-        animatedObject.transform.position = Vector3.MoveTowards(animatedObject.transform.position, currentPosHolder, Time.deltaTime * moveSpeed);
-
-        var rotation = Quaternion.LookRotation(currentPosHolder - animatedObject.transform.position);
-        animatedObject.transform.rotation = Quaternion.Slerp(animatedObject.transform.rotation, rotation, Time.deltaTime * rotationSpeed);
-
-        if (distance <= 0.1f)
+        if (curIdx < pos.Length)
         {
-            curIdx += 1;
-            checkPos();
+            currentPosHolder = pos[curIdx];
         }
+        else resetPath();
     }
 
-    float percentsPerSecond = 0.3f; // %2 of the path moved per second
+    float percentsPerSecond = 0.3f; // %30 of the path moved per second
     float currentPathPercent = 0.0f; //min 0, max 1
 
-    private void test()
+    private void followMovementPath()
     {
         if (currentPathPercent >= 1)
         {
+            // reset
             movement = false;
             currentPathPercent = 0;
         }
 
         currentPathPercent += percentsPerSecond * Time.deltaTime;
-        //iTween.PutOnPath(animatedObject, pos, currentPathPercent);
         float distance = Vector3.Distance(currentPosHolder, animatedObject.transform.position);
         Vector3 tarPos = Interp(pos, currentPathPercent);
+
+        Debug.Log(currentPosHolder.ToString() + ", " + tarPos.ToString());
+
         animatedObject.transform.position = Vector3.MoveTowards(animatedObject.transform.position, tarPos, moveSpeed);
         var rotation = Quaternion.LookRotation(currentPosHolder - animatedObject.transform.position);
         animatedObject.transform.rotation = Quaternion.Slerp(animatedObject.transform.rotation, rotation, Time.deltaTime * rotationSpeed);
-        if (distance <= 0.1f)
+
+        if (distance <= 0.3f)
         {
             curIdx += 1;
             checkPos();
         }
     }
 
-    private static Vector3 Interp(Vector3[] pts, float t)
+    void resetPath()
     {
-        int numSections = pts.Length - 3;
-        int currPt = Mathf.Min(Mathf.FloorToInt(t * (float)numSections), numSections - 1);
+        curIdx = 0;
+        currentPathPercent = 0;
+    }
+
+    private Vector3 Interp(Vector3[] pts, float t)
+    {
+        int numSections = pts.Length-1;
+        int currPt = Mathf.Min(Mathf.FloorToInt(t * (float)numSections), numSections - 1)
         float u = t * (float)numSections - (float)currPt;
 
         Vector3 a = pts[currPt];
