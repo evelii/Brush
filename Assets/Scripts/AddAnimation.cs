@@ -142,6 +142,7 @@ public class AddAnimation : MonoBehaviour
         Debug.Log(currentPosHolder.ToString() + ", " + tarPos.ToString());
 
         animatedObject.transform.position = Vector3.MoveTowards(animatedObject.transform.position, tarPos, moveSpeed);
+        // upright vector?
         var rotation = Quaternion.LookRotation(currentPosHolder - animatedObject.transform.position);
         animatedObject.transform.rotation = Quaternion.Slerp(animatedObject.transform.rotation, rotation, Time.deltaTime * rotationSpeed);
 
@@ -160,8 +161,8 @@ public class AddAnimation : MonoBehaviour
 
     private Vector3 Interp(Vector3[] pts, float t)
     {
-        int numSections = pts.Length-1;
-        int currPt = Mathf.Min(Mathf.FloorToInt(t * (float)numSections), numSections - 1)
+        int numSections = pts.Length-3;
+        int currPt = Mathf.Min(Mathf.FloorToInt(t * (float)numSections), numSections - 1);
         float u = t * (float)numSections - (float)currPt;
 
         Vector3 a = pts[currPt];
