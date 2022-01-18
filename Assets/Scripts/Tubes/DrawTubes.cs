@@ -35,9 +35,8 @@ public class DrawTubes : MonoBehaviour
     public void Update()
     {
         // when a new dragging on the cursor, create a new tube
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && canDraw)
         {
-            Debug.Log("clicked");
             state = StrokeState.START_STROKE;
             _currentTubeStroke = null;
 
