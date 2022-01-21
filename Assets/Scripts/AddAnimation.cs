@@ -13,11 +13,15 @@ public class AddAnimation : MonoBehaviour
     private Vector3[] pos;
 
     public GameObject animatedObject; // the object which moves along the path
+    public GameObject testObject;
     public float moveSpeed; // the speed when moving along the path
     public float rotationSpeed;
     int curIdx;
     static Vector3 currentPosHolder;
     public PathFollower path;
+
+    // Motion Brush
+    public MotionBrush motionBrush;
 
     // Start is called before the first frame update
     void Start()
@@ -35,8 +39,20 @@ public class AddAnimation : MonoBehaviour
 
         if (movement)
         {
-            movementInit();
-            followMovementPath();
+            // Check if there is user defined path
+            pos = path.getPathPoints();
+            // 1. There is a customized movement path, just follow the path
+            if(pos.Length > 1)
+            {
+                movementInit();
+                followMovementPath();
+            }
+
+            // 2. There is no customized path, use the default behaviour
+            else
+            {
+                defaultMovement();
+            }
         }
     }
 
@@ -104,12 +120,6 @@ public class AddAnimation : MonoBehaviour
     {
         if (movementPrepare) return;
 
-        pos = path.getPathPoints();
-        if (pos.Length == 0)
-        {
-            Debug.LogError("Movement path hasn't been specified yet!");
-            throw new Exception();
-        }
         checkPos();
         movementPrepare = true;
     }
@@ -128,6 +138,7 @@ public class AddAnimation : MonoBehaviour
 
     private void followMovementPath()
     {
+        //animatedObject = testObject;
         if (currentPathPercent >= 1)
         {
             // reset
@@ -136,20 +147,42 @@ public class AddAnimation : MonoBehaviour
         }
 
         currentPathPercent += percentsPerSecond * Time.deltaTime;
-        float distance = Vector3.Distance(currentPosHolder, animatedObject.transform.position);
         Vector3 tarPos = Interp(pos, currentPathPercent);
+        float distance = Vector3.Distance(currentPosHolder, animatedObject.transform.position);
 
         //Debug.Log(currentPosHolder.ToString() + ", " + tarPos.ToString());
-
+        animatedObject.transform.right = Vector3.RotateTowards(animatedObject.transform.right, tarPos - animatedObject.transform.position, rotationSpeed * Time.deltaTime, 0.0f);
         animatedObject.transform.position = Vector3.MoveTowards(animatedObject.transform.position, tarPos, moveSpeed);
-        // upright vector?
-        var rotation = Quaternion.LookRotation(currentPosHolder - animatedObject.transform.position);
-        animatedObject.transform.rotation = Quaternion.Slerp(animatedObject.transform.rotation, rotation, Time.deltaTime * rotationSpeed);
 
         if (distance <= 0.3f)
         {
             curIdx += 1;
             checkPos();
+        }
+    }
+
+    void defaultMovement()
+    {
+        if (motionBrush.moveDirection == "right")
+        {
+            if (animatedObject.transform.position.x < 7)
+                animatedObject.transform.Translate(Vector3.right * 9 * Time.deltaTime);
+            else
+            {
+                motionBrush.resetBrush();
+                movement = false;
+            }
+        }
+
+        else if (motionBrush.moveDirection == "left")
+        {
+            if (animatedObject.transform.position.x > -7)
+                animatedObject.transform.Translate(Vector3.left * 9 * Time.deltaTime);
+            else
+            {
+                motionBrush.resetBrush();
+                movement = false;
+            }
         }
     }
 

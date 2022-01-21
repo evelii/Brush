@@ -21,6 +21,7 @@ public class ColorManager : MonoBehaviour
             go.transform.localScale = Vector3.one * 1.5f;
             //go.transform.LookAt(Camera.main.transform);
             CP = go.GetComponent<ColorPickerTriangle>();
+            CP.TheColor = Color.black;
         }
     }
 

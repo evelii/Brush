@@ -15,7 +15,10 @@ public class MotionBrush : MonoBehaviour
 
     public GameObject animatedObject; // the object to be animated
     int lineCount = 0;
-    string moveDirection = "";
+    public string moveDirection = "";
+
+    // AddAnimation script
+    public AddAnimation addAnimation;
 
     // Colors
     public ColorPickerTriangle CP;
@@ -41,31 +44,9 @@ public class MotionBrush : MonoBehaviour
     {
         if(lineCount == 3)
         {
-            Debug.LogWarning("3!!!");
-            if (moveDirection == "right")
-            {
-                if (animatedObject.transform.position.x < 7)
-                    animatedObject.transform.Translate(Vector3.right * 9 * Time.deltaTime);
-                else
-                {
-                    lineCount = 0;
-                    moveDirection = "";
-                }
-            }
+            addAnimation.movement = true;
 
-            else if (moveDirection == "left") {
-                if (animatedObject.transform.position.x > -7)
-                {
-                    animatedObject.transform.Translate(Vector3.left * 9 * Time.deltaTime);
-                }
-                    
-                else
-                {
-                    lineCount = 0;
-                    moveDirection = "";
-                }
-            }
-
+            // hide the motion lines from the display
             foreach (GameObject l in lineCollection)
             {
                 l.SetActive(false);
@@ -123,6 +104,12 @@ public class MotionBrush : MonoBehaviour
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         return ray.origin + ray.direction * 10;
+    }
+
+    public void resetBrush()
+    {
+        lineCount = 0;
+        moveDirection = "";
     }
 
     /// <summary>
