@@ -14,11 +14,19 @@ public class MotionBrush : MonoBehaviour
     public float width;
 
     public GameObject animatedObject; // the object to be animated
-    int count = 0;
+    int lineCount = 0;
     string moveDirection = "";
 
     // Colors
     public ColorPickerTriangle CP;
+
+    // Stroke Recognizer
+    enum StrokeType
+    {
+        Line,
+        Curve,
+        Unknown
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -31,15 +39,16 @@ public class MotionBrush : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(count == 3)
+        if(lineCount == 3)
         {
+            Debug.LogWarning("3!!!");
             if (moveDirection == "right")
             {
                 if (animatedObject.transform.position.x < 7)
                     animatedObject.transform.Translate(Vector3.right * 9 * Time.deltaTime);
                 else
                 {
-                    count = 0;
+                    lineCount = 0;
                     moveDirection = "";
                 }
             }
@@ -52,7 +61,7 @@ public class MotionBrush : MonoBehaviour
                     
                 else
                 {
-                    count = 0;
+                    lineCount = 0;
                     moveDirection = "";
                 }
             }
@@ -102,7 +111,10 @@ public class MotionBrush : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
-            count++;
+            if (recognizeStroke(linePoints) == StrokeType.Line)
+            {
+                lineCount++;
+            }
             linePoints.Clear();
         }
     }
@@ -111,5 +123,39 @@ public class MotionBrush : MonoBehaviour
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         return ray.origin + ray.direction * 10;
+    }
+
+    /// <summary>
+    /// Method which takes a list of points for a stroke and returns the stroke type
+    /// </summary>
+    /// <param name="points"></param>
+    /// <returns></returns>
+    StrokeType recognizeStroke(List<Vector3> points)
+    {
+        // guarantee there are at least two points in the list
+        if (points.Count < 2) return StrokeType.Unknown;
+
+        bool isLine = true;
+        float initSlope = slope(points[1], points[0]);
+
+        for(int i = 2; i < points.Count; i++)
+        {
+            float curSlope = slope(points[i], points[0]);
+            if (Mathf.Abs(curSlope - initSlope) > 0.2f)
+            {
+                isLine = false;
+                break;
+            }
+        }
+        
+        if(isLine) return StrokeType.Line;
+
+        return StrokeType.Unknown;
+    }
+
+    float slope(Vector3 p1, Vector3 p2)
+    {
+        if (p2.x - p1.x == 0) return 0;
+        return (p2.y - p1.y) / (p2.x - p1.x);
     }
 }
