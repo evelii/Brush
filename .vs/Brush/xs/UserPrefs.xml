@@ -3,9 +3,9 @@
     <Files>
       <File FileName="Assets/Scripts/MotionBrush.cs" Line="157" Column="83" />
       <File FileName="Assets/Scripts/AddAnimation.cs" Line="81" Column="1" />
-      <File FileName="Assets/Scripts/Tubes/DrawTubes.cs" Line="69" Column="1" />
-      <File FileName="Assets/Scripts/ColorManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Audio.cs" Line="20" Column="47" />
+      <File FileName="Assets/Scripts/Tubes/DrawTubes.cs" />
+      <File FileName="Assets/Scripts/ColorManager.cs" />
+      <File FileName="Assets/Scripts/Audio.cs" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

@@ -166,7 +166,7 @@ public class MotionBrush : MonoBehaviour
         for (int i = startIndex; i < points.Count; i++)
         {
             float curSlope = slope(points[i], firstPoint);
-            Debug.LogWarning(initSlope + ", " + curSlope);
+            //Debug.LogWarning(initSlope + ", " + curSlope);
             if (Mathf.Abs(curSlope - initSlope) > 0.4f)
             {
                 isLine = false;

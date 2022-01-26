@@ -151,7 +151,7 @@ public class AddAnimation : MonoBehaviour
         else resetPath();
     }
 
-    float percentsPerSecond = 0.15f; // %30 of the path moved per second
+    float percentsPerSecond = 0.15f; // %15 of the path moved per second
     float currentPathPercent = 0.0f; //min 0, max 1
 
     private void followMovementPath()
