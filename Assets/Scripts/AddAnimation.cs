@@ -34,7 +34,15 @@ public class AddAnimation : MonoBehaviour
     {
         if (bounce)
         {
-            addBouncingEffect();
+            // Check if there is user defined path
+            pos = path.getPathPoints();
+            // 1. There is a customized movement path, just follow the path
+            if (pos.Length > 1)
+            {
+
+            }
+
+            else addBouncingEffect();
         }
 
         if (movement)
@@ -63,11 +71,21 @@ public class AddAnimation : MonoBehaviour
 
     private void addBouncingEffect()
     {
+        SquashAndStretchKit.SquashAndStretch tem = _parentObject.AddComponent<SquashAndStretchKit.SquashAndStretch>();
+        tem.enableSquash = true;
+        tem.enableStretch = true;
+        tem.maxSpeedThreshold = 20;
+        tem.minSpeedThreshold = 1;
+        tem.maxSquash = 1.6f;
+        tem.maxStretch = 1.5f;
         _parentObject.AddComponent<Rigidbody>();
+        _parentObject.AddComponent<BoxCollider>();
+
         Collider collider = _currentObject.AddComponent<BoxCollider>();
         collider.material.bounciness = 1.0f;
         FitColliderToChildren(_parentObject);
         bounce = false;  // necessary components have been added, so turned off the bool
+        motionBrush.resetBrush();
     }
 
     private void FitColliderToChildren(GameObject parentObj)
@@ -133,7 +151,7 @@ public class AddAnimation : MonoBehaviour
         else resetPath();
     }
 
-    float percentsPerSecond = 0.3f; // %30 of the path moved per second
+    float percentsPerSecond = 0.15f; // %30 of the path moved per second
     float currentPathPercent = 0.0f; //min 0, max 1
 
     private void followMovementPath()
@@ -149,10 +167,10 @@ public class AddAnimation : MonoBehaviour
         currentPathPercent += percentsPerSecond * Time.deltaTime;
         Vector3 tarPos = Interp(pos, currentPathPercent);
         float distance = Vector3.Distance(currentPosHolder, animatedObject.transform.position);
+        tarPos = currentPosHolder;  // TODO: tarpos and change moveSpeed*Time.deltaTime to moveSpeed
 
-        //Debug.Log(currentPosHolder.ToString() + ", " + tarPos.ToString());
         animatedObject.transform.right = Vector3.RotateTowards(animatedObject.transform.right, tarPos - animatedObject.transform.position, rotationSpeed * Time.deltaTime, 0.0f);
-        animatedObject.transform.position = Vector3.MoveTowards(animatedObject.transform.position, tarPos, moveSpeed);
+        animatedObject.transform.position = Vector3.MoveTowards(animatedObject.transform.position, tarPos, moveSpeed*Time.deltaTime);
 
         if (distance <= 0.3f)
         {

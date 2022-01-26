@@ -14,7 +14,8 @@ public class MotionBrush : MonoBehaviour
     public float width;
 
     public GameObject animatedObject; // the object to be animated
-    int lineCount = 0;
+    int lineCount = 0; // horizontal
+    int verticalLineCount = 0;
     public string moveDirection = "";
 
     // AddAnimation script
@@ -26,7 +27,8 @@ public class MotionBrush : MonoBehaviour
     // Stroke Recognizer
     enum StrokeType
     {
-        Line,
+        Line, // horizontal, diagonal
+        VerticalLine,
         Curve,
         Unknown
     }
@@ -53,6 +55,17 @@ public class MotionBrush : MonoBehaviour
             }
         }
 
+        else if(verticalLineCount == 3)
+        {
+            addAnimation.bounce = true;
+
+            // hide the motion lines from the display
+            foreach (GameObject l in lineCollection)
+            {
+                l.SetActive(false);
+            }
+        }
+
         // returns true only on the first frame during which the mouse button is clicked
         if (Input.GetMouseButtonDown(0))
         {
@@ -61,6 +74,7 @@ public class MotionBrush : MonoBehaviour
             lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
 
             Color c = ColorManager.Instance.GetColor();
+            c = Color.cyan;
             lineRenderer.material.color = c;
 
             lineRenderer.startWidth = width;
@@ -92,10 +106,17 @@ public class MotionBrush : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
-            if (recognizeStroke(linePoints) == StrokeType.Line)
+            StrokeType strokeType = recognizeStroke(linePoints);
+            Debug.LogWarning(strokeType);
+            if (strokeType == StrokeType.Line)
             {
                 lineCount++;
             }
+            else if (strokeType == StrokeType.VerticalLine)
+            {
+                verticalLineCount++;
+            }
+
             linePoints.Clear();
         }
     }
@@ -109,6 +130,7 @@ public class MotionBrush : MonoBehaviour
     public void resetBrush()
     {
         lineCount = 0;
+        verticalLineCount = 0;
         moveDirection = "";
     }
 
@@ -123,21 +145,46 @@ public class MotionBrush : MonoBehaviour
         if (points.Count < 2) return StrokeType.Unknown;
 
         bool isLine = true;
-        float initSlope = slope(points[1], points[0]);
 
-        for(int i = 2; i < points.Count; i++)
+        Vector3 firstPoint = points[0];
+        Vector3 secondPoint = points[1];
+        int startIndex = 1;
+
+        for(int i = 1; i < points.Count; i++)
         {
-            float curSlope = slope(points[i], points[0]);
-            if (Mathf.Abs(curSlope - initSlope) > 0.2f)
+            if(!points[i].Equals(firstPoint))
             {
-                isLine = false;
+                secondPoint = points[i+1]; // try excluding some points which are at beginning
+                startIndex = i+1;
                 break;
             }
         }
+
+        float initSlope = slope(secondPoint, firstPoint);
+        bool isVerticalLine = canBeVerticalLine(initSlope);
+
+        for (int i = startIndex; i < points.Count; i++)
+        {
+            float curSlope = slope(points[i], firstPoint);
+            Debug.LogWarning(initSlope + ", " + curSlope);
+            if (Mathf.Abs(curSlope - initSlope) > 0.4f)
+            {
+                isLine = false;
+                //break;
+            }
+            if (!canBeVerticalLine(curSlope)) isVerticalLine = false;
+        }
         
         if(isLine) return StrokeType.Line;
+        if(isVerticalLine) return StrokeType.VerticalLine;
 
         return StrokeType.Unknown;
+    }
+
+    bool canBeVerticalLine(float s)
+    {
+        if (s == 0f ||  Mathf.Abs(s) >= 6f) return true;
+        return false;
     }
 
     float slope(Vector3 p1, Vector3 p2)

@@ -63,9 +63,12 @@ public class DrawTubes : MonoBehaviour
 
     private void _createNewTube()
     {
-        gameObject.transform.position = cursor.transform.position;
+        GameObject newStroke = new GameObject("NewStroke");
+        newStroke.transform.position = cursor.transform.position;
+
         GameObject go = new GameObject("TubeStroke");
-        go.transform.parent = transform;
+        go.transform.parent = newStroke.transform;
+        addAnimation._parentObject = newStroke;
         addAnimation._currentObject = go;
         _currentTubeStroke = go.AddComponent<TubeStroke>();
 
@@ -74,21 +77,6 @@ public class DrawTubes : MonoBehaviour
         go.GetComponent<MeshRenderer>().material.color = ColorManager.Instance.GetColor();
         tube.radius = strokeRadius;
     }
-
-    //private void _createNewTube()
-    //{
-    //    //gameObject.transform.position = cursor.transform.position;
-    //    GameObject go = new GameObject("TubeStroke");
-    //    //gameObject.transform.parent = transform;
-    //    //go.transform.position = cursor.transform.position;
-    //    addAnimation._currentObject = go;
-    //    _currentTubeStroke = go.AddComponent<TubeStroke>();
-
-    //    TubeRenderer tube = go.AddComponent<TubeRenderer>();
-    //    tube.MarkDynamic();
-    //    go.GetComponent<MeshRenderer>().material.color = ColorManager.Instance.GetColor();
-    //    tube.radius = strokeRadius;
-    //}
 
     public void FixedUpdate()
     {
@@ -133,36 +121,4 @@ public class DrawTubes : MonoBehaviour
     {
         canAdd = true;
     }
-
-
-    //void Update()
-    //{
-        
-
-    //    // returns true always if the mouse button is being pressed
-    //    if (Input.GetMouseButton(0))
-    //    {
-    //        // Debug.DrawRay(Camera.main.ScreenToWorldPoint(Input.mousePosition), GetMousePosition(), Color.red);
-    //        timer -= Time.deltaTime;
-    //        if (timer <= 0)
-    //        {
-    //            linePoints.Add(GetMousePosition());  // the end of the ray
-    //            lineRenderer.positionCount = linePoints.Count;
-    //            lineRenderer.SetPositions(linePoints.ToArray());
-    //            timer = timerDelay;
-
-    //        }
-    //    }
-
-    //    if (Input.GetMouseButtonUp(0))
-    //    {
-    //        linePoints.Clear();
-    //    }
-    //}
-
-    //Vector3 GetMousePosition()
-    //{
-    //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-    //    return ray.origin + ray.direction * 10;
-    //}
 }
