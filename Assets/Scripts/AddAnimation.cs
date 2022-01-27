@@ -14,7 +14,9 @@ public class AddAnimation : MonoBehaviour
     private Vector3[] pos;
 
     public GameObject animatedObject; // the object which moves along the path
+    public Vector3 keyframePos; // the position of the animatedObject where key frame should be added
     public GameObject keyframeObject; // object which is inserted as a key frame
+    public bool passedKeyframe = false;
 
     public float moveSpeed; // the speed when moving along the path
     public float rotationSpeed;
@@ -196,6 +198,8 @@ public class AddAnimation : MonoBehaviour
             curIdx += 1;
             checkPos();
         }
+
+        handleKeyframe();
     }
 
     // use key to move along the movement path: left or right
@@ -263,6 +267,22 @@ public class AddAnimation : MonoBehaviour
     {
         curIdx = 0;
         currentPathPercent = 0;
+    }
+
+    void handleKeyframe()
+    {
+        if(!insertKeyframe && keyframeObject) // if we are now out of the mode of insertingKeyframe and there's a sketch to be inserted
+        {
+            float dis = Vector3.Distance(animatedObject.transform.position, keyframePos);
+            if (dis <= 0.1f)
+            {
+                keyframeObject.SetActive(true);
+                passedKeyframe = true;
+            } else if (!passedKeyframe)
+            {
+                keyframeObject.SetActive(false); // hide the sketch
+            }
+        }
     }
 
     private Vector3 Interp(Vector3[] pts, float t)

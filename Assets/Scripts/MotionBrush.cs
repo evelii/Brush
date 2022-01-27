@@ -29,6 +29,7 @@ public class MotionBrush : MonoBehaviour
     {
         Line, // horizontal, diagonal
         VerticalLine,
+        Point,
         Curve,
         Unknown
     }
@@ -159,7 +160,7 @@ public class MotionBrush : MonoBehaviour
             }
         }
 
-        if (startIndex == 0) return StrokeType.Unknown; // it's a point
+        if (startIndex == 0) return StrokeType.Point; // all positions are the same
 
         float initSlope = slope(secondPoint, firstPoint);
         bool isVerticalLine = canBeVerticalLine(initSlope);

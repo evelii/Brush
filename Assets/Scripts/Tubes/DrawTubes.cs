@@ -72,6 +72,7 @@ public class DrawTubes : MonoBehaviour
         if(addAnimation.insertKeyframe)
         {
             addAnimation.keyframeObject = newStroke;
+            addAnimation.keyframePos = addAnimation.animatedObject.transform.position;
         } else
         {
             addAnimation._parentObject = newStroke;
