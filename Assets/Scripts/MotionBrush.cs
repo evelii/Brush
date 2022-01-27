@@ -146,10 +146,10 @@ public class MotionBrush : MonoBehaviour
         bool isLine = true;
 
         Vector3 firstPoint = points[0];
-        Vector3 secondPoint = points[1];
-        int startIndex = 1;
+        Vector3 secondPoint = points[0];
+        int startIndex = 0;
 
-        for(int i = 1; i < points.Count; i++)
+        for(int i = 0; i < points.Count; i++)
         {
             if(!points[i].Equals(firstPoint))
             {
@@ -158,6 +158,8 @@ public class MotionBrush : MonoBehaviour
                 break;
             }
         }
+
+        if (startIndex == 0) return StrokeType.Unknown; // it's a point
 
         float initSlope = slope(secondPoint, firstPoint);
         bool isVerticalLine = canBeVerticalLine(initSlope);

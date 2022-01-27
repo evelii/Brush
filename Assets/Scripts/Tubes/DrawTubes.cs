@@ -68,9 +68,17 @@ public class DrawTubes : MonoBehaviour
 
         GameObject go = new GameObject("TubeStroke");
         go.transform.parent = newStroke.transform;
-        addAnimation._parentObject = newStroke;
-        addAnimation.animatedObject = newStroke;
-        addAnimation._currentObject = go;
+
+        if(addAnimation.insertKeyframe)
+        {
+            addAnimation.keyframeObject = newStroke;
+        } else
+        {
+            addAnimation._parentObject = newStroke;
+            addAnimation.animatedObject = newStroke;
+            addAnimation._currentObject = go;
+        }
+        
         _currentTubeStroke = go.AddComponent<TubeStroke>();
 
         TubeRenderer tube = go.AddComponent<TubeRenderer>();

@@ -9,10 +9,13 @@ public class AddAnimation : MonoBehaviour
     public bool bounce;
     private bool movementPrepare;
     public bool movement;
+    public bool insertKeyframe = false;
 
     private Vector3[] pos;
 
     public GameObject animatedObject; // the object which moves along the path
+    public GameObject keyframeObject; // object which is inserted as a key frame
+
     public float moveSpeed; // the speed when moving along the path
     public float rotationSpeed;
     int curIdx;
@@ -48,6 +51,11 @@ public class AddAnimation : MonoBehaviour
         {
             // Check if there is user defined path
             pos = path.getPathPoints();
+            if (insertKeyframe)
+            {
+                resetPath();
+                insertKeyframe = false;
+            }
             // 1. There is a customized movement path, just follow the path
             if(pos.Length > 1)
             {
@@ -65,9 +73,11 @@ public class AddAnimation : MonoBehaviour
         // press left/right arrow to move along the movement path
         if (Input.GetKey("right"))
         {
+            insertKeyframe = true;
             moveAlong("right");
         } else if (Input.GetKey("left"))
         {
+            insertKeyframe = true;
             moveAlong("left");
         }
     }
@@ -154,7 +164,7 @@ public class AddAnimation : MonoBehaviour
 
     void checkPos()
     {
-        if (curIdx < pos.Length)
+        if (curIdx >= 0 && curIdx < pos.Length)
         {
             currentPosHolder = pos[curIdx];
         }
