@@ -13,7 +13,6 @@ public class AddAnimation : MonoBehaviour
     private Vector3[] pos;
 
     public GameObject animatedObject; // the object which moves along the path
-    public GameObject testObject;
     public float moveSpeed; // the speed when moving along the path
     public float rotationSpeed;
     int curIdx;
@@ -61,6 +60,15 @@ public class AddAnimation : MonoBehaviour
             {
                 defaultMovement();
             }
+        }
+
+        // press left/right arrow to move along the movement path
+        if (Input.GetKey("right"))
+        {
+            moveAlong("right");
+        } else if (Input.GetKey("left"))
+        {
+            moveAlong("left");
         }
     }
 
@@ -138,6 +146,8 @@ public class AddAnimation : MonoBehaviour
     {
         if (movementPrepare) return;
 
+        pos = path.getPathPoints();
+
         checkPos();
         movementPrepare = true;
     }
@@ -156,7 +166,6 @@ public class AddAnimation : MonoBehaviour
 
     private void followMovementPath()
     {
-        //animatedObject = testObject;
         if (currentPathPercent >= 1)
         {
             // reset
@@ -176,6 +185,38 @@ public class AddAnimation : MonoBehaviour
         {
             curIdx += 1;
             checkPos();
+        }
+    }
+
+    // use key to move along the movement path: left or right
+    private void moveAlong(string direction)
+    {
+        movementInit();
+
+        float distance = Vector3.Distance(currentPosHolder, animatedObject.transform.position);
+        Vector3 tarPos = currentPosHolder;
+
+        if (direction == "right")
+        {
+            animatedObject.transform.right = Vector3.RotateTowards(animatedObject.transform.right, tarPos - animatedObject.transform.position, rotationSpeed * Time.deltaTime, 0.0f);
+            animatedObject.transform.position = Vector3.MoveTowards(animatedObject.transform.position, tarPos, moveSpeed * Time.deltaTime);
+
+            if (distance <= 0.3f)
+            {
+                curIdx += 1;
+                checkPos();
+            }
+        }
+        else if(direction == "left")
+        {
+            animatedObject.transform.right = Vector3.RotateTowards(animatedObject.transform.right, - tarPos + animatedObject.transform.position, rotationSpeed * Time.deltaTime, 0.0f);
+            animatedObject.transform.position = Vector3.MoveTowards(animatedObject.transform.position, tarPos, moveSpeed * Time.deltaTime);
+
+            if (distance <= 0.3f)
+            {
+                curIdx -= 1;
+                checkPos();
+            }
         }
     }
 
@@ -201,6 +242,10 @@ public class AddAnimation : MonoBehaviour
                 motionBrush.resetBrush();
                 movement = false;
             }
+        }
+
+        else {
+            Debug.LogError("No motion direction is given by speed lines!");
         }
     }
 

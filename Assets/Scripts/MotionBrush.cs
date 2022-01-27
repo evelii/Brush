@@ -107,7 +107,6 @@ public class MotionBrush : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             StrokeType strokeType = recognizeStroke(linePoints);
-            Debug.LogWarning(strokeType);
             if (strokeType == StrokeType.Line)
             {
                 lineCount++;

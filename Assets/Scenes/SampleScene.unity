@@ -672,11 +672,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentObject: {fileID: 0}
-  _parentObject: {fileID: 2033916451}
+  _parentObject: {fileID: 0}
   bounce: 0
   movement: 0
-  animatedObject: {fileID: 2033916451}
-  testObject: {fileID: 0}
+  animatedObject: {fileID: 0}
   moveSpeed: 10
   rotationSpeed: 20
   path: {fileID: 41646995}
