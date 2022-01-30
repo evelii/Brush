@@ -54,6 +54,7 @@ public class MotionBrush : MonoBehaviour
             {
                 l.SetActive(false);
             }
+            resetBrush();
         }
 
         else if(verticalLineCount == 3)

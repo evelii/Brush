@@ -170,7 +170,12 @@ public class AddAnimation : MonoBehaviour
         {
             currentPosHolder = pos[curIdx];
         }
-        else resetPath();
+        else
+        {
+            resetPath();
+            //movement = false;
+            passedKeyframe = false;
+        }
     }
 
     float percentsPerSecond = 0.15f; // %15 of the path moved per second
