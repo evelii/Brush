@@ -52,7 +52,7 @@ public class AddAnimation : MonoBehaviour
         if (movement)
         {
             // Check if there is user defined path
-            pos = path.getPathPoints();
+            if(pos == null) pos = path.getPathPoints();
             if (insertKeyframe)
             {
                 resetPath();

@@ -152,8 +152,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6379f7b898b3648e9a2f39c0c2423052, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 0
   pathSetter: {fileID: 47116413}
   numClicks: 0
+  canDraw: 1
+  addAnimation: {fileID: 1336290716}
 --- !u!4 &41646996
 Transform:
   m_ObjectHideFlags: 0
@@ -675,7 +678,11 @@ MonoBehaviour:
   _parentObject: {fileID: 0}
   bounce: 0
   movement: 0
+  insertKeyframe: 0
   animatedObject: {fileID: 0}
+  keyframePos: {x: 0, y: 0, z: 0}
+  keyframeObject: {fileID: 0}
+  passedKeyframe: 0
   moveSpeed: 10
   rotationSpeed: 20
   path: {fileID: 41646995}
