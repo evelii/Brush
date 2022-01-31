@@ -11,7 +11,7 @@ public class AddAnimation : MonoBehaviour
     public bool movement;
     public bool insertKeyframe = false;
 
-    private Vector3[] pos;
+    private Vector3[] pos; // the movement path for the main object
 
     public GameObject animatedObject; // the object which moves along the path
     public Vector3 keyframePos; // the position of the animatedObject where key frame should be added

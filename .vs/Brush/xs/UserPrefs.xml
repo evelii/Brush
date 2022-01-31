@@ -1,12 +1,11 @@
 ﻿<Properties StartupConfiguration="{3ABA823B-8C2A-4926-463E-BB0DA48C0615}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/AddAnimation.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PathFollower.cs">
     <Files>
-      <File FileName="Assets/Scripts/MotionBrush.cs" Line="66" Column="28" />
-      <File FileName="Assets/Scripts/AddAnimation.cs" Line="277" Column="1" />
+      <File FileName="Assets/Scripts/MotionBrush.cs" Line="68" Column="14" />
+      <File FileName="Assets/Scripts/AddAnimation.cs" Line="14" Column="68" />
       <File FileName="Assets/Scripts/Tubes/DrawTubes.cs" />
       <File FileName="Assets/Scripts/ColorManager.cs" />
-      <File FileName="Assets/Scripts/Audio.cs" />
-      <File FileName="Assets/Scripts/PathFollower.cs" />
+      <File FileName="Assets/Scripts/PathFollower.cs" Line="7" Column="32" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

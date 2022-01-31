@@ -66,6 +66,7 @@ public class MotionBrush : MonoBehaviour
             {
                 l.SetActive(false);
             }
+            resetBrush();
         }
 
         // returns true only on the first frame during which the mouse button is clicked
