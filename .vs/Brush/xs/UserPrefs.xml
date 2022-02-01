@@ -1,16 +1,16 @@
 ﻿<Properties StartupConfiguration="{3ABA823B-8C2A-4926-463E-BB0DA48C0615}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PathFollower.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/MotionBrush.cs">
     <Files>
+      <File FileName="Assets/Scripts/AddAnimation.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/MotionBrush.cs" Line="68" Column="14" />
-      <File FileName="Assets/Scripts/AddAnimation.cs" Line="14" Column="68" />
-      <File FileName="Assets/Scripts/Tubes/DrawTubes.cs" />
       <File FileName="Assets/Scripts/ColorManager.cs" />
-      <File FileName="Assets/Scripts/PathFollower.cs" Line="7" Column="32" />
+      <File FileName="Assets/Scripts/Tubes/DrawTubes.cs" />
+      <File FileName="Assets/Scripts/PathFollower.cs" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="a0d191b4-7332-423d-8f97-efb1e00d461e" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="cc7a49b8-9142-4336-b1a2-817f5a7a14d4" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

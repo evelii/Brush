@@ -12,6 +12,7 @@ public class AddAnimation : MonoBehaviour
     public bool insertKeyframe = false;
 
     private Vector3[] pos; // the movement path for the main object
+    private Vector3[] posKeyframe; // the movement path for the keyframe object
 
     public GameObject animatedObject; // the object which moves along the path
     public Vector3 keyframePos; // the position of the animatedObject where key frame should be added
@@ -158,7 +159,7 @@ public class AddAnimation : MonoBehaviour
     {
         if (movementPrepare) return;
 
-        pos = path.getPathPoints();
+        if (pos == null) pos = path.getPathPoints();
 
         checkPos();
         movementPrepare = true;
@@ -274,6 +275,17 @@ public class AddAnimation : MonoBehaviour
         currentPathPercent = 0;
     }
 
+    int curIdxKeyframe = 0;
+    Vector3 currentPosHolderKeyframe;
+
+    void checkPos2()
+    {
+        if (curIdxKeyframe >= 0 && curIdxKeyframe < posKeyframe.Length)
+        {
+            currentPosHolderKeyframe = posKeyframe[curIdxKeyframe];
+        }
+    }
+
     void handleKeyframe()
     {
         if(!insertKeyframe && keyframeObject) // if we are now out of the mode of insertingKeyframe and there's a sketch to be inserted
@@ -286,9 +298,29 @@ public class AddAnimation : MonoBehaviour
             } else if (!passedKeyframe)
             {
                 keyframeObject.SetActive(false); // hide the sketch
+                curIdxKeyframe = 0;
             }
         }
-    }
+
+        if(movement && posKeyframe==null)
+        {
+            posKeyframe = path.getPathKeyframe();
+        }
+
+        if(posKeyframe!=null && passedKeyframe)
+        {
+            float distance = Vector3.Distance(currentPosHolderKeyframe, keyframeObject.transform.position);
+
+            keyframeObject.transform.right = Vector3.RotateTowards(keyframeObject.transform.right, currentPosHolderKeyframe - keyframeObject.transform.position, rotationSpeed * Time.deltaTime, 0.0f);
+            keyframeObject.transform.position = Vector3.MoveTowards(keyframeObject.transform.position, currentPosHolderKeyframe, moveSpeed * 1.2f * Time.deltaTime);
+
+            if (distance <= 0.3f)
+            {
+                curIdxKeyframe += 1;
+                checkPos2();
+            }
+        }
+    } 
 
     private Vector3 Interp(Vector3[] pts, float t)
     {

@@ -108,4 +108,11 @@ public class PathFollower : MonoBehaviour
         
         return pos;
     }
+
+    public Vector3[] getPathKeyframe()
+    {
+        Vector3[] pos = new Vector3[_currKeyframeLine.positionCount];
+        _currKeyframeLine.GetPositions(pos);
+        return pos;
+    }
 }
