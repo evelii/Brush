@@ -273,6 +273,11 @@ public class AddAnimation : MonoBehaviour
     {
         curIdx = 0;
         currentPathPercent = 0;
+        if (pos != null)
+        {
+            animatedObject.transform.position = pos[0];
+            currentPosHolder = pos[0];
+        }
     }
 
     int curIdxKeyframe = 0;
@@ -299,10 +304,15 @@ public class AddAnimation : MonoBehaviour
             {
                 keyframeObject.SetActive(false); // hide the sketch
                 curIdxKeyframe = 0;
+                if (posKeyframe != null)
+                {
+                    keyframeObject.transform.position = posKeyframe[0];
+                    currentPosHolderKeyframe = posKeyframe[0];
+                }
             }
         }
 
-        if(movement && posKeyframe==null)
+        if(movement && posKeyframe==null && keyframeObject != null)
         {
             posKeyframe = path.getPathKeyframe();
         }
@@ -312,7 +322,7 @@ public class AddAnimation : MonoBehaviour
             float distance = Vector3.Distance(currentPosHolderKeyframe, keyframeObject.transform.position);
 
             keyframeObject.transform.right = Vector3.RotateTowards(keyframeObject.transform.right, currentPosHolderKeyframe - keyframeObject.transform.position, rotationSpeed * Time.deltaTime, 0.0f);
-            keyframeObject.transform.position = Vector3.MoveTowards(keyframeObject.transform.position, currentPosHolderKeyframe, moveSpeed * 1.2f * Time.deltaTime);
+            keyframeObject.transform.position = Vector3.MoveTowards(keyframeObject.transform.position, currentPosHolderKeyframe, moveSpeed * 1.6f * Time.deltaTime);
 
             if (distance <= 0.3f)
             {
