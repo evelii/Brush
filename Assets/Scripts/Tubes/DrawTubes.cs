@@ -95,6 +95,7 @@ public class DrawTubes : MonoBehaviour
         }
 
         GameObject newStroke = new GameObject("NewStroke");
+        newStroke.AddComponent<SketchedObject>();
         newStroke.transform.position = cursor.transform.position;
 
         GameObject go = new GameObject("TubeStroke");
