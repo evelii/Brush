@@ -90,6 +90,7 @@
     <Compile Include="Assets/SquashAndStretch/Examples/Common/GradientSprite.cs" />
     <Compile Include="Assets/SquashAndStretch/Examples/Satellites/Planet.cs" />
     <Compile Include="Assets/SquashAndStretch/Examples/FallingStars/StarSpawner.cs" />
+    <Compile Include="Assets/Scripts/FindPlane.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/SquashAndStretch/README.txt" />

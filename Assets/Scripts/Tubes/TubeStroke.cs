@@ -43,6 +43,10 @@ public class TubeStroke : MonoBehaviour
         _strokePoints.Add(p);
     }
 
+    public List<Vector3> getStrokePoints() {
+        return _strokePoints;
+    }
+
     internal void UpdateAnchorPoints()
     {
         if (!_init) init();

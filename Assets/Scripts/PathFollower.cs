@@ -20,6 +20,7 @@ public class PathFollower : MonoBehaviour
     public bool canDraw = true;
 
     public AddAnimation addAnimation;
+    public DrawTubes drawTubes; // to retrieve stroke lists
 
     // Start is called before the first frame update
     void Start()

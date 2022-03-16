@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum StrokeState
@@ -23,6 +24,7 @@ public class DrawTubes : MonoBehaviour
     public StrokeState state;
     public bool canDraw;
     private TubeStroke _currentTubeStroke;
+    public List<List<Vector3>> strokesList;
 
     public AddAnimation addAnimation;
 
@@ -30,10 +32,33 @@ public class DrawTubes : MonoBehaviour
     { 
         state = StrokeState.WAITING;
         canDraw = true;
+        strokesList = new List<List<Vector3>>();
     }
 
     public void Update()
     {
+        if(state == StrokeState.DRAW && !canDraw)
+        {
+            if (_currentTubeStroke != null)
+            {
+                strokesList.Add(_currentTubeStroke.getStrokePoints());
+            }
+            string strokeStr = "";
+            foreach(List<Vector3> strokes in strokesList)
+            {
+                for(int i = 0; i < strokes.Count; i++)
+                {
+                    Vector2 v2 = strokes[i];
+                    strokeStr += v2.ToString();
+                    if(i != strokes.Count-1) strokeStr += ",";
+                    
+                }
+                strokeStr = strokeStr.Replace(" ", "");
+                Debug.LogError(strokeStr);
+            }
+            
+        }
+
         // when a new dragging on the cursor, create a new tube
         if (Input.GetMouseButton(0) && canDraw)
         {
@@ -63,6 +88,12 @@ public class DrawTubes : MonoBehaviour
 
     private void _createNewTube()
     {
+        // save the previous strokes first for sketch recognition
+        if(_currentTubeStroke != null)
+        {
+            strokesList.Add(_currentTubeStroke.getStrokePoints());
+        }
+
         GameObject newStroke = new GameObject("NewStroke");
         newStroke.transform.position = cursor.transform.position;
 
