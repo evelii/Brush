@@ -113,7 +113,6 @@ public class DrawTubes : MonoBehaviour
         }
         
         _currentTubeStroke = go.AddComponent<TubeStroke>();
-
         TubeRenderer tube = go.AddComponent<TubeRenderer>();
         tube.MarkDynamic();
         go.GetComponent<MeshRenderer>().material.color = ColorManager.Instance.GetColor();

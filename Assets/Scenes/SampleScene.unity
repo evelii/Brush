@@ -196,7 +196,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 47116412}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14.99, y: 6.11, z: -5.1}
+  m_LocalPosition: {x: -9.3, y: 7.58, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -214,6 +214,7 @@ GameObject:
   - component: {fileID: 515449622}
   - component: {fileID: 515449621}
   - component: {fileID: 515449620}
+  - component: {fileID: 515449624}
   m_Layer: 0
   m_Name: Floor
   m_TagString: Untagged
@@ -297,6 +298,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &515449624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 515449619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 538840546f4ff4b168e4c60d850c76f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selfSound: {fileID: 0}
+  movingSound: {fileID: 0}
+  collisionHard: {fileID: 0}
+  collisionSoft: {fileID: 0}
+  identity: 
+  softness: 
+  aniStart: 0
 --- !u!1 &526923074
 GameObject:
   m_ObjectHideFlags: 0
@@ -664,6 +684,7 @@ MonoBehaviour:
   _parentObject: {fileID: 0}
   bounce: 0
   movement: 0
+  addCollider: 0
   insertKeyframe: 0
   animatedObject: {fileID: 0}
   keyframePos: {x: 0, y: 0, z: 0}
@@ -788,6 +809,7 @@ GameObject:
   - component: {fileID: 1750869931}
   - component: {fileID: 1750869930}
   - component: {fileID: 1750869929}
+  - component: {fileID: 1750869928}
   m_Layer: 0
   m_Name: Wall
   m_TagString: Untagged
@@ -795,6 +817,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1750869928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1750869927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 538840546f4ff4b168e4c60d850c76f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selfSound: {fileID: 0}
+  movingSound: {fileID: 0}
+  collisionHard: {fileID: 0}
+  collisionSoft: {fileID: 0}
+  identity: 
+  softness: 
+  aniStart: 0
 --- !u!65 &1750869929
 BoxCollider:
   m_ObjectHideFlags: 0

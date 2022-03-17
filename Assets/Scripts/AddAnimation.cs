@@ -50,6 +50,7 @@ public class AddAnimation : MonoBehaviour
 
         if (bounce)
         {
+            _parentObject.GetComponent<SketchedObject>().aniStart = true;
             // Check if there is user defined path
             pos = path.getPathPoints();
             // 1. There is a customized movement path, just follow the path
@@ -62,9 +63,10 @@ public class AddAnimation : MonoBehaviour
         }
 
         if (movement)
-        { 
+        {
+            _parentObject.GetComponent<SketchedObject>().aniStart = true;
             // Check if there is user defined path
-            if(pos == null) pos = path.getPathPoints();
+            if (pos == null) pos = path.getPathPoints();
             if (insertKeyframe)
             {
                 resetPath();
