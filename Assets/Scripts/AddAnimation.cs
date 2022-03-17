@@ -9,6 +9,7 @@ public class AddAnimation : MonoBehaviour
     public bool bounce;
     private bool movementPrepare;
     public bool movement;
+    public bool addCollider = true;
     public bool insertKeyframe = false;
 
     private Vector3[] pos; // the movement path for the main object
@@ -32,11 +33,21 @@ public class AddAnimation : MonoBehaviour
     void Start()
     {
         movementPrepare = false;
+        addCollider = true;
     }
 
     // Update is called once per frame
     public void Update()
     {
+        if((bounce || movement) && addCollider)
+        {
+            _parentObject.AddComponent<BoxCollider>();
+            _parentObject.AddComponent<Rigidbody>();
+            _currentObject.AddComponent<BoxCollider>();
+            FitColliderToChildren(_parentObject);
+            addCollider = false;
+        }
+
         if (bounce)
         {
             // Check if there is user defined path
@@ -51,7 +62,7 @@ public class AddAnimation : MonoBehaviour
         }
 
         if (movement)
-        {
+        { 
             // Check if there is user defined path
             if(pos == null) pos = path.getPathPoints();
             if (insertKeyframe)
@@ -62,6 +73,7 @@ public class AddAnimation : MonoBehaviour
             // 1. There is a customized movement path, just follow the path
             if(pos.Length > 1)
             {
+                _parentObject.GetComponent<Rigidbody>().useGravity = false;
                 movementInit();
                 followMovementPath();
             }
@@ -99,12 +111,12 @@ public class AddAnimation : MonoBehaviour
         tem.minSpeedThreshold = 1;
         tem.maxSquash = 1.6f;
         tem.maxStretch = 1.5f;
-        _parentObject.AddComponent<Rigidbody>();
-        _parentObject.AddComponent<BoxCollider>();
+        //_parentObject.AddComponent<Rigidbody>();
+        //_parentObject.AddComponent<BoxCollider>();
 
-        Collider collider = _currentObject.AddComponent<BoxCollider>();
+        Collider collider = _currentObject.GetComponent<BoxCollider>();
         collider.material.bounciness = 1.0f;
-        FitColliderToChildren(_parentObject);
+        //FitColliderToChildren(_parentObject);
         bounce = false;  // necessary components have been added, so turned off the bool
         motionBrush.resetBrush();
     }

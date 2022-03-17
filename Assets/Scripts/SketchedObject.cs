@@ -38,7 +38,6 @@ public class SketchedObject : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         //if(Collision.ga)
-        //Debug.LogWarning("collide!");
         collisionHard.Play();
     }
 }
