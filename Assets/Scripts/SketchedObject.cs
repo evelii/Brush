@@ -47,6 +47,7 @@ public class SketchedObject : MonoBehaviour
     {
         if (identity == "car")
         {
+            selfSound.clip = Resources.Load<AudioClip>("SFX/police_siren");
             movingSound.clip = Resources.Load<AudioClip>("SFX/car_engine_sound");
             collisionHard.clip = Resources.Load<AudioClip>("SFX/car_crash_sound");
         }

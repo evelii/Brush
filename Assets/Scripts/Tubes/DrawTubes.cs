@@ -117,6 +117,8 @@ public class DrawTubes : MonoBehaviour
         tube.MarkDynamic();
         go.GetComponent<MeshRenderer>().material.color = ColorManager.Instance.GetColor();
         tube.radius = strokeRadius;
+
+        SketchManager.manager.sketchObjects.Add(newStroke);
     }
 
     public void FixedUpdate()

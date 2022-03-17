@@ -70,6 +70,7 @@
     <Compile Include="Assets/Scripts/AddAnimation.cs" />
     <Compile Include="Assets/SquashAndStretch/Examples/BouncingObjects/BouncingObject.cs" />
     <Compile Include="Assets/ColorPickerTriangle/Example/example.cs" />
+    <Compile Include="Assets/Scripts/SketchedObject.cs" />
     <Compile Include="Assets/TubeRenderer/Runtime/SplineMaker.cs" />
     <Compile Include="Assets/TubeRenderer/Examples/Assets/Shared/ExampleHelpers.cs" />
     <Compile Include="Assets/SquashAndStretch/Examples/FallingStars/FallingStar.cs" />
@@ -91,7 +92,8 @@
     <Compile Include="Assets/SquashAndStretch/Examples/Common/GradientSprite.cs" />
     <Compile Include="Assets/SquashAndStretch/Examples/Satellites/Planet.cs" />
     <Compile Include="Assets/SquashAndStretch/Examples/FallingStars/StarSpawner.cs" />
-    <Compile Include="Assets/Scripts/SketchedObject.cs" />
+    <Compile Include="Assets/Scripts/SoundBrush.cs" />
+    <Compile Include="Assets/Scripts/SketchManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/SquashAndStretch/README.txt" />

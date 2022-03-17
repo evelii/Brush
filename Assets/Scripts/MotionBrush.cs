@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MotionBrush : MonoBehaviour
 {
+    public bool active; // motion brush is activated
+
     List<Vector3> linePoints;
     float timer;
     public float timerDelay;
@@ -40,6 +42,7 @@ public class MotionBrush : MonoBehaviour
         linePoints = new List<Vector3>();
         timer = timerDelay;
         lineCollection = new List<GameObject>();
+        active = false;
     }
 
     // Update is called once per frame
@@ -69,57 +72,60 @@ public class MotionBrush : MonoBehaviour
             resetBrush();
         }
 
-        // returns true only on the first frame during which the mouse button is clicked
-        if (Input.GetMouseButtonDown(0))
+        if(active)
         {
-            newLine = new GameObject();
-            lineRenderer = newLine.AddComponent<LineRenderer>();
-            lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
-
-            Color c = ColorManager.Instance.GetColor();
-            c = Color.cyan;
-            lineRenderer.material.color = c;
-
-            lineRenderer.startWidth = width;
-            lineRenderer.endWidth = width;
-
-            lineCollection.Add(newLine);
-        }
-
-        // returns true always if the mouse button is being pressed
-        if (Input.GetMouseButton(0))
-        {
-            //Debug.DrawRay(Camera.main.ScreenToWorldPoint(Input.mousePosition), GetMousePosition(), Color.red);
-            timer -= Time.deltaTime;
-            if (timer <= 0)
+            // returns true only on the first frame during which the mouse button is clicked
+            if (Input.GetMouseButtonDown(0))
             {
-                Vector3 mousePos = GetMousePosition();
-                linePoints.Add(mousePos);  // the end of the ray
-                lineRenderer.positionCount = linePoints.Count;
-                lineRenderer.SetPositions(linePoints.ToArray());
-                timer = timerDelay;
+                newLine = new GameObject();
+                lineRenderer = newLine.AddComponent<LineRenderer>();
+                lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
 
-                if(moveDirection=="")
+                Color c = ColorManager.Instance.GetColor();
+                c = Color.cyan;
+                lineRenderer.material.color = c;
+
+                lineRenderer.startWidth = width;
+                lineRenderer.endWidth = width;
+
+                lineCollection.Add(newLine);
+            }
+
+            // returns true always if the mouse button is being pressed
+            if (Input.GetMouseButton(0))
+            {
+                //Debug.DrawRay(Camera.main.ScreenToWorldPoint(Input.mousePosition), GetMousePosition(), Color.red);
+                timer -= Time.deltaTime;
+                if (timer <= 0)
                 {
-                    if (mousePos.x < animatedObject.transform.position.x) moveDirection = "right";
-                    else moveDirection = "left";
+                    Vector3 mousePos = GetMousePosition();
+                    linePoints.Add(mousePos);  // the end of the ray
+                    lineRenderer.positionCount = linePoints.Count;
+                    lineRenderer.SetPositions(linePoints.ToArray());
+                    timer = timerDelay;
+
+                    if (moveDirection == "")
+                    {
+                        if (mousePos.x < animatedObject.transform.position.x) moveDirection = "right";
+                        else moveDirection = "left";
+                    }
                 }
             }
-        }
 
-        if (Input.GetMouseButtonUp(0))
-        {
-            StrokeType strokeType = recognizeStroke(linePoints);
-            if (strokeType == StrokeType.Line)
+            if (Input.GetMouseButtonUp(0))
             {
-                lineCount++;
-            }
-            else if (strokeType == StrokeType.VerticalLine)
-            {
-                verticalLineCount++;
-            }
+                StrokeType strokeType = recognizeStroke(linePoints);
+                if (strokeType == StrokeType.Line)
+                {
+                    lineCount++;
+                }
+                else if (strokeType == StrokeType.VerticalLine)
+                {
+                    verticalLineCount++;
+                }
 
-            linePoints.Clear();
+                linePoints.Clear();
+            }
         }
     }
 
