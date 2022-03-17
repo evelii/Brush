@@ -1,12 +1,12 @@
 ﻿<Properties StartupConfiguration="{3ABA823B-8C2A-4926-463E-BB0DA48C0615}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Tubes/DrawTubes.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/SketchedObject.cs">
     <Files>
       <File FileName="Assets/Scripts/AddAnimation.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/MotionBrush.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/PathFollower.cs" />
       <File FileName="Assets/Scripts/Tubes/TubeStroke.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Tubes/DrawTubes.cs" Line="103" Column="40" />
-      <File FileName="Assets/Scripts/SketchedObject.cs" Line="6" Column="2" />
+      <File FileName="Assets/Scripts/Tubes/DrawTubes.cs" Line="99" Column="1" />
+      <File FileName="Assets/Scripts/SketchedObject.cs" Line="37" Column="30" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

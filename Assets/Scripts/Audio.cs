@@ -16,8 +16,8 @@ public class Audio : MonoBehaviour
 
     private void OnCollisionEnter()
     {
-        //bounceSound.pitch = startingPitch + ball.GetComponent<Rigidbody>().velocity.sqrMagnitude * 0.05f;
-        //bounceSound.volume = startingVolume + ball.GetComponent<Rigidbody>().velocity.sqrMagnitude * 0.5f;
-        //bounceSound.Play();
+        bounceSound.pitch = startingPitch + ball.GetComponent<Rigidbody>().velocity.sqrMagnitude * 0.05f;
+        bounceSound.volume = startingVolume + ball.GetComponent<Rigidbody>().velocity.sqrMagnitude * 0.5f;
+        bounceSound.Play();
     }
 }
