@@ -64,6 +64,7 @@
     <Compile Include="Assets/TubeRenderer/Examples/Assets/Herd.cs" />
     <Compile Include="Assets/ColorPickerTriangle/Scripts/ColorPickerTriangle.cs" />
     <Compile Include="Assets/TubeRenderer/Examples/Assets/Starfish.cs" />
+    <Compile Include="Assets/Scripts/SoundBrush.cs" />
     <Compile Include="Assets/Scripts/MotionBrush.cs" />
     <Compile Include="Assets/TubeRenderer/Examples/Assets/Skin.cs" />
     <Compile Include="Assets/Scripts/Audio.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="Assets/TubeRenderer/Runtime/SplineMaker.cs" />
     <Compile Include="Assets/TubeRenderer/Examples/Assets/Shared/ExampleHelpers.cs" />
     <Compile Include="Assets/SquashAndStretch/Examples/FallingStars/FallingStar.cs" />
+    <Compile Include="Assets/Scripts/SketchManager.cs" />
     <Compile Include="Assets/Scripts/FindPlane.cs" />
     <Compile Include="Assets/Scripts/Tubes/DrawTubes.cs" />
     <Compile Include="Assets/TubeRenderer/Examples/Assets/Digestion.cs" />
@@ -92,8 +94,7 @@
     <Compile Include="Assets/SquashAndStretch/Examples/Common/GradientSprite.cs" />
     <Compile Include="Assets/SquashAndStretch/Examples/Satellites/Planet.cs" />
     <Compile Include="Assets/SquashAndStretch/Examples/FallingStars/StarSpawner.cs" />
-    <Compile Include="Assets/Scripts/SoundBrush.cs" />
-    <Compile Include="Assets/Scripts/SketchManager.cs" />
+    <Compile Include="Assets/Scripts/TCPClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/SquashAndStretch/README.txt" />
@@ -682,14 +683,17 @@
     <Reference Include="Unity.VisualStudio.Editor">
       <HintPath>Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Timeline.Editor">
-      <HintPath>Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+    <Reference Include="Unity.XR.Management.Editor">
+      <HintPath>Library/ScriptAssemblies/Unity.XR.Management.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
       <HintPath>Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Subsystem.Registration">
+      <HintPath>Library/ScriptAssemblies/Unity.Subsystem.Registration.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
@@ -702,6 +706,30 @@
     </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SpatialTracking">
+      <HintPath>Library/ScriptAssemblies/UnityEngine.SpatialTracking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.XR.LegacyInputHelpers">
+      <HintPath>Library/ScriptAssemblies/UnityEngine.XR.LegacyInputHelpers.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Timeline.Editor">
+      <HintPath>Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.XR.LegacyInputHelpers">
+      <HintPath>Library/ScriptAssemblies/UnityEditor.XR.LegacyInputHelpers.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.XR.Management">
+      <HintPath>Library/ScriptAssemblies/Unity.XR.Management.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.SpatialTracking">
+      <HintPath>Library/ScriptAssemblies/UnityEditor.SpatialTracking.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.XR.Oculus.Editor">
+      <HintPath>Library/ScriptAssemblies/Unity.XR.Oculus.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.XR.Oculus">
+      <HintPath>Library/ScriptAssemblies/Unity.XR.Oculus.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
