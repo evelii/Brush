@@ -1,22 +1,20 @@
 ﻿<Properties StartupConfiguration="{3ABA823B-8C2A-4926-463E-BB0DA48C0615}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Packages/manifest.json">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/TCPClient.cs">
     <Files>
-      <File FileName="Assets/Scripts/SketchedObject.cs" Line="26" Column="43" />
+      <File FileName="Assets/Scripts/TCPClient.cs" Line="55" Column="28" />
+      <File FileName="Assets/Scripts/SketchedObject.cs" />
       <File FileName="Assets/Scripts/AddAnimation.cs" />
       <File FileName="Assets/Scripts/PathFollower.cs" />
       <File FileName="Assets/Scripts/Tubes/TubeStroke.cs" />
       <File FileName="Assets/Scripts/Tubes/DrawTubes.cs" />
       <File FileName="Assets/Scripts/MotionBrush.cs" />
       <File FileName="Assets/Scripts/SoundBrush.cs" />
-      <File FileName="Assets/Scripts/SketchManager.cs" Line="4" Column="1" />
-      <File FileName="Assets/SteamVR/Extras/SteamVR_TestThrow.cs" />
-      <File FileName="Assets/Scripts/TCPClient.cs" Line="84" Column="1" />
-      <File FileName="Packages/manifest.json" Line="2" Column="19" />
+      <File FileName="Assets/Scripts/SketchManager.cs" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="61971cd1-be64-4005-b25d-a493937f9b7f" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="efdbabdf-2795-410f-8ae3-3be149131afb" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

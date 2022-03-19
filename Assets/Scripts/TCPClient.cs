@@ -28,6 +28,7 @@ public class TCPClient : MonoBehaviour
 	{
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
+			Debug.LogWarning("press!");
 			SendMessage();
 		}
 	}
