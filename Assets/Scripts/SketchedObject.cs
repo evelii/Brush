@@ -12,6 +12,7 @@ public class SketchedObject : MonoBehaviour
     public string identity; // sketch recognition result
     public string softness; // hard or soft
     public bool aniStart;
+    bool inCollision;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +25,7 @@ public class SketchedObject : MonoBehaviour
         movingSound.playOnAwake = false;
         collisionHard.playOnAwake = false;
         collisionSoft.playOnAwake = false;
+        inCollision = false;
         recognize();
     }
 
@@ -59,12 +61,14 @@ public class SketchedObject : MonoBehaviour
         if (aniStart)
         {
             //Debug.LogWarning("start engine");
-            if(!movingSound.isPlaying) movingSound.Play();
+            if(!movingSound.isPlaying && ! inCollision) movingSound.Play();
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
+        inCollision = true;
+        movingSound.Stop();
         if (collision.gameObject.GetComponent<SketchedObject>().softness == "hard")
             collisionHard.Play();
         else collisionSoft.Play();
