@@ -22,7 +22,7 @@ public class DrawTubes : MonoBehaviour
     public float updateLineInterval;
 
     public StrokeState state;
-    public bool canDraw;
+    //public bool canDraw;
     private TubeStroke _currentTubeStroke;
     public List<List<Vector3>> strokesList;
 
@@ -31,32 +31,23 @@ public class DrawTubes : MonoBehaviour
     public void Start()
     { 
         state = StrokeState.WAITING;
-        canDraw = true;
+        //canDraw = true;
         strokesList = new List<List<Vector3>>();
     }
 
     public void Update()
-    {
-        if(state == StrokeState.DRAW && !canDraw)
+    { 
+        bool canDraw = GameObject.Find("3DCursor").GetComponent<Cursor>().canDraw;
+        if (state == StrokeState.DRAW && !canDraw)
         {
             if (_currentTubeStroke != null)
             {
                 strokesList.Add(_currentTubeStroke.getStrokePoints());
             }
-            string strokeStr = "";
-            foreach(List<Vector3> strokes in strokesList)
-            {
-                for(int i = 0; i < strokes.Count; i++)
-                {
-                    Vector2 v2 = strokes[i];
-                    strokeStr += v2.ToString();
-                    if(i != strokes.Count-1) strokeStr += ",";
-                    
-                }
-                strokeStr = strokeStr.Replace(" ", "");
-                Debug.LogError(strokeStr);
-            }
-            
+
+            GameObject clientObject = GameObject.Find("TCPClient");
+            TCPClient client = (TCPClient)clientObject.GetComponent(typeof(TCPClient));
+            client.strokesList = strokesList;
         }
 
         // when a new dragging on the cursor, create a new tube

@@ -17,6 +17,8 @@ public class TCPClient : MonoBehaviour
 	private Thread clientReceiveThread;
 	#endregion
 
+	public List<List<Vector3>> strokesList;
+
 	// Use this for initialization 	
 	void Start()
 	{
@@ -83,6 +85,27 @@ public class TCPClient : MonoBehaviour
 		}
 	}
 
+	private string prepareData()
+    {
+		string res = "";
+		foreach (List<Vector3> strokes in strokesList)
+		{
+			string strokeStr = "";
+			for (int i = 0; i < strokes.Count; i++)
+			{
+				Vector2 v2 = strokes[i];
+				strokeStr += v2.ToString();
+				if (i != strokes.Count - 1) strokeStr += ",";
+
+			}
+			strokeStr = strokeStr.Replace(" ", "");
+			Debug.LogError(strokeStr);
+			strokeStr += "#"; // delimiter of different strokes
+			res += strokeStr;
+		}
+		return res;
+	}
+
 	/// <summary> 	
 	/// Send message to server using socket connection. 	
 	/// </summary> 	
@@ -99,6 +122,9 @@ public class TCPClient : MonoBehaviour
 			if (stream.CanWrite)
 			{
 				string clientMessage = "This is a message from one of your clients.";
+
+				clientMessage = prepareData();
+
 				// Convert string message to byte array.                 
 				byte[] clientMessageAsByteArray = Encoding.ASCII.GetBytes(clientMessage);
 				// Write byte array to socketConnection stream.                 
