@@ -106,11 +106,34 @@ public class TCPClient : MonoBehaviour
 		return res;
 	}
 
+	private string prepareDataBestFit()
+	{
+		FindPlane findPlane = GameObject.Find("BestFitPlane").GetComponent<FindPlane>();
+		List<Vector2> translatedPoints = findPlane.getTranslatedPoints();
+
+		string res = "";
+		for (int i = 0; i < translatedPoints.Count; i++)
+		{
+			res += translatedPoints[i].ToString();
+			if (i != translatedPoints.Count - 1) res += ",";
+
+		}
+
+		return res;
+	}
+
 	/// <summary> 	
 	/// Send message to server using socket connection. 	
 	/// </summary> 	
 	private void SendMessage()
 	{
+		string clientMessage = "This is a message from one of your clients.";
+
+		clientMessage = prepareDataBestFit();
+		clientMessage = clientMessage.Replace(" ", "");
+
+		Debug.Log(clientMessage);
+
 		if (socketConnection == null)
 		{
 			return;
@@ -121,11 +144,8 @@ public class TCPClient : MonoBehaviour
 			NetworkStream stream = socketConnection.GetStream();
 			if (stream.CanWrite)
 			{
-				string clientMessage = "This is a message from one of your clients.";
-
-				clientMessage = prepareData();
-
-				// Convert string message to byte array.                 
+				// Convert string message to byte array.
+				
 				byte[] clientMessageAsByteArray = Encoding.ASCII.GetBytes(clientMessage);
 				// Write byte array to socketConnection stream.                 
 				stream.Write(clientMessageAsByteArray, 0, clientMessageAsByteArray.Length);

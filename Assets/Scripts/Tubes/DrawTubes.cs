@@ -26,6 +26,9 @@ public class DrawTubes : MonoBehaviour
     private TubeStroke _currentTubeStroke;
     public List<List<Vector3>> strokesList;
 
+    Vector3 lastPos;
+    public List<Vector3> fullPoints; // all points drawn by the controller
+
     public AddAnimation addAnimation;
 
     public void Start()
@@ -33,6 +36,7 @@ public class DrawTubes : MonoBehaviour
         state = StrokeState.WAITING;
         //canDraw = true;
         strokesList = new List<List<Vector3>>();
+        fullPoints = new List<Vector3>();
     }
 
     public void Update()
@@ -42,7 +46,12 @@ public class DrawTubes : MonoBehaviour
         {
             if (_currentTubeStroke != null)
             {
-                strokesList.Add(_currentTubeStroke.getStrokePoints());
+                //strokesList.Add(_currentTubeStroke.getStrokePoints());
+                if(fullPoints.Count > 0)
+                {
+                    strokesList.Add(new List<Vector3>(fullPoints));
+                    fullPoints.Clear();
+                }
             }
 
             GameObject clientObject = GameObject.Find("TCPClient");
@@ -69,22 +78,22 @@ public class DrawTubes : MonoBehaviour
             _createNewTube();
             state = StrokeState.DRAW;
             _currentTubeStroke.AddPoint(cursor.position);
+            lastPos = cursor.position;
         }
 
         if (state == StrokeState.DRAW)
         {
+            if (lastPos != cursor.position)
+            {
+                fullPoints.Add(cursor.position);
+            }
+            lastPos = cursor.position;
             if (!canDraw) state = StrokeState.WAITING;
         }
     }
 
     private void _createNewTube()
     {
-        // save the previous strokes first for sketch recognition
-        if(_currentTubeStroke != null)
-        {
-            strokesList.Add(_currentTubeStroke.getStrokePoints());
-        }
-
         GameObject newStroke = new GameObject("NewStroke");
         newStroke.AddComponent<SketchedObject>();
         newStroke.transform.position = cursor.transform.position;
