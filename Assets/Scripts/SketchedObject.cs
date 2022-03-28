@@ -60,7 +60,6 @@ public class SketchedObject : MonoBehaviour
     {
         if (aniStart)
         {
-            //Debug.LogWarning("start engine");
             if(!movingSound.isPlaying && ! inCollision) movingSound.Play();
         }
     }

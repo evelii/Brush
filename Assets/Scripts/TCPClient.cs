@@ -106,22 +106,6 @@ public class TCPClient : MonoBehaviour
 		return res;
 	}
 
-	private string prepareDataBestFit()
-	{
-		FindPlane findPlane = GameObject.Find("BestFitPlane").GetComponent<FindPlane>();
-		List<Vector2> translatedPoints = findPlane.getTranslatedPoints();
-
-		string res = "";
-		for (int i = 0; i < translatedPoints.Count; i++)
-		{
-			res += translatedPoints[i].ToString();
-			if (i != translatedPoints.Count - 1) res += ",";
-
-		}
-
-		return res;
-	}
-
 	/// <summary> 	
 	/// Send message to server using socket connection. 	
 	/// </summary> 	
@@ -129,7 +113,9 @@ public class TCPClient : MonoBehaviour
 	{
 		string clientMessage = "This is a message from one of your clients.";
 
-		clientMessage = prepareDataBestFit();
+		FindPlane findPlane = GameObject.Find("BestFitPlane").GetComponent<FindPlane>();
+		clientMessage = findPlane.getTranslatedPoints();
+
 		clientMessage = clientMessage.Replace(" ", "");
 
 		Debug.Log(clientMessage);

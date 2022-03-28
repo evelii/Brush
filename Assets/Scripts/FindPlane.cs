@@ -8,6 +8,7 @@ public class FindPlane : MonoBehaviour
     public List<Vector3> points;
     public bool getBestFit = false;
     private bool drawPlane = false;
+    private bool flipHorizontally = false;
 
     // Best Fitting Plane
     public Vector3 normal;
@@ -37,10 +38,10 @@ public class FindPlane : MonoBehaviour
             plRotated = pl;
             drawPlane = true;
             getBestFit = false;
-            //printPoints(translatedPoints);
             rotatePlaneToParallelToXY();
         }
-        if(drawPlane)
+
+        if (drawPlane)
         {
             //Debug.LogWarning(pl.distance);
             DrawPlane(Vector3.zero - pl.distance * pl.normal, pl.normal, Color.green);
@@ -48,17 +49,72 @@ public class FindPlane : MonoBehaviour
         }
     }
 
-    void rotatePlaneToParallelToXY()
+
+    public string getTranslatedPoints()
+    {
+        List<List<Vector3>> strokes = tubes.strokesList;
+        if (strokes == null) return "";
+        foreach (List<Vector3> stroke in strokes)
+        {
+            points.AddRange(populatePoints(stroke));
+        }
+        compute(points.ToArray());
+        plRotated = pl;
+        drawPlane = true;
+        getBestFit = false;
+        List<Vector2> mappedPoints = rotatePlaneToParallelToXY();
+
+        string res = "";
+        for (int i = 0; i < mappedPoints.Count; i++)
+        {
+            res += mappedPoints[i].ToString();
+            if (i != mappedPoints.Count - 1) res += ",";
+
+        }
+
+        if (flipHorizontally) res += "Y";
+        else res += "N";
+
+        return res;
+    }
+
+    List<Vector3> populatePoints(List<Vector3> originalPoints)
+    {
+        List<Vector3> populated = new List<Vector3>();
+        for(int i = 0; i < originalPoints.Count - 1; i++)
+        {
+            // mid point
+            Vector3 pointA = originalPoints[i];
+            Vector3 pointB = originalPoints[i + 1];
+            Vector3 midpointB = new Vector3((pointA.x + pointB.x) / 2, (pointA.y + pointB.y) / 2, (pointA.z + pointB.z) / 2);
+
+            // mid mid point
+            Vector2 midpointA = new Vector3((pointA.x + midpointB.x) / 2, (pointA.y + midpointB.y) / 2, (pointA.z + midpointB.z) / 2);
+            Vector2 midpointC = new Vector3((midpointB.x + pointB.x) / 2, (midpointB.y + pointB.y) / 2, (midpointB.z + pointB.z) / 2);
+
+            populated.Add(pointA);
+            populated.Add(midpointA);
+            populated.Add(midpointB);
+            populated.Add(midpointC);
+        }
+        populated.Add(originalPoints[originalPoints.Count - 1]);
+        return populated;
+    }
+
+    List<Vector2> rotatePlaneToParallelToXY()
     {
         Vector3 xy = new Vector3(0, 0, 1);
         //float angle = Vector3.Angle(pl.normal, xy);
         //plRotated.normal = Quaternion.Euler(0, angle, 0) * pl.normal;
-        Debug.LogWarning(pl.normal);
+        //Debug.LogWarning(pl.normal);
 
         Quaternion rotation = Quaternion.FromToRotation(pl.normal, xy);
+        Vector3 indegree = rotation.eulerAngles;
+        if (indegree.y == 180.0f) flipHorizontally = true;
+
         plRotated.normal = rotation * pl.normal;
         
-        Debug.LogWarning(plRotated.normal); // should be a multiple of (0, 0, 1)
+        //Debug.LogWarning(plRotated.normal); // should be a multiple of (0, 0, 1)
         for(int i = 0; i < translatedPoints.Count; i++)
         {
             translatedPoints[i] = rotation * translatedPoints[i];
@@ -70,6 +126,8 @@ public class FindPlane : MonoBehaviour
         }
 
         printPoints(xyPoint);
+
+        return xyPoint;
     }
 
     void DrawPlane(Vector3 position, Vector3 normal, Color color)
@@ -82,7 +140,7 @@ public class FindPlane : MonoBehaviour
         else
             v3 = Vector3.Cross(normal, Vector3.up).normalized * normal.magnitude;
 
-        v3 *= 3.0f;
+        v3 *= 10.0f;
 
         var corner0 = position + v3;
         var corner2 = position - v3;
@@ -90,7 +148,6 @@ public class FindPlane : MonoBehaviour
         v3 = q * v3;
         var corner1 = position + v3;
         var corner3 = position - v3;
-
         Debug.DrawLine(corner0, corner2, color);
         Debug.DrawLine(corner1, corner3, color);
         Debug.DrawLine(corner0, corner1, color);
@@ -110,7 +167,7 @@ public class FindPlane : MonoBehaviour
 
         }
         output = output.Replace(" ", "");
-        Debug.LogError(output);
+        //Debug.LogError(output);
     }
 
     private void computePlane(Vector3[] points)
@@ -137,7 +194,6 @@ public class FindPlane : MonoBehaviour
 
     private Vector3 computeNormal(Vector3[] v, int n)
     {
-
         // Zero out sum
         Vector3 result = Vector3.zero;
 
