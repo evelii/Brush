@@ -116,8 +116,6 @@ public class TCPClient : MonoBehaviour
 		FindPlane findPlane = GameObject.Find("BestFitPlane").GetComponent<FindPlane>();
 		clientMessage = findPlane.getTranslatedPoints();
 
-		clientMessage = clientMessage.Replace(" ", "");
-
 		Debug.Log(clientMessage);
 
 		if (socketConnection == null)

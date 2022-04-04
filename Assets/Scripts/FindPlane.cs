@@ -14,7 +14,6 @@ public class FindPlane : MonoBehaviour
     public Vector3 normal;
     public Plane pl;
     public Plane plRotated;
-    public List<Vector3> translatedPoints = new List<Vector3>();
     public float dist;
 
     // Start is called before the first frame update
@@ -26,20 +25,20 @@ public class FindPlane : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (getBestFit)
-        {
-            List<List<Vector3>> strokes = tubes.strokesList;
-            if (strokes == null) return;
-            foreach (List<Vector3> stroke in strokes)
-            {
-                points.AddRange(stroke);
-            }
-            compute(points.ToArray());
-            plRotated = pl;
-            drawPlane = true;
-            getBestFit = false;
-            rotatePlaneToParallelToXY();
-        }
+        //if (getBestFit)
+        //{
+        //    List<List<Vector3>> strokes = tubes.strokesList;
+        //    if (strokes == null) return;
+        //    foreach (List<Vector3> stroke in strokes)
+        //    {
+        //        points.AddRange(stroke);
+        //    }
+        //    compute(points.ToArray());
+        //    plRotated = pl;
+        //    drawPlane = true;
+        //    getBestFit = false;
+        //    rotatePlaneToParallelToXY();
+        //}
 
         if (drawPlane)
         {
@@ -56,24 +55,44 @@ public class FindPlane : MonoBehaviour
         if (strokes == null) return "";
         foreach (List<Vector3> stroke in strokes)
         {
-            points.AddRange(populatePoints(stroke));
+            points.AddRange(stroke);
         }
         compute(points.ToArray());
+
+        List<List<Vector3>> pointsOnPlane = new List<List<Vector3>>();
+
+        foreach (List<Vector3> stroke in strokes)
+        {
+            pointsOnPlane.Add(computeTranslatedPoints(stroke));
+        }
+
         plRotated = pl;
         drawPlane = true;
         getBestFit = false;
-        List<Vector2> mappedPoints = rotatePlaneToParallelToXY();
+
+        List<List<Vector2>> translatedPoints = new List<List<Vector2>>();
+        foreach (List<Vector3> planePoints in pointsOnPlane)
+        {
+            translatedPoints.Add(rotatePlaneToParallelToXY(planePoints));
+        }
 
         string res = "";
-        for (int i = 0; i < mappedPoints.Count; i++)
-        {
-            res += mappedPoints[i].ToString();
-            if (i != mappedPoints.Count - 1) res += ",";
 
+        foreach (List<Vector2> stroke in translatedPoints)
+        {
+            for (int i = 0; i < stroke.Count; i++)
+            {
+                res += stroke[i].ToString();
+                if (i != stroke.Count - 1) res += ",";
+
+            }
+            res += "#";
         }
 
         if (flipHorizontally) res += "Y";
         else res += "N";
+
+        res = res.Replace(" ", "");
 
         return res;
     }
@@ -101,7 +120,7 @@ public class FindPlane : MonoBehaviour
         return populated;
     }
 
-    List<Vector2> rotatePlaneToParallelToXY()
+    List<Vector2> rotatePlaneToParallelToXY(List<Vector3> planePoints)
     {
         Vector3 xy = new Vector3(0, 0, 1);
         //float angle = Vector3.Angle(pl.normal, xy);
@@ -115,12 +134,12 @@ public class FindPlane : MonoBehaviour
         plRotated.normal = rotation * pl.normal;
         
         //Debug.LogWarning(plRotated.normal); // should be a multiple of (0, 0, 1)
-        for(int i = 0; i < translatedPoints.Count; i++)
+        for(int i = 0; i < planePoints.Count; i++)
         {
-            translatedPoints[i] = rotation * translatedPoints[i];
+            planePoints[i] = rotation * planePoints[i];
         }
         List<Vector2> xyPoint = new List<Vector2>();
-        foreach(Vector3 point in translatedPoints)
+        foreach(Vector3 point in planePoints)
         {
             xyPoint.Add(point);
         }
@@ -246,8 +265,6 @@ public class FindPlane : MonoBehaviour
     public void compute(Vector3[] pnt)
     {
         List<Vector3> points = new List<Vector3>();
-        List<Vector3> pointsAux = new List<Vector3>();
-        Vector3 aux;
 
         for (int i = 0; i < pnt.Length; i++)
         {
@@ -257,12 +274,7 @@ public class FindPlane : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < pnt.Length; i++)
-        {
-            pointsAux.Add(pnt[i]);
-        }
-
         computePlane(points.ToArray());
-        translatedPoints = computeTranslatedPoints(pointsAux);
+        
     }
 }
