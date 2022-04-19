@@ -87,7 +87,7 @@ public class SoundBrush : MonoBehaviour
 
             if (Input.GetMouseButtonUp(0))
             {
-                StrokeType strokeType = recognizeStroke(linePoints);
+                StrokeType strokeType = RecognizeStroke(linePoints);
                 if (strokeType == StrokeType.Line)
                 {
                     lineCount++;
@@ -108,7 +108,7 @@ public class SoundBrush : MonoBehaviour
         return ray.origin + ray.direction * 10;
     }
 
-    public void resetBrush()
+    public void ResetBrush()
     {
         lineCount = 0;
         verticalLineCount = 0;
@@ -119,7 +119,7 @@ public class SoundBrush : MonoBehaviour
     /// </summary>
     /// <param name="points"></param>
     /// <returns></returns>
-    StrokeType recognizeStroke(List<Vector3> points)
+    StrokeType RecognizeStroke(List<Vector3> points)
     {
         // guarantee there are at least two points in the list
         if (points.Count < 2) return StrokeType.Unknown;
@@ -142,19 +142,19 @@ public class SoundBrush : MonoBehaviour
 
         if (startIndex == 0) return StrokeType.Point; // all positions are the same
 
-        float initSlope = slope(secondPoint, firstPoint);
-        bool isVerticalLine = canBeVerticalLine(initSlope);
+        float initSlope = Slope(secondPoint, firstPoint);
+        bool isVerticalLine = CanBeVerticalLine(initSlope);
 
         for (int i = startIndex; i < points.Count; i++)
         {
-            float curSlope = slope(points[i], firstPoint);
+            float curSlope = Slope(points[i], firstPoint);
             //Debug.LogWarning(initSlope + ", " + curSlope);
             if (Mathf.Abs(curSlope - initSlope) > 0.4f)
             {
                 isLine = false;
                 //break;
             }
-            if (!canBeVerticalLine(curSlope)) isVerticalLine = false;
+            if (!CanBeVerticalLine(curSlope)) isVerticalLine = false;
         }
 
         if (isLine) return StrokeType.Line;
@@ -163,13 +163,13 @@ public class SoundBrush : MonoBehaviour
         return StrokeType.Unknown;
     }
 
-    bool canBeVerticalLine(float s)
+    bool CanBeVerticalLine(float s)
     {
         if (s == 0f || Mathf.Abs(s) >= 6f) return true;
         return false;
     }
 
-    float slope(Vector3 p1, Vector3 p2)
+    float Slope(Vector3 p1, Vector3 p2)
     {
         if (p2.x - p1.x == 0) return 0;
         return (p2.y - p1.y) / (p2.x - p1.x);

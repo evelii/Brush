@@ -59,7 +59,7 @@ public class AddAnimation : MonoBehaviour
 
             }
 
-            else addBouncingEffect();
+            else AddBouncingEffect();
         }
 
         if (movement)
@@ -69,21 +69,21 @@ public class AddAnimation : MonoBehaviour
             if (pos == null) pos = path.getPathPoints();
             if (insertKeyframe)
             {
-                resetPath();
+                ResetPath();
                 insertKeyframe = false;
             }
             // 1. There is a customized movement path, just follow the path
             if(pos.Length > 1)
             {
                 _parentObject.GetComponent<Rigidbody>().useGravity = false;
-                movementInit();
-                followMovementPath();
+                MovementInit();
+                FollowMovementPath();
             }
 
             // 2. There is no customized path, use the default behaviour
             else
             {
-                defaultMovement();
+                DefaultMovement();
             }
         }
 
@@ -91,11 +91,11 @@ public class AddAnimation : MonoBehaviour
         if (Input.GetKey("right"))
         {
             insertKeyframe = true;
-            moveAlong("right");
+            MoveAlong("right");
         } else if (Input.GetKey("left"))
         {
             insertKeyframe = true;
-            moveAlong("left");
+            MoveAlong("left");
         }
     }
 
@@ -104,7 +104,7 @@ public class AddAnimation : MonoBehaviour
         
     }
 
-    private void addBouncingEffect()
+    private void AddBouncingEffect()
     {
         SquashAndStretchKit.SquashAndStretch tem = _parentObject.AddComponent<SquashAndStretchKit.SquashAndStretch>();
         tem.enableSquash = true;
@@ -169,17 +169,17 @@ public class AddAnimation : MonoBehaviour
     //    bounce = false;  // necessary components have been added, so turned off the bool
     //}
 
-    void movementInit()
+    void MovementInit()
     {
         if (movementPrepare) return;
 
         if (pos == null) pos = path.getPathPoints();
 
-        checkPos();
+        CheckPos();
         movementPrepare = true;
     }
 
-    void checkPos()
+    void CheckPos()
     {
         if (curIdx >= 0 && curIdx < pos.Length)
         {
@@ -187,7 +187,7 @@ public class AddAnimation : MonoBehaviour
         }
         else
         {
-            resetPath();
+            ResetPath();
             //movement = false;
             passedKeyframe = false;
         }
@@ -196,7 +196,7 @@ public class AddAnimation : MonoBehaviour
     float percentsPerSecond = 0.15f; // %15 of the path moved per second
     float currentPathPercent = 0.0f; //min 0, max 1
 
-    private void followMovementPath()
+    private void FollowMovementPath()
     {
         if (currentPathPercent >= 1)
         {
@@ -216,16 +216,16 @@ public class AddAnimation : MonoBehaviour
         if (distance <= 0.3f)
         {
             curIdx += 1;
-            checkPos();
+            CheckPos();
         }
 
-        handleKeyframe();
+        HandleKeyframe();
     }
 
     // use key to move along the movement path: left or right
-    private void moveAlong(string direction)
+    private void MoveAlong(string direction)
     {
-        movementInit();
+        MovementInit();
 
         float distance = Vector3.Distance(currentPosHolder, animatedObject.transform.position);
         Vector3 tarPos = currentPosHolder;
@@ -238,7 +238,7 @@ public class AddAnimation : MonoBehaviour
             if (distance <= 0.3f)
             {
                 curIdx += 1;
-                checkPos();
+                CheckPos();
             }
         }
         else if(direction == "left")
@@ -249,12 +249,12 @@ public class AddAnimation : MonoBehaviour
             if (distance <= 0.3f)
             {
                 curIdx -= 1;
-                checkPos();
+                CheckPos();
             }
         }
     }
 
-    void defaultMovement()
+    void DefaultMovement()
     {
         if (motionBrush.moveDirection == "right")
         {
@@ -283,7 +283,7 @@ public class AddAnimation : MonoBehaviour
         }
     }
 
-    void resetPath()
+    void ResetPath()
     {
         curIdx = 0;
         currentPathPercent = 0;
@@ -297,7 +297,7 @@ public class AddAnimation : MonoBehaviour
     int curIdxKeyframe = 0;
     Vector3 currentPosHolderKeyframe;
 
-    void checkPos2()
+    void CheckPos2()
     {
         if (curIdxKeyframe >= 0 && curIdxKeyframe < posKeyframe.Length)
         {
@@ -305,7 +305,7 @@ public class AddAnimation : MonoBehaviour
         }
     }
 
-    void handleKeyframe()
+    void HandleKeyframe()
     {
         if(!insertKeyframe && keyframeObject) // if we are now out of the mode of insertingKeyframe and there's a sketch to be inserted
         {
@@ -341,7 +341,7 @@ public class AddAnimation : MonoBehaviour
             if (distance <= 0.3f)
             {
                 curIdxKeyframe += 1;
-                checkPos2();
+                CheckPos2();
             }
         }
     } 

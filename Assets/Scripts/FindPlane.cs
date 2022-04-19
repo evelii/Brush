@@ -49,7 +49,7 @@ public class FindPlane : MonoBehaviour
     }
 
 
-    public string getTranslatedPoints()
+    public string GetTranslatedPoints()
     {
         List<List<Vector3>> strokes = tubes.strokesList;
         if (strokes == null) return "";
@@ -57,13 +57,13 @@ public class FindPlane : MonoBehaviour
         {
             points.AddRange(stroke);
         }
-        compute(points.ToArray());
+        Compute(points.ToArray());
 
         List<List<Vector3>> pointsOnPlane = new List<List<Vector3>>();
 
         foreach (List<Vector3> stroke in strokes)
         {
-            pointsOnPlane.Add(computeTranslatedPoints(stroke));
+            pointsOnPlane.Add(ComputeTranslatedPoints(stroke));
         }
 
         plRotated = pl;
@@ -73,7 +73,7 @@ public class FindPlane : MonoBehaviour
         List<List<Vector2>> translatedPoints = new List<List<Vector2>>();
         foreach (List<Vector3> planePoints in pointsOnPlane)
         {
-            translatedPoints.Add(rotatePlaneToParallelToXY(planePoints));
+            translatedPoints.Add(RotatePlaneToParallelToXY(planePoints));
         }
 
         string res = "";
@@ -97,7 +97,7 @@ public class FindPlane : MonoBehaviour
         return res;
     }
 
-    List<Vector3> populatePoints(List<Vector3> originalPoints)
+    List<Vector3> PopulatePoints(List<Vector3> originalPoints)
     {
         List<Vector3> populated = new List<Vector3>();
         for(int i = 0; i < originalPoints.Count - 1; i++)
@@ -120,7 +120,7 @@ public class FindPlane : MonoBehaviour
         return populated;
     }
 
-    List<Vector2> rotatePlaneToParallelToXY(List<Vector3> planePoints)
+    List<Vector2> RotatePlaneToParallelToXY(List<Vector3> planePoints)
     {
         Vector3 xy = new Vector3(0, 0, 1);
         //float angle = Vector3.Angle(pl.normal, xy);
@@ -144,7 +144,7 @@ public class FindPlane : MonoBehaviour
             xyPoint.Add(point);
         }
 
-        printPoints(xyPoint);
+        PrintPoints(xyPoint);
 
         return xyPoint;
     }
@@ -176,7 +176,7 @@ public class FindPlane : MonoBehaviour
         Debug.DrawRay(position, normal, Color.red);
     }
 
-    void printPoints(List<Vector2> points)
+    void PrintPoints(List<Vector2> points)
     {
         string output = "";
         for (int i = 0; i < points.Count; i++)
@@ -189,14 +189,14 @@ public class FindPlane : MonoBehaviour
         //Debug.LogError(output);
     }
 
-    private void computePlane(Vector3[] points)
+    private void ComputePlane(Vector3[] points)
     {
-        normal = computeNormal(points, points.Length);
-        dist = computeDistance(points, normal);
+        normal = ComputeNormal(points, points.Length);
+        dist = ComputeDistance(points, normal);
         pl = new Plane(normal, dist);
     }
 
-    private float computeDistance(Vector3[] points, Vector3 normal)
+    private float ComputeDistance(Vector3[] points, Vector3 normal)
     {
         Vector3 sum = new Vector3(0, 0, 0);
         int n = points.Length;
@@ -211,7 +211,7 @@ public class FindPlane : MonoBehaviour
         return d;
     }
 
-    private Vector3 computeNormal(Vector3[] v, int n)
+    private Vector3 ComputeNormal(Vector3[] v, int n)
     {
         // Zero out sum
         Vector3 result = Vector3.zero;
@@ -243,7 +243,7 @@ public class FindPlane : MonoBehaviour
         return result;
     }
 
-    private List<Vector3> computeTranslatedPoints(List<Vector3> pnt)
+    private List<Vector3> ComputeTranslatedPoints(List<Vector3> pnt)
     {
         List<Vector3> transP = new List<Vector3>();
         float scalarDist;
@@ -262,7 +262,7 @@ public class FindPlane : MonoBehaviour
         return transP;
     }
 
-    public void compute(Vector3[] pnt)
+    public void Compute(Vector3[] pnt)
     {
         List<Vector3> points = new List<Vector3>();
 
@@ -274,7 +274,7 @@ public class FindPlane : MonoBehaviour
             }
         }
 
-        computePlane(points.ToArray());
+        ComputePlane(points.ToArray());
         
     }
 }

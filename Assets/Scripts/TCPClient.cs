@@ -8,9 +8,11 @@ using UnityEngine;
 
 public class TCPClient : MonoBehaviour
 {
-
+	public GameObject bestFitPlane;
+	public SketchedObject curObjectForRecognition;
 	public string address;
 	public int port;
+	string result;
 
 	#region private members 	
 	private TcpClient socketConnection;
@@ -23,6 +25,7 @@ public class TCPClient : MonoBehaviour
 	void Start()
 	{
 		ConnectToTcpServer();
+		result = "";
 	}
 
 	// Update is called once per frame
@@ -32,6 +35,13 @@ public class TCPClient : MonoBehaviour
 		{
 			Debug.LogWarning("press!");
 			SendMessage();
+		}
+
+		if (result != "")
+        {
+			Debug.Log(result);
+			curObjectForRecognition.ObjectIdentity(result);
+			result = "";
 		}
 	}
 
@@ -75,6 +85,7 @@ public class TCPClient : MonoBehaviour
 						// Convert byte array to string message. 						
 						string serverMessage = Encoding.ASCII.GetString(incommingData);
 						Debug.Log("server message received as: " + serverMessage);
+						result = serverMessage;
 					}
 				}
 			}
@@ -85,7 +96,7 @@ public class TCPClient : MonoBehaviour
 		}
 	}
 
-	private string prepareData()
+	private string PrepareData()
     {
 		string res = "";
 		foreach (List<Vector3> strokes in strokesList)
@@ -113,8 +124,8 @@ public class TCPClient : MonoBehaviour
 	{
 		string clientMessage = "This is a message from one of your clients.";
 
-		FindPlane findPlane = GameObject.Find("BestFitPlane").GetComponent<FindPlane>();
-		clientMessage = findPlane.getTranslatedPoints();
+		FindPlane findPlane = bestFitPlane.GetComponent<FindPlane>();
+		clientMessage = findPlane.GetTranslatedPoints();
 
 		Debug.Log(clientMessage);
 

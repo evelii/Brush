@@ -26,10 +26,9 @@ public class SketchedObject : MonoBehaviour
         collisionHard.playOnAwake = false;
         collisionSoft.playOnAwake = false;
         inCollision = false;
-        recognize();
     }
 
-    void recognize()
+    public void ObjectIdentity(string recognitionResult)
     {
         if (gameObject.name == "Floor")
         {
@@ -41,11 +40,12 @@ public class SketchedObject : MonoBehaviour
             identity = "wall";
             softness = "hard";
         }
-        else identity = "car";
-        addSound();
+        else identity = recognitionResult;
+        Debug.LogWarning(identity);
+        AddSound();
     }
 
-    void addSound()
+    void AddSound()
     {
         if (identity == "car")
         {

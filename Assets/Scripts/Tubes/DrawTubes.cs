@@ -10,6 +10,7 @@ public enum StrokeState
 
 public class DrawTubes : MonoBehaviour
 {
+    public GameObject curSketch;
     public Transform cursor;
 
     public Color strokeColor;
@@ -57,6 +58,7 @@ public class DrawTubes : MonoBehaviour
             GameObject clientObject = GameObject.Find("TCPClient");
             TCPClient client = (TCPClient)clientObject.GetComponent(typeof(TCPClient));
             client.strokesList = strokesList;
+            client.curObjectForRecognition = curSketch.GetComponent<SketchedObject>();
         }
 
         // when a new dragging on the cursor, create a new tube
@@ -119,6 +121,7 @@ public class DrawTubes : MonoBehaviour
         tube.radius = strokeRadius;
 
         SketchManager.manager.sketchObjects.Add(newStroke);
+        curSketch = newStroke;
     }
 
     public void FixedUpdate()
