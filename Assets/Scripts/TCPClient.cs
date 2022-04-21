@@ -40,6 +40,7 @@ public class TCPClient : MonoBehaviour
 		if (result != "")
         {
 			Debug.Log(result);
+			if (result[result.Length - 1] == '\n') result = result.Substring(0, result.Length - 1);
 			curObjectForRecognition.ObjectIdentity(result);
 			result = "";
 		}

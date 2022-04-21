@@ -13,10 +13,15 @@ public class SketchedObject : MonoBehaviour
     public string softness; // hard or soft
     public bool aniStart;
     bool inCollision;
+    string rootFolder;
+
+    Vector3 selfSoundStartPoint;
+    bool editingMode;
 
     // Start is called before the first frame update
     void Start()
     {
+        rootFolder = "SFX";
         selfSound = gameObject.AddComponent<AudioSource>();
         movingSound = gameObject.AddComponent<AudioSource>();
         collisionHard = gameObject.AddComponent<AudioSource>();
@@ -26,10 +31,9 @@ public class SketchedObject : MonoBehaviour
         collisionHard.playOnAwake = false;
         collisionSoft.playOnAwake = false;
         inCollision = false;
-    }
+        editingMode = false;
+        selfSoundStartPoint = Vector3.zero;
 
-    public void ObjectIdentity(string recognitionResult)
-    {
         if (gameObject.name == "Floor")
         {
             identity = "floor";
@@ -40,18 +44,24 @@ public class SketchedObject : MonoBehaviour
             identity = "wall";
             softness = "hard";
         }
-        else identity = recognitionResult;
+        ObjectIdentity("dog");
+    }
+
+    public void ObjectIdentity(string recognitionResult)
+    {
+        identity = recognitionResult;
         Debug.LogWarning(identity);
         AddSound();
     }
 
     void AddSound()
     {
-        if (identity == "car")
+        if (identity == "car" || identity == "airplane" || identity == "dog")
         {
-            selfSound.clip = Resources.Load<AudioClip>("SFX/police_siren");
-            movingSound.clip = Resources.Load<AudioClip>("SFX/car_engine_sound");
-            collisionHard.clip = Resources.Load<AudioClip>("SFX/car_crash_sound");
+            selfSound.clip = Resources.Load<AudioClip>(rootFolder + "/" + identity + "/" + "self");
+            movingSound.clip = Resources.Load<AudioClip>(rootFolder + "/" + identity + "/" + "moving");
+            collisionHard.clip = Resources.Load<AudioClip>(rootFolder + "/" + identity + "/" + "hardCollision");
+            collisionHard.loop = false;
         }
     }
 
@@ -60,8 +70,36 @@ public class SketchedObject : MonoBehaviour
     {
         if (aniStart)
         {
-            if(!movingSound.isPlaying && ! inCollision) movingSound.Play();
+            if (!movingSound.isPlaying && !inCollision)
+            {
+                movingSound.Play();
+            }
         }
+
+        if (selfSoundStartPoint != Vector3.zero && !editingMode)
+        { 
+            float distance = Vector3.Distance(selfSoundStartPoint, gameObject.transform.position);
+            Debug.Log(distance);
+            if (distance <= 0.2f)
+            {
+                selfSound.Play();
+            }
+        }
+    }
+
+    public void TurnOnEditingMode()
+    {
+        editingMode = true;
+    }
+
+    public void TurnOffEditingMode()
+    {
+        editingMode = false;
+    }
+
+    public void MarkSelfSoundStartPoint()
+    {
+        selfSoundStartPoint = gameObject.transform.position;
     }
 
     private void OnCollisionEnter(Collision collision)

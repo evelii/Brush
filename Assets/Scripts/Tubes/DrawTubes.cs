@@ -103,17 +103,6 @@ public class DrawTubes : MonoBehaviour
         GameObject go = new GameObject("TubeStroke");
         go.transform.parent = newStroke.transform;
 
-        if(addAnimation.insertKeyframe)
-        {
-            addAnimation.keyframeObject = newStroke;
-            addAnimation.keyframePos = addAnimation.animatedObject.transform.position;
-        } else
-        {
-            addAnimation._parentObject = newStroke;
-            addAnimation.animatedObject = newStroke;
-            addAnimation._currentObject = go;
-        }
-        
         _currentTubeStroke = go.AddComponent<TubeStroke>();
         TubeRenderer tube = go.AddComponent<TubeRenderer>();
         tube.MarkDynamic();
@@ -122,6 +111,18 @@ public class DrawTubes : MonoBehaviour
 
         SketchManager.manager.sketchObjects.Add(newStroke);
         curSketch = newStroke;
+
+        if (addAnimation.insertKeyframe)
+        {
+            addAnimation.keyframeObject = curSketch;
+            addAnimation.keyframePos = addAnimation._animatedObject.transform.position;
+        }
+        else
+        {
+            SketchManager._parentObject = curSketch;
+            SketchManager._curEditingObject = go;
+            SketchManager.curEditingObject = curSketch.GetComponent<SketchedObject>();
+        }
     }
 
     public void FixedUpdate()

@@ -14,13 +14,9 @@ public class SoundBrush : MonoBehaviour
     List<GameObject> lineCollection;
     LineRenderer lineRenderer;
     public float width;
+    int lineCount;
 
-    public GameObject animatedObject; // the object to be animated
-    int lineCount = 0; // horizontal
-    int verticalLineCount = 0;
-
-    // AddAnimation script
-    public AddAnimation addAnimation;
+    public SketchedObject editingSketch; // the object to be animated
 
     // Colors
     public ColorPickerTriangle CP;
@@ -47,12 +43,10 @@ public class SoundBrush : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(active)
-        {
-            if (lineCount == 3)
-            {
-            }
+        if (SketchManager.curEditingObject != null) editingSketch = SketchManager.curEditingObject;
 
+        if (active)
+        {
             // returns true only on the first frame during which the mouse button is clicked
             if (Input.GetMouseButtonDown(0))
             {
@@ -92,13 +86,16 @@ public class SoundBrush : MonoBehaviour
                 {
                     lineCount++;
                 }
-                else if (strokeType == StrokeType.VerticalLine)
-                {
-                    verticalLineCount++;
-                }
 
                 linePoints.Clear();
             }
+        }
+
+        // turn on the self sound
+        if (lineCount >= 4)
+        {
+            editingSketch.MarkSelfSoundStartPoint();
+            lineCount = 0;
         }
     }
 
@@ -110,8 +107,7 @@ public class SoundBrush : MonoBehaviour
 
     public void ResetBrush()
     {
-        lineCount = 0;
-        verticalLineCount = 0;
+
     }
 
     /// <summary>
@@ -148,7 +144,6 @@ public class SoundBrush : MonoBehaviour
         for (int i = startIndex; i < points.Count; i++)
         {
             float curSlope = Slope(points[i], firstPoint);
-            //Debug.LogWarning(initSlope + ", " + curSlope);
             if (Mathf.Abs(curSlope - initSlope) > 0.4f)
             {
                 isLine = false;
@@ -158,7 +153,7 @@ public class SoundBrush : MonoBehaviour
         }
 
         if (isLine) return StrokeType.Line;
-        if (isVerticalLine) return StrokeType.VerticalLine;
+        if (isVerticalLine) return StrokeType.Line;
 
         return StrokeType.Unknown;
     }

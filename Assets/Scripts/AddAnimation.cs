@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class AddAnimation : MonoBehaviour
 {
-    public GameObject _currentObject;
-    public GameObject _parentObject;
+    public SketchedObject sketch;
+    public GameObject _childObject;
+    public GameObject _animatedObject; // the object which moves along the path
 
     public bool bounce;
     private bool movementPrepare;
@@ -15,7 +16,6 @@ public class AddAnimation : MonoBehaviour
     private Vector3[] pos; // the movement path for the main object
     private Vector3[] posKeyframe; // the movement path for the keyframe object
 
-    public GameObject animatedObject; // the object which moves along the path
     public Vector3 keyframePos; // the position of the animatedObject where key frame should be added
     public GameObject keyframeObject; // object which is inserted as a key frame
     public bool passedKeyframe = false;
@@ -39,18 +39,22 @@ public class AddAnimation : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
-        if((bounce || movement) && addCollider)
+        _animatedObject = SketchManager._parentObject;
+        _childObject = SketchManager._curEditingObject;
+        sketch = SketchManager._parentObject.GetComponent<SketchedObject>();
+
+        if ((bounce || movement) && addCollider)
         {
-            _parentObject.AddComponent<BoxCollider>();
-            _parentObject.AddComponent<Rigidbody>();
-            _currentObject.AddComponent<BoxCollider>();
-            FitColliderToChildren(_parentObject);
+            _animatedObject.AddComponent<BoxCollider>();
+            _animatedObject.AddComponent<Rigidbody>();
+            _childObject.AddComponent<BoxCollider>();
+            FitColliderToChildren(_animatedObject);
             addCollider = false;
         }
 
         if (bounce)
         {
-            _parentObject.GetComponent<SketchedObject>().aniStart = true;
+            _animatedObject.GetComponent<SketchedObject>().aniStart = true;
             // Check if there is user defined path
             pos = path.getPathPoints();
             // 1. There is a customized movement path, just follow the path
@@ -64,18 +68,19 @@ public class AddAnimation : MonoBehaviour
 
         if (movement)
         {
-            _parentObject.GetComponent<SketchedObject>().aniStart = true;
+            _animatedObject.GetComponent<SketchedObject>().aniStart = true;
             // Check if there is user defined path
             if (pos == null) pos = path.getPathPoints();
             if (insertKeyframe)
             {
                 ResetPath();
                 insertKeyframe = false;
+                sketch.TurnOffEditingMode();
             }
             // 1. There is a customized movement path, just follow the path
             if(pos.Length > 1)
             {
-                _parentObject.GetComponent<Rigidbody>().useGravity = false;
+                _animatedObject.GetComponent<Rigidbody>().useGravity = false;
                 MovementInit();
                 FollowMovementPath();
             }
@@ -91,10 +96,12 @@ public class AddAnimation : MonoBehaviour
         if (Input.GetKey("right"))
         {
             insertKeyframe = true;
+            sketch.TurnOnEditingMode();
             MoveAlong("right");
         } else if (Input.GetKey("left"))
         {
             insertKeyframe = true;
+            sketch.TurnOnEditingMode();
             MoveAlong("left");
         }
     }
@@ -106,7 +113,7 @@ public class AddAnimation : MonoBehaviour
 
     private void AddBouncingEffect()
     {
-        SquashAndStretchKit.SquashAndStretch tem = _parentObject.AddComponent<SquashAndStretchKit.SquashAndStretch>();
+        SquashAndStretchKit.SquashAndStretch tem = _animatedObject.AddComponent<SquashAndStretchKit.SquashAndStretch>();
         tem.enableSquash = true;
         tem.enableStretch = true;
         tem.maxSpeedThreshold = 20;
@@ -116,11 +123,11 @@ public class AddAnimation : MonoBehaviour
         //_parentObject.AddComponent<Rigidbody>();
         //_parentObject.AddComponent<BoxCollider>();
 
-        Collider collider = _currentObject.GetComponent<BoxCollider>();
+        Collider collider = _childObject.GetComponent<BoxCollider>();
         collider.material.bounciness = 1.0f;
         //FitColliderToChildren(_parentObject);
         bounce = false;  // necessary components have been added, so turned off the bool
-        motionBrush.resetBrush();
+        motionBrush.ResetBrush();
     }
 
     private void FitColliderToChildren(GameObject parentObj)
@@ -207,11 +214,11 @@ public class AddAnimation : MonoBehaviour
 
         currentPathPercent += percentsPerSecond * Time.deltaTime;
         Vector3 tarPos = Interp(pos, currentPathPercent);
-        float distance = Vector3.Distance(currentPosHolder, animatedObject.transform.position);
+        float distance = Vector3.Distance(currentPosHolder, _animatedObject.transform.position);
         tarPos = currentPosHolder;  // TODO: tarpos and change moveSpeed*Time.deltaTime to moveSpeed
 
-        animatedObject.transform.right = Vector3.RotateTowards(animatedObject.transform.right, tarPos - animatedObject.transform.position, rotationSpeed * Time.deltaTime, 0.0f);
-        animatedObject.transform.position = Vector3.MoveTowards(animatedObject.transform.position, tarPos, moveSpeed*Time.deltaTime);
+        _animatedObject.transform.right = Vector3.RotateTowards(_animatedObject.transform.right, tarPos - _animatedObject.transform.position, rotationSpeed * Time.deltaTime, 0.0f);
+        _animatedObject.transform.position = Vector3.MoveTowards(_animatedObject.transform.position, tarPos, moveSpeed*Time.deltaTime);
 
         if (distance <= 0.3f)
         {
@@ -227,13 +234,13 @@ public class AddAnimation : MonoBehaviour
     {
         MovementInit();
 
-        float distance = Vector3.Distance(currentPosHolder, animatedObject.transform.position);
+        float distance = Vector3.Distance(currentPosHolder, _animatedObject.transform.position);
         Vector3 tarPos = currentPosHolder;
 
         if (direction == "right")
         {
-            animatedObject.transform.right = Vector3.RotateTowards(animatedObject.transform.right, tarPos - animatedObject.transform.position, rotationSpeed * Time.deltaTime, 0.0f);
-            animatedObject.transform.position = Vector3.MoveTowards(animatedObject.transform.position, tarPos, moveSpeed * Time.deltaTime);
+            _animatedObject.transform.right = Vector3.RotateTowards(_animatedObject.transform.right, tarPos - _animatedObject.transform.position, rotationSpeed * Time.deltaTime, 0.0f);
+            _animatedObject.transform.position = Vector3.MoveTowards(_animatedObject.transform.position, tarPos, moveSpeed * Time.deltaTime);
 
             if (distance <= 0.3f)
             {
@@ -243,8 +250,8 @@ public class AddAnimation : MonoBehaviour
         }
         else if(direction == "left")
         {
-            animatedObject.transform.right = Vector3.RotateTowards(animatedObject.transform.right, - tarPos + animatedObject.transform.position, rotationSpeed * Time.deltaTime, 0.0f);
-            animatedObject.transform.position = Vector3.MoveTowards(animatedObject.transform.position, tarPos, moveSpeed * Time.deltaTime);
+            _animatedObject.transform.right = Vector3.RotateTowards(_animatedObject.transform.right, - tarPos + _animatedObject.transform.position, rotationSpeed * Time.deltaTime, 0.0f);
+            _animatedObject.transform.position = Vector3.MoveTowards(_animatedObject.transform.position, tarPos, moveSpeed * Time.deltaTime);
 
             if (distance <= 0.3f)
             {
@@ -258,22 +265,22 @@ public class AddAnimation : MonoBehaviour
     {
         if (motionBrush.moveDirection == "right")
         {
-            if (animatedObject.transform.position.x < 7)
-                animatedObject.transform.Translate(Vector3.right * 9 * Time.deltaTime);
+            if (_animatedObject.transform.position.x < 7)
+                _animatedObject.transform.Translate(Vector3.right * 9 * Time.deltaTime);
             else
             {
-                motionBrush.resetBrush();
+                motionBrush.ResetBrush();
                 movement = false;
             }
         }
 
         else if (motionBrush.moveDirection == "left")
         {
-            if (animatedObject.transform.position.x > -7)
-                animatedObject.transform.Translate(Vector3.left * 9 * Time.deltaTime);
+            if (_animatedObject.transform.position.x > -7)
+                _animatedObject.transform.Translate(Vector3.left * 9 * Time.deltaTime);
             else
             {
-                motionBrush.resetBrush();
+                motionBrush.ResetBrush();
                 movement = false;
             }
         }
@@ -289,7 +296,7 @@ public class AddAnimation : MonoBehaviour
         currentPathPercent = 0;
         if (pos != null)
         {
-            animatedObject.transform.position = pos[0];
+            _animatedObject.transform.position = pos[0];
             currentPosHolder = pos[0];
         }
     }
@@ -309,7 +316,7 @@ public class AddAnimation : MonoBehaviour
     {
         if(!insertKeyframe && keyframeObject) // if we are now out of the mode of insertingKeyframe and there's a sketch to be inserted
         {
-            float dis = Vector3.Distance(animatedObject.transform.position, keyframePos);
+            float dis = Vector3.Distance(_animatedObject.transform.position, keyframePos);
             if (dis <= 0.1f)
             {
                 keyframeObject.SetActive(true);

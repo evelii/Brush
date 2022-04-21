@@ -310,6 +310,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 538840546f4ff4b168e4c60d850c76f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  editingMode: 0
   selfSound: {fileID: 0}
   movingSound: {fileID: 0}
   collisionHard: {fileID: 0}
@@ -473,6 +474,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3974bd0fcc46640fba630c8fcd8fe9c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bestFitPlane: {fileID: 1984207557}
+  curObjectForRecognition: {fileID: 0}
   address: 127.0.0.1
   port: 2004
 --- !u!4 &610419570
@@ -739,7 +742,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e6d362e95b5441b2b8f24156ec504e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentObject: {fileID: 0}
+  _childObject: {fileID: 0}
   _parentObject: {fileID: 0}
   bounce: 0
   movement: 0
@@ -857,8 +860,7 @@ MonoBehaviour:
   active: 0
   timerDelay: 0.01
   width: 0.1
-  animatedObject: {fileID: 2033916451}
-  addAnimation: {fileID: 1336290716}
+  editingSketch: {fileID: 0}
   CP: {fileID: 114000013784935286, guid: f24822f355d009d409e4bfb5c585f135, type: 3}
 --- !u!1 &1458427562
 GameObject:
@@ -936,6 +938,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 538840546f4ff4b168e4c60d850c76f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  editingMode: 0
   selfSound: {fileID: 0}
   movingSound: {fileID: 0}
   collisionHard: {fileID: 0}
@@ -1052,7 +1055,7 @@ MonoBehaviour:
   active: 0
   timerDelay: 0.01
   width: 0.1
-  animatedObject: {fileID: 2033916451}
+  animatedObject: {fileID: 0}
   moveDirection: 
   addAnimation: {fileID: 1336290716}
   CP: {fileID: 114000013784935286, guid: f24822f355d009d409e4bfb5c585f135, type: 3}
@@ -1111,7 +1114,6 @@ MonoBehaviour:
   points: []
   getBestFit: 0
   normal: {x: 0, y: 0, z: 0}
-  translatedPoints: []
   dist: 0
 --- !u!4 &1984207559
 Transform:
@@ -1158,12 +1160,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 856f683b8f37e4acd8145a518291e071, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  curSketch: {fileID: 0}
   cursor: {fileID: 685610042}
   strokeColor: {r: 0, g: 0, b: 0, a: 0}
   CP: {fileID: 0}
   strokeRadius: 0.1
   updateLineInterval: 0.01
   state: 0
+  fullPoints: []
   addAnimation: {fileID: 1336290716}
 --- !u!4 &2033916453
 Transform:
