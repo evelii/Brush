@@ -61,7 +61,7 @@ public class SoundBrush : MonoBehaviour
                 lineRenderer.startWidth = width;
                 lineRenderer.endWidth = width;
 
-                lineCollection.Add(newLine);
+                editingSketch.AddSoundMark(newLine);
             }
 
             // returns true always if the mouse button is being pressed
@@ -81,21 +81,16 @@ public class SoundBrush : MonoBehaviour
 
             if (Input.GetMouseButtonUp(0))
             {
-                StrokeType strokeType = RecognizeStroke(linePoints);
-                if (strokeType == StrokeType.Line)
-                {
-                    lineCount++;
-                }
-
                 linePoints.Clear();
             }
         }
 
         // turn on the self sound
-        if (lineCount >= 4)
+        if (editingSketch && editingSketch.InEditingMode() && editingSketch.SoundStartNotMarked()
+            && editingSketch.GetSoundMarkCount() >= 4)
         {
+            //Debug.Log("4!!");
             editingSketch.MarkSelfSoundStartPoint();
-            lineCount = 0;
         }
     }
 
@@ -107,7 +102,7 @@ public class SoundBrush : MonoBehaviour
 
     public void ResetBrush()
     {
-
+        
     }
 
     /// <summary>

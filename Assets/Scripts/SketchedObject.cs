@@ -17,6 +17,7 @@ public class SketchedObject : MonoBehaviour
 
     Vector3 selfSoundStartPoint;
     bool editingMode;
+    List<GameObject> soundMarkCollection;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +33,7 @@ public class SketchedObject : MonoBehaviour
         collisionSoft.playOnAwake = false;
         inCollision = false;
         editingMode = false;
+        soundMarkCollection = new List<GameObject>();
         selfSoundStartPoint = Vector3.zero;
 
         if (gameObject.name == "Floor")
@@ -61,6 +63,8 @@ public class SketchedObject : MonoBehaviour
             selfSound.clip = Resources.Load<AudioClip>(rootFolder + "/" + identity + "/" + "self");
             movingSound.clip = Resources.Load<AudioClip>(rootFolder + "/" + identity + "/" + "moving");
             collisionHard.clip = Resources.Load<AudioClip>(rootFolder + "/" + identity + "/" + "hardCollision");
+            selfSound.loop = true;
+            movingSound.loop = true;
             collisionHard.loop = false;
         }
     }
@@ -70,6 +74,7 @@ public class SketchedObject : MonoBehaviour
     {
         if (aniStart)
         {
+            HideSoundMarks();
             if (!movingSound.isPlaying && !inCollision)
             {
                 movingSound.Play();
@@ -79,7 +84,6 @@ public class SketchedObject : MonoBehaviour
         if (selfSoundStartPoint != Vector3.zero && !editingMode)
         { 
             float distance = Vector3.Distance(selfSoundStartPoint, gameObject.transform.position);
-            Debug.Log(distance);
             if (distance <= 0.2f)
             {
                 selfSound.Play();
@@ -97,9 +101,38 @@ public class SketchedObject : MonoBehaviour
         editingMode = false;
     }
 
+    public bool InEditingMode()
+    {
+        return editingMode;
+    }
+
     public void MarkSelfSoundStartPoint()
     {
         selfSoundStartPoint = gameObject.transform.position;
+    }
+
+    public bool SoundStartNotMarked()
+    {
+        return selfSoundStartPoint == Vector3.zero;
+    }
+
+    public void AddSoundMark(GameObject newMark)
+    {
+        soundMarkCollection.Add(newMark);
+    }
+
+    public int GetSoundMarkCount()
+    {
+        return soundMarkCollection.Count;
+    }
+
+    void HideSoundMarks()
+    {
+        // hide the sound lines from the display
+        foreach (GameObject l in soundMarkCollection)
+        {
+            l.SetActive(false);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
