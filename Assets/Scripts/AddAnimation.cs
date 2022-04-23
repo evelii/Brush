@@ -41,7 +41,7 @@ public class AddAnimation : MonoBehaviour
     {
         _animatedObject = SketchManager._parentObject;
         _childObject = SketchManager._curEditingObject;
-        sketch = SketchManager._parentObject.GetComponent<SketchedObject>();
+        if (_animatedObject) sketch = SketchManager._parentObject.GetComponent<SketchedObject>();
 
         if ((bounce || movement) && addCollider)
         {

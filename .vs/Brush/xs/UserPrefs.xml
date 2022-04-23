@@ -1,17 +1,17 @@
 ﻿<Properties StartupConfiguration="{3ABA823B-8C2A-4926-463E-BB0DA48C0615}|">
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/SoundBrush.cs">
     <Files>
-      <File FileName="Assets/Scripts/AddAnimation.cs" Line="44" Column="1" />
+      <File FileName="Assets/Scripts/AddAnimation.cs" Line="44" Column="30" />
       <File FileName="Assets/Scripts/Tubes/DrawTubes.cs" />
-      <File FileName="Assets/Scripts/SketchedObject.cs" />
+      <File FileName="Assets/Scripts/SketchedObject.cs" Line="55" Column="1" />
       <File FileName="Assets/Scripts/SketchManager.cs" />
-      <File FileName="Assets/Scripts/SoundBrush.cs" Line="98" Column="27" />
+      <File FileName="Assets/Scripts/SoundBrush.cs" Line="94" Column="1" />
       <File FileName="Assets/Scripts/MotionBrush.cs" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="c29b1a0d-4192-4e3b-923c-186e5d694207" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="4ceb8fcc-3c39-461c-9c24-00068b7388d7" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

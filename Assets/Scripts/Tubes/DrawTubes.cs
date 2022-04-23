@@ -32,6 +32,8 @@ public class DrawTubes : MonoBehaviour
 
     public AddAnimation addAnimation;
 
+    GameObject newStroke;
+
     public void Start()
     { 
         state = StrokeState.WAITING;
@@ -96,9 +98,13 @@ public class DrawTubes : MonoBehaviour
 
     private void _createNewTube()
     {
-        GameObject newStroke = new GameObject("NewStroke");
-        newStroke.AddComponent<SketchedObject>();
-        newStroke.transform.position = cursor.transform.position;
+        if (newStroke == null)
+        {
+            newStroke = new GameObject("NewStroke");
+            newStroke.transform.position = cursor.transform.position;
+            curSketch = newStroke;
+        }
+        if (newStroke.GetComponent<SketchedObject>() == null) newStroke.AddComponent<SketchedObject>();
 
         GameObject go = new GameObject("TubeStroke");
         go.transform.parent = newStroke.transform;
@@ -109,8 +115,7 @@ public class DrawTubes : MonoBehaviour
         go.GetComponent<MeshRenderer>().material.color = ColorManager.Instance.GetColor();
         tube.radius = strokeRadius;
 
-        SketchManager.manager.sketchObjects.Add(newStroke);
-        curSketch = newStroke;
+        //SketchManager.manager.sketchObjects.Add(newStroke);
 
         if (addAnimation.insertKeyframe)
         {
