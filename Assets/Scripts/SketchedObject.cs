@@ -14,6 +14,7 @@ public class SketchedObject : MonoBehaviour
     public bool aniStart;
     bool inCollision;
     string rootFolder;
+    Dictionary<string, bool> supportedSketches = new Dictionary<string, bool>();
 
     Vector3 selfSoundStartPoint;
     bool editingMode;
@@ -35,6 +36,10 @@ public class SketchedObject : MonoBehaviour
         editingMode = false;
         soundMarkCollection = new List<GameObject>();
         selfSoundStartPoint = Vector3.zero;
+        supportedSketches.Add("car", true);
+        supportedSketches.Add("airplane", true);
+        supportedSketches.Add("dog", true);
+        supportedSketches.Add("police car", true);
 
         if (gameObject.name == "Floor")
         {
@@ -46,7 +51,7 @@ public class SketchedObject : MonoBehaviour
             identity = "wall";
             softness = "hard";
         }
-        ObjectIdentity("dog");
+        ObjectIdentity("police car");
     }
 
     public void ObjectIdentity(string recognitionResult)
@@ -58,7 +63,7 @@ public class SketchedObject : MonoBehaviour
 
     void AddSound()
     {
-        if (identity == "car" || identity == "airplane" || identity == "dog")
+        if (supportedSketches.ContainsKey(identity))
         {
             selfSound.clip = Resources.Load<AudioClip>(rootFolder + "/" + identity + "/" + "self");
             movingSound.clip = Resources.Load<AudioClip>(rootFolder + "/" + identity + "/" + "moving");
@@ -139,6 +144,7 @@ public class SketchedObject : MonoBehaviour
     {
         inCollision = true;
         movingSound.Stop();
+        selfSound.Stop();
         if (collision.gameObject.GetComponent<SketchedObject>().softness == "hard")
             collisionHard.Play();
         else collisionSoft.Play();
