@@ -33,18 +33,28 @@ public class DrawTubes : MonoBehaviour
     public AddAnimation addAnimation;
 
     GameObject newStroke;
+    Cursor cursorScript;
 
     public void Start()
     { 
         state = StrokeState.WAITING;
-        //canDraw = true;
         strokesList = new List<List<Vector3>>();
         fullPoints = new List<Vector3>();
+        cursorScript = cursor.gameObject.GetComponent<Cursor>();
     }
 
     public void Update()
-    { 
-        bool canDraw = GameObject.Find("3DCursor").GetComponent<Cursor>().canDraw;
+    {
+        bool canDraw = cursorScript.canDraw;
+        bool newSketch = cursorScript.newSketch;
+        if (newSketch)
+        {
+            newStroke = new GameObject("NewStroke");
+            newStroke.transform.position = cursor.transform.position;
+            curSketch = newStroke;
+            cursorScript.TurnOffNewSketch();
+        }
+
         if (state == StrokeState.DRAW && !canDraw)
         {
             if (_currentTubeStroke != null)
