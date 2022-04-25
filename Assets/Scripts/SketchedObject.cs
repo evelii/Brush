@@ -12,10 +12,11 @@ public class SketchedObject : MonoBehaviour
     public string identity; // sketch recognition result
     public string softness; // hard or soft
     public bool aniStart;
+    public List<GameObject> childStrokes;
+
     bool inCollision;
     string rootFolder;
     Dictionary<string, bool> supportedSketches = new Dictionary<string, bool>();
-
     Vector3 selfSoundStartPoint;
     bool editingMode;
     List<GameObject> soundMarkCollection;
@@ -40,6 +41,9 @@ public class SketchedObject : MonoBehaviour
         supportedSketches.Add("airplane", true);
         supportedSketches.Add("dog", true);
         supportedSketches.Add("police car", true);
+
+        //childStrokes = new List<GameObject>();
+        gameObject.AddComponent<BoxCollider>();
 
         if (gameObject.name == "Floor")
         {
@@ -138,6 +142,12 @@ public class SketchedObject : MonoBehaviour
         {
             l.SetActive(false);
         }
+    }
+
+    public void AddChildStroke(GameObject newChild)
+    {
+        //childStrokes.Add(newChild);
+        //newChild.AddComponent<BoxCollider>();
     }
 
     private void OnCollisionEnter(Collision collision)

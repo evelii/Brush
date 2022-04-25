@@ -52,6 +52,7 @@ public class DrawTubes : MonoBehaviour
             newStroke = new GameObject("NewStroke");
             newStroke.transform.position = cursor.transform.position;
             curSketch = newStroke;
+            newStroke.AddComponent<SketchedObject>();
             cursorScript.TurnOffNewSketch();
         }
 
@@ -113,11 +114,12 @@ public class DrawTubes : MonoBehaviour
             newStroke = new GameObject("NewStroke");
             newStroke.transform.position = cursor.transform.position;
             curSketch = newStroke;
+            newStroke.AddComponent<SketchedObject>();
         }
-        if (newStroke.GetComponent<SketchedObject>() == null) newStroke.AddComponent<SketchedObject>();
 
         GameObject go = new GameObject("TubeStroke");
         go.transform.parent = newStroke.transform;
+        newStroke.GetComponent<SketchedObject>().AddChildStroke(go);
 
         _currentTubeStroke = go.AddComponent<TubeStroke>();
         TubeRenderer tube = go.AddComponent<TubeRenderer>();

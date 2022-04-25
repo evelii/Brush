@@ -45,7 +45,7 @@ public class AddAnimation : MonoBehaviour
 
         if ((bounce || movement) && addCollider)
         {
-            _animatedObject.AddComponent<BoxCollider>();
+            //_animatedObject.AddComponent<BoxCollider>();
             _animatedObject.AddComponent<Rigidbody>();
             _childObject.AddComponent<BoxCollider>();
             FitColliderToChildren(_animatedObject);
