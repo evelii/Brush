@@ -1,18 +1,19 @@
 ﻿<Properties StartupConfiguration="{3ABA823B-8C2A-4926-463E-BB0DA48C0615}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/DrawLine.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Tubes/DrawTubes.cs">
     <Files>
-      <File FileName="Assets/Scripts/AddAnimation.cs" Line="220" Column="33" />
-      <File FileName="Assets/Scripts/Tubes/DrawTubes.cs" Line="119" Column="1" />
+      <File FileName="Assets/Scripts/TCPClient.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/AddAnimation.cs" />
+      <File FileName="Assets/Scripts/Tubes/DrawTubes.cs" Line="58" Column="1" />
       <File FileName="Assets/Scripts/SketchedObject.cs" />
       <File FileName="Assets/Scripts/SketchManager.cs" />
       <File FileName="Assets/Scripts/SoundBrush.cs" />
       <File FileName="Assets/Scripts/MotionBrush.cs" />
-      <File FileName="Assets/Scripts/DrawLine.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/DrawLine.cs" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="60e6773b-0727-4a69-988c-aa77f765b668" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="efa99d01-6d83-4079-8a6f-88c535b508d1" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

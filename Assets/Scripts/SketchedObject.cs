@@ -146,7 +146,8 @@ public class SketchedObject : MonoBehaviour
 
     public void AddChildStroke(GameObject newChild)
     {
-        //childStrokes.Add(newChild);
+        if (childStrokes == null) childStrokes = new List<GameObject>();
+        childStrokes.Add(newChild);
         //newChild.AddComponent<BoxCollider>();
     }
 
@@ -158,5 +159,14 @@ public class SketchedObject : MonoBehaviour
         if (collision.gameObject.GetComponent<SketchedObject>().softness == "hard")
             collisionHard.Play();
         else collisionSoft.Play();
+    }
+
+    public void AddColliders()
+    {
+        foreach (GameObject child in childStrokes)
+        {
+            Collider collider = child.AddComponent<BoxCollider>();
+            collider.material.bounciness = 1.0f;
+        }
     }
 }

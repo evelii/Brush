@@ -47,7 +47,8 @@ public class AddAnimation : MonoBehaviour
         {
             //_animatedObject.AddComponent<BoxCollider>();
             _animatedObject.AddComponent<Rigidbody>();
-            _childObject.AddComponent<BoxCollider>();
+            //_childObject.AddComponent<BoxCollider>();
+            _animatedObject.GetComponent<SketchedObject>().AddColliders();
             FitColliderToChildren(_animatedObject);
             addCollider = false;
         }
@@ -123,8 +124,8 @@ public class AddAnimation : MonoBehaviour
         //_parentObject.AddComponent<Rigidbody>();
         //_parentObject.AddComponent<BoxCollider>();
 
-        Collider collider = _childObject.GetComponent<BoxCollider>();
-        collider.material.bounciness = 1.0f;
+        //Collider collider = _childObject.GetComponent<BoxCollider>();
+        //collider.material.bounciness = 1.0f;
         //FitColliderToChildren(_parentObject);
         bounce = false;  // necessary components have been added, so turned off the bool
         motionBrush.ResetBrush();
