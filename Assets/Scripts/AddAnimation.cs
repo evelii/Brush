@@ -99,11 +99,13 @@ public class AddAnimation : MonoBehaviour
             insertKeyframe = true;
             sketch.TurnOnEditingMode();
             MoveAlong("right");
+            sketch.HideSoundMarks();
         } else if (Input.GetKey("left"))
         {
             insertKeyframe = true;
             sketch.TurnOnEditingMode();
             MoveAlong("left");
+            sketch.HideSoundMarks();
         }
     }
 

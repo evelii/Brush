@@ -37,7 +37,7 @@ public class SketchedObject : MonoBehaviour
         editingMode = false;
         soundMarkCollection = new List<GameObject>();
         selfSoundStartPoint = Vector3.zero;
-        supportedSketches.Add("car", true);
+        supportedSketches.Add("ambulance", true);
         supportedSketches.Add("airplane", true);
         supportedSketches.Add("dog", true);
         supportedSketches.Add("police car", true);
@@ -55,7 +55,7 @@ public class SketchedObject : MonoBehaviour
             identity = "wall";
             softness = "hard";
         }
-        ObjectIdentity("police car");
+        ObjectIdentity("ambulance");
     }
 
     public void ObjectIdentity(string recognitionResult)
@@ -70,8 +70,16 @@ public class SketchedObject : MonoBehaviour
         if (supportedSketches.ContainsKey(identity))
         {
             selfSound.clip = Resources.Load<AudioClip>(rootFolder + "/" + identity + "/" + "self");
-            movingSound.clip = Resources.Load<AudioClip>(rootFolder + "/" + identity + "/" + "moving");
-            collisionHard.clip = Resources.Load<AudioClip>(rootFolder + "/" + identity + "/" + "hardCollision");
+            if (identity == "ambulance" || identity == "police car")
+            {
+                movingSound.clip = Resources.Load<AudioClip>(rootFolder + "/car/" + "moving");
+                collisionHard.clip = Resources.Load<AudioClip>(rootFolder + "/car/" + "hardCollision");
+            }
+            else
+            {
+                movingSound.clip = Resources.Load<AudioClip>(rootFolder + "/" + identity + "/" + "moving");
+                collisionHard.clip = Resources.Load<AudioClip>(rootFolder + "/" + identity + "/" + "hardCollision");
+            }
             selfSound.loop = true;
             movingSound.loop = true;
             collisionHard.loop = false;
@@ -135,7 +143,7 @@ public class SketchedObject : MonoBehaviour
         return soundMarkCollection.Count;
     }
 
-    void HideSoundMarks()
+    public void HideSoundMarks()
     {
         // hide the sound lines from the display
         foreach (GameObject l in soundMarkCollection)
