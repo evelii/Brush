@@ -42,9 +42,6 @@ public class SketchedObject : MonoBehaviour
         supportedSketches.Add("dog", true);
         supportedSketches.Add("police car", true);
 
-        //childStrokes = new List<GameObject>();
-        gameObject.AddComponent<BoxCollider>();
-
         if (gameObject.name == "Floor")
         {
             identity = "floor";
@@ -156,7 +153,6 @@ public class SketchedObject : MonoBehaviour
     {
         if (childStrokes == null) childStrokes = new List<GameObject>();
         childStrokes.Add(newChild);
-        //newChild.AddComponent<BoxCollider>();
     }
 
     private void OnCollisionEnter(Collision collision)

@@ -310,7 +310,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 538840546f4ff4b168e4c60d850c76f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  editingMode: 0
   selfSound: {fileID: 0}
   movingSound: {fileID: 0}
   collisionHard: {fileID: 0}
@@ -318,6 +317,7 @@ MonoBehaviour:
   identity: 
   softness: 
   aniStart: 0
+  childStrokes: []
 --- !u!1 &526923074
 GameObject:
   m_ObjectHideFlags: 0
@@ -517,7 +517,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 685610041}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.07, y: 10.07, z: 0}
+  m_LocalPosition: {x: 0.27, y: 12.46, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -536,6 +536,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canDraw: 0
+  newSketch: 0
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -742,13 +743,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e6d362e95b5441b2b8f24156ec504e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sketch: {fileID: 0}
   _childObject: {fileID: 0}
-  _parentObject: {fileID: 0}
+  _animatedObject: {fileID: 0}
   bounce: 0
   movement: 0
   addCollider: 0
   insertKeyframe: 0
-  animatedObject: {fileID: 0}
   keyframePos: {x: 0, y: 0, z: 0}
   keyframeObject: {fileID: 0}
   passedKeyframe: 0
@@ -938,7 +939,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 538840546f4ff4b168e4c60d850c76f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  editingMode: 0
   selfSound: {fileID: 0}
   movingSound: {fileID: 0}
   collisionHard: {fileID: 0}
@@ -946,6 +946,7 @@ MonoBehaviour:
   identity: 
   softness: 
   aniStart: 0
+  childStrokes: []
 --- !u!65 &1750869929
 BoxCollider:
   m_ObjectHideFlags: 0

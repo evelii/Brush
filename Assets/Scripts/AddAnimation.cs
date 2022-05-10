@@ -45,11 +45,10 @@ public class AddAnimation : MonoBehaviour
 
         if ((bounce || movement) && addCollider)
         {
-            //_animatedObject.AddComponent<BoxCollider>();
             _animatedObject.AddComponent<Rigidbody>();
             //_childObject.AddComponent<BoxCollider>();
-            _animatedObject.GetComponent<SketchedObject>().AddColliders();
-            FitColliderToChildren(_animatedObject);
+            //_animatedObject.GetComponent<SketchedObject>().AddColliders();
+            //FitColliderToChildren(_animatedObject);
             addCollider = false;
         }
 
@@ -373,5 +372,11 @@ public class AddAnimation : MonoBehaviour
             + (-a + c) * u
             + 2f * b
         );
+    }
+
+    public void AddColliderToSketch()
+    {
+        _animatedObject.GetComponent<SketchedObject>().AddColliders();
+        FitColliderToChildren(_animatedObject);
     }
 }

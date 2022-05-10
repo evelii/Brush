@@ -49,10 +49,11 @@ public class DrawTubes : MonoBehaviour
         bool newSketch = cursorScript.newSketch;
         if (newSketch)
         {
-            newStroke = new GameObject("NewStroke");
-            newStroke.transform.position = cursor.transform.position;
-            curSketch = newStroke;
-            newStroke.AddComponent<SketchedObject>();
+            if (SketchManager.curEditingObject != null)
+            {
+                addAnimation.AddColliderToSketch();
+            }
+            newStroke = null;
             cursorScript.TurnOffNewSketch();
         }
 
@@ -119,6 +120,8 @@ public class DrawTubes : MonoBehaviour
 
         GameObject go = new GameObject("TubeStroke");
         go.transform.parent = newStroke.transform;
+        curSketch = newStroke;
+        newStroke.AddComponent<BoxCollider>();
         newStroke.GetComponent<SketchedObject>().AddChildStroke(go);
 
         _currentTubeStroke = go.AddComponent<TubeStroke>();
@@ -126,8 +129,6 @@ public class DrawTubes : MonoBehaviour
         tube.MarkDynamic();
         go.GetComponent<MeshRenderer>().material.color = ColorManager.Instance.GetColor();
         tube.radius = strokeRadius;
-
-        //SketchManager.manager.sketchObjects.Add(newStroke);
 
         if (addAnimation.insertKeyframe)
         {
