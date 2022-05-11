@@ -16,7 +16,7 @@ public class DrawTubes : MonoBehaviour
     public Color strokeColor;
     public ColorPickerTriangle CP;
 
-    [Range(0.1f, 1f)]
+    [Range(0.001f, 0.1f)]
     public float strokeRadius;
 
     [Range(0.01f, 0.1f)]
@@ -57,54 +57,73 @@ public class DrawTubes : MonoBehaviour
             cursorScript.TurnOffNewSketch();
         }
 
-        if (state == StrokeState.DRAW && !canDraw)
+        //if (state == StrokeState.DRAW && !canDraw)
+        //{
+        //    if (_currentTubeStroke != null)
+        //    {
+        //        //strokesList.Add(_currentTubeStroke.getStrokePoints());
+        //        if(fullPoints.Count > 0)
+        //        {
+        //            strokesList.Add(new List<Vector3>(fullPoints));
+        //            fullPoints.Clear();
+        //        }
+        //    }
+
+        //    GameObject clientObject = GameObject.Find("TCPClient");
+        //    TCPClient client = (TCPClient)clientObject.GetComponent(typeof(TCPClient));
+        //    client.strokesList = strokesList;
+        //    client.curObjectForRecognition = curSketch.GetComponent<SketchedObject>();
+        //}
+
+        //// when a new dragging on the cursor, create a new tube
+        //if (Input.GetMouseButton(0) && canDraw)
+        //{
+        //    state = StrokeState.START_STROKE;
+        //    _currentTubeStroke = null;
+
+        //}
+
+        //if (state == StrokeState.WAITING)
+        //{
+        //    if (canDraw) state = StrokeState.START_STROKE;
+        //    _currentTubeStroke = null;
+        //}
+
+        //if (state == StrokeState.START_STROKE)
+        //{
+        //    _createNewTube();
+        //    state = StrokeState.DRAW;
+        //    _currentTubeStroke.AddPoint(cursor.position);
+        //    lastPos = cursor.position;
+        //}
+
+        //if (state == StrokeState.DRAW)
+        //{
+        //    if (lastPos != cursor.position)
+        //    {
+        //        fullPoints.Add(cursor.position);
+        //    }
+        //    lastPos = cursor.position;
+        //    if (!canDraw) state = StrokeState.WAITING;
+        //}
+
+        if (OVRInput.GetDown(OVRInput.Button.One) && canDraw)
         {
-            if (_currentTubeStroke != null)
+            if (state == StrokeState.WAITING)
             {
-                //strokesList.Add(_currentTubeStroke.getStrokePoints());
-                if(fullPoints.Count > 0)
-                {
-                    strokesList.Add(new List<Vector3>(fullPoints));
-                    fullPoints.Clear();
-                }
+                state = StrokeState.START_STROKE;
+                _createNewTube();
+                _currentTubeStroke.AddPoint(cursor.position);
+                state = StrokeState.DRAW;
             }
-
-            GameObject clientObject = GameObject.Find("TCPClient");
-            TCPClient client = (TCPClient)clientObject.GetComponent(typeof(TCPClient));
-            client.strokesList = strokesList;
-            client.curObjectForRecognition = curSketch.GetComponent<SketchedObject>();
         }
-
-        // when a new dragging on the cursor, create a new tube
-        if (Input.GetMouseButton(0) && canDraw)
+        else if (OVRInput.GetUp(OVRInput.Button.One) && state == StrokeState.DRAW)
         {
-            state = StrokeState.START_STROKE;
-            _currentTubeStroke = null;
-
-        }
-
-        if (state == StrokeState.WAITING)
-        {
-            if (canDraw) state = StrokeState.START_STROKE;
-            _currentTubeStroke = null;
-        }
-
-        if (state == StrokeState.START_STROKE)
-        {
-            _createNewTube();
-            state = StrokeState.DRAW;
-            _currentTubeStroke.AddPoint(cursor.position);
-            lastPos = cursor.position;
-        }
-
-        if (state == StrokeState.DRAW)
-        {
-            if (lastPos != cursor.position)
+            if (_currentTubeStroke)
             {
-                fullPoints.Add(cursor.position);
+                _currentTubeStroke = null;
+                state = StrokeState.WAITING;
             }
-            lastPos = cursor.position;
-            if (!canDraw) state = StrokeState.WAITING;
         }
     }
 
