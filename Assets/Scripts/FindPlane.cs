@@ -122,22 +122,22 @@ public class FindPlane : MonoBehaviour
 
     List<Vector2> RotatePlaneToParallelToXY(List<Vector3> planePoints)
     {
-        Vector3 xy = new Vector3(0, 0, 1);
-        //float angle = Vector3.Angle(pl.normal, xy);
-        //plRotated.normal = Quaternion.Euler(0, angle, 0) * pl.normal;
-        //Debug.LogWarning(pl.normal);
+        //Vector3 xy = new Vector3(0, 0, 1);
+        ////float angle = Vector3.Angle(pl.normal, xy);
+        ////plRotated.normal = Quaternion.Euler(0, angle, 0) * pl.normal;
+        ////Debug.LogWarning(pl.normal);
 
-        Quaternion rotation = Quaternion.FromToRotation(pl.normal, xy);
-        Vector3 indegree = rotation.eulerAngles;
-        if (indegree.y == 180.0f) flipHorizontally = true;
+        //Quaternion rotation = Quaternion.FromToRotation(pl.normal, xy);
+        //Vector3 indegree = rotation.eulerAngles;
+        //if (indegree.y == 180.0f) flipHorizontally = true;
 
-        plRotated.normal = rotation * pl.normal;
+        //plRotated.normal = rotation * pl.normal;
         
         //Debug.LogWarning(plRotated.normal); // should be a multiple of (0, 0, 1)
-        for(int i = 0; i < planePoints.Count; i++)
-        {
-            planePoints[i] = rotation * planePoints[i];
-        }
+        //for(int i = 0; i < planePoints.Count; i++)
+        //{
+        //    planePoints[i] = rotation * planePoints[i];
+        //}
         List<Vector2> xyPoint = new List<Vector2>();
         foreach(Vector3 point in planePoints)
         {

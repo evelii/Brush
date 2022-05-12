@@ -31,23 +31,18 @@ public class PathFollower : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (state == PathSetState.WAITING)
-        {
-            if (canDraw) state = PathSetState.START_SETTING;
-            //_currLine = null;
-            //_currKeyframeLine = null;
-        }
 
-        if (state == PathSetState.START_SETTING)
+        if (OVRInput.GetDown(OVRInput.Button.Two))
         {
             _createNewPath();
             state = PathSetState.DRAW;
         }
 
-        if (state == PathSetState.DRAW)
+        else if (OVRInput.GetUp(OVRInput.Button.Two))
         {
-            if (!canDraw) state = PathSetState.WAITING;
+            state = PathSetState.WAITING;
         }
+
     }
 
     private void _createNewPath()
@@ -96,6 +91,8 @@ public class PathFollower : MonoBehaviour
 
     public Vector3[] getPathPoints()
     {
+        if (_currLine == null) return null;  // no path is drawn
+
         Vector3[] pos;
         if (!addAnimation.insertKeyframe || _currKeyframeLine == null)
         {

@@ -8,6 +8,7 @@ using UnityEngine;
 
 public class TCPClient : MonoBehaviour
 {
+	public DrawTubes tubes;
 	public GameObject bestFitPlane;
 	public SketchedObject curObjectForRecognition;
 	public string address;
@@ -31,10 +32,11 @@ public class TCPClient : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.Space))
+		if (OVRInput.GetDown(OVRInput.Button.Two))
 		{
 			Debug.LogWarning("press!");
 			SendMessage();
+			tubes.FinishSketch();
 		}
 
 		if (result != "")

@@ -31,6 +31,7 @@ public class DrawTubes : MonoBehaviour
     public List<Vector3> fullPoints; // all points drawn by the controller
 
     public AddAnimation addAnimation;
+    public GameObject clientObject;
 
     GameObject newStroke;
     Cursor cursorScript;
@@ -46,66 +47,17 @@ public class DrawTubes : MonoBehaviour
     public void Update()
     {
         bool canDraw = cursorScript.canDraw;
-        bool newSketch = cursorScript.newSketch;
-        if (newSketch)
+        //bool newSketch = cursorScript.newSketch;
+
+        if (state == StrokeState.DRAW)
         {
-            if (SketchManager.curEditingObject != null)
+            if (lastPos != cursor.position)
             {
-                addAnimation.AddColliderToSketch();
+                fullPoints.Add(cursor.position);
             }
-            newStroke = null;
-            cursorScript.TurnOffNewSketch();
+            lastPos = cursor.position;
+            if (!canDraw) state = StrokeState.WAITING;
         }
-
-        //if (state == StrokeState.DRAW && !canDraw)
-        //{
-        //    if (_currentTubeStroke != null)
-        //    {
-        //        //strokesList.Add(_currentTubeStroke.getStrokePoints());
-        //        if(fullPoints.Count > 0)
-        //        {
-        //            strokesList.Add(new List<Vector3>(fullPoints));
-        //            fullPoints.Clear();
-        //        }
-        //    }
-
-        //    GameObject clientObject = GameObject.Find("TCPClient");
-        //    TCPClient client = (TCPClient)clientObject.GetComponent(typeof(TCPClient));
-        //    client.strokesList = strokesList;
-        //    client.curObjectForRecognition = curSketch.GetComponent<SketchedObject>();
-        //}
-
-        //// when a new dragging on the cursor, create a new tube
-        //if (Input.GetMouseButton(0) && canDraw)
-        //{
-        //    state = StrokeState.START_STROKE;
-        //    _currentTubeStroke = null;
-
-        //}
-
-        //if (state == StrokeState.WAITING)
-        //{
-        //    if (canDraw) state = StrokeState.START_STROKE;
-        //    _currentTubeStroke = null;
-        //}
-
-        //if (state == StrokeState.START_STROKE)
-        //{
-        //    _createNewTube();
-        //    state = StrokeState.DRAW;
-        //    _currentTubeStroke.AddPoint(cursor.position);
-        //    lastPos = cursor.position;
-        //}
-
-        //if (state == StrokeState.DRAW)
-        //{
-        //    if (lastPos != cursor.position)
-        //    {
-        //        fullPoints.Add(cursor.position);
-        //    }
-        //    lastPos = cursor.position;
-        //    if (!canDraw) state = StrokeState.WAITING;
-        //}
 
         if (OVRInput.GetDown(OVRInput.Button.One) && canDraw)
         {
@@ -123,8 +75,29 @@ public class DrawTubes : MonoBehaviour
             {
                 _currentTubeStroke = null;
                 state = StrokeState.WAITING;
+
+                if (fullPoints.Count > 0)
+                {
+                    strokesList.Add(new List<Vector3>(fullPoints));
+                    fullPoints.Clear();
+                }
             }
+
+            TCPClient client = (TCPClient)clientObject.GetComponent(typeof(TCPClient));
+            client.strokesList = strokesList;
+            client.curObjectForRecognition = curSketch.GetComponent<SketchedObject>();
         }
+    }
+
+    public void FinishSketch()
+    {
+        if (SketchManager.curEditingObject != null)
+        {
+            addAnimation.AddColliderToSketch();
+        }
+        newStroke = null;
+        strokesList.Clear();
+        //cursorScript.TurnOffNewSketch();
     }
 
     private void _createNewTube()
