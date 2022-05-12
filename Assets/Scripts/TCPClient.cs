@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using System.IO;
 using UnityEngine;
 
 public class TCPClient : MonoBehaviour
@@ -129,8 +130,7 @@ public class TCPClient : MonoBehaviour
 
 		FindPlane findPlane = bestFitPlane.GetComponent<FindPlane>();
 		clientMessage = findPlane.GetTranslatedPoints();
-
-		Debug.Log(clientMessage);
+		WriteString(clientMessage);
 
 		if (socketConnection == null)
 		{
@@ -154,5 +154,18 @@ public class TCPClient : MonoBehaviour
 		{
 			Debug.Log("Socket exception: " + socketException);
 		}
+	}
+
+	private void WriteString(string content)
+	{
+		string path = "Assets/Resources/Points.txt";
+		//Write some text to the test.txt file
+		StreamWriter writer = new StreamWriter(path, true);
+		writer.WriteLine(content);
+		writer.Close();
+		StreamReader reader = new StreamReader(path);
+		//Print the text from the file
+		Debug.Log(reader.ReadToEnd());
+		reader.Close();
 	}
 }
