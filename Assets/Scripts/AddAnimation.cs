@@ -40,72 +40,61 @@ public class AddAnimation : MonoBehaviour
     public void Update()
     {
         _animatedObject = SketchManager._parentObject;
-        _childObject = SketchManager._curEditingObject;
-        if (_animatedObject) sketch = SketchManager._parentObject.GetComponent<SketchedObject>();
-
-        if ((bounce || movement) && addCollider)
+        if (_animatedObject)
         {
-            _animatedObject.AddComponent<Rigidbody>();
-            //_childObject.AddComponent<BoxCollider>();
-            //_animatedObject.GetComponent<SketchedObject>().AddColliders();
-            //FitColliderToChildren(_animatedObject);
-            addCollider = false;
-        }
+            _childObject = SketchManager._curEditingObject;
+            sketch = SketchManager._parentObject.GetComponent<SketchedObject>();
 
-        if (bounce)
-        {
-            _animatedObject.GetComponent<SketchedObject>().aniStart = true;
-            // Check if there is user defined path
-            pos = path.getPathPoints();
-            // 1. There is a customized movement path, just follow the path
-            if (pos.Length > 1)
+            if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
             {
-
+                sketch.aniStart = true;
             }
 
-            else AddBouncingEffect();
-        }
-
-        if (movement)
-        {
-            _animatedObject.GetComponent<SketchedObject>().aniStart = true;
-            // Check if there is user defined path
-            if (pos == null) pos = path.getPathPoints();
-            if (insertKeyframe)
+            if (sketch.aniStart && !sketch.rigidBodyAdded)
             {
-                ResetPath();
-                insertKeyframe = false;
-                sketch.TurnOffEditingMode();
-            }
-            // 1. There is a customized movement path, just follow the path
-            if(pos.Length > 1)
-            {
-                _animatedObject.GetComponent<Rigidbody>().useGravity = false;
-                MovementInit();
-                FollowMovementPath();
+                _animatedObject.AddComponent<Rigidbody>();
+                sketch.rigidBodyAdded = true;
             }
 
-            // 2. There is no customized path, use the default behaviour
-            else
+            if (sketch.aniStart)
             {
-                DefaultMovement();
+                // Check if there is user defined path
+                if (pos == null) pos = path.getPathPoints();
+                if (insertKeyframe)
+                {
+                    ResetPath();
+                    insertKeyframe = false;
+                    sketch.TurnOffEditingMode();
+                }
+                // 1. There is a customized movement path, just follow the path
+                if (pos != null)
+                {
+                    _animatedObject.GetComponent<Rigidbody>().useGravity = false;
+                    MovementInit();
+                    FollowMovementPath();
+                }
+
+                // 2. There is no customized path, use the gravity
+                else if (!sketch.bouncyAdded) AddBouncingEffect();
+            }
+
+            // press left/right arrow to move along the movement path
+            if (Input.GetKey("right"))
+            {
+                insertKeyframe = true;
+                sketch.TurnOnEditingMode();
+                MoveAlong("right");
+                sketch.HideSoundMarks();
+            }
+            else if (Input.GetKey("left"))
+            {
+                insertKeyframe = true;
+                sketch.TurnOnEditingMode();
+                MoveAlong("left");
+                sketch.HideSoundMarks();
             }
         }
-
-        // press left/right arrow to move along the movement path
-        if (Input.GetKey("right"))
-        {
-            insertKeyframe = true;
-            sketch.TurnOnEditingMode();
-            MoveAlong("right");
-            sketch.HideSoundMarks();
-        } else if (Input.GetKey("left"))
-        {
-            insertKeyframe = true;
-            sketch.TurnOnEditingMode();
-            MoveAlong("left");
-            sketch.HideSoundMarks();
-        }
+            
     }
 
     public void FixedUpdate()
@@ -128,7 +117,8 @@ public class AddAnimation : MonoBehaviour
         //Collider collider = _childObject.GetComponent<BoxCollider>();
         //collider.material.bounciness = 1.0f;
         //FitColliderToChildren(_parentObject);
-        bounce = false;  // necessary components have been added, so turned off the bool
+        sketch.bouncyAdded = true;  // necessary components have been added, so turned off the bool
+        sketch.aniStart = false;
         motionBrush.ResetBrush();
     }
 
@@ -161,22 +151,6 @@ public class AddAnimation : MonoBehaviour
             bc.size = Vector3.zero;
         }
     }
-
-    //private void addBouncingEffect()
-    //{
-    //    _currentObject.AddComponent<Rigidbody>();
-    //    Collider collider = _currentObject.AddComponent<SphereCollider>();
-    //    collider.material.bounciness = 1.0f;
-    //    SquashAndStretchKit.SquashAndStretch tem = _currentObject.AddComponent<SquashAndStretchKit.SquashAndStretch>();
-    //    tem.enableSquash = true;
-    //    tem.enableStretch = true;
-    //    tem.maxSpeedThreshold = 20;
-    //    tem.minSpeedThreshold = 1;
-    //    tem.maxSquash = 1.6f;
-    //    tem.maxStretch = 1.5f;
-
-    //    bounce = false;  // necessary components have been added, so turned off the bool
-    //}
 
     void MovementInit()
     {

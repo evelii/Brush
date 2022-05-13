@@ -52,14 +52,14 @@ public class PathFollower : MonoBehaviour
         {
             GameObject newPath = new GameObject("New Path");
             _currLine = newPath.AddComponent<LineRenderer>();
-            _currLine.startWidth = .1f;
-            _currLine.endWidth = .1f;
+            _currLine.startWidth = .05f;
+            _currLine.endWidth = .05f;
         } else
         {
             GameObject newPath = new GameObject("New Keyframe Path");
             _currKeyframeLine = newPath.AddComponent<LineRenderer>();
-            _currKeyframeLine.startWidth = .1f;
-            _currKeyframeLine.endWidth = .1f;
+            _currKeyframeLine.startWidth = .05f;
+            _currKeyframeLine.endWidth = .05f;
         }
         
         numClicks = 0;

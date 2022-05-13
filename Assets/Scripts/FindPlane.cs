@@ -236,7 +236,7 @@ public class FindPlane : MonoBehaviour
             p = c;
         }
 
-        float d = 1.0f;
+        //float d = 1.0f;
 
         // Normalize the result and return it
         result.Normalize();

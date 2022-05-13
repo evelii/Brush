@@ -12,6 +12,7 @@ public class SketchedObject : MonoBehaviour
     public string identity; // sketch recognition result
     public string softness; // hard or soft
     public bool aniStart;
+    public bool rigidBodyAdded = false;
     public List<GameObject> childStrokes;
 
     bool inCollision;
@@ -20,6 +21,7 @@ public class SketchedObject : MonoBehaviour
     Vector3 selfSoundStartPoint;
     bool editingMode;
     List<GameObject> soundMarkCollection;
+    public bool bouncyAdded = false;
 
     // Start is called before the first frame update
     void Start()
@@ -41,6 +43,7 @@ public class SketchedObject : MonoBehaviour
         supportedSketches.Add("airplane", true);
         supportedSketches.Add("dog", true);
         supportedSketches.Add("police car", true);
+        supportedSketches.Add("basketball", true);
 
         if (gameObject.name == "Floor")
         {
@@ -52,7 +55,7 @@ public class SketchedObject : MonoBehaviour
             identity = "wall";
             softness = "hard";
         }
-        ObjectIdentity("ambulance");
+        ObjectIdentity("police car");
     }
 
     public void ObjectIdentity(string recognitionResult)
@@ -77,6 +80,10 @@ public class SketchedObject : MonoBehaviour
                 movingSound.clip = Resources.Load<AudioClip>(rootFolder + "/" + identity + "/" + "moving");
                 collisionHard.clip = Resources.Load<AudioClip>(rootFolder + "/" + identity + "/" + "hardCollision");
             }
+
+            if (identity == "ambulance" || identity == "police car" || identity == "airplane") softness = "hard";
+            else softness = "soft";
+
             selfSound.loop = true;
             movingSound.loop = true;
             collisionHard.loop = false;
@@ -160,6 +167,7 @@ public class SketchedObject : MonoBehaviour
         inCollision = true;
         movingSound.Stop();
         selfSound.Stop();
+        if (collision.gameObject.GetComponent<SketchedObject>() == null) Debug.LogWarning("is null! " + collision.gameObject.name);
         if (collision.gameObject.GetComponent<SketchedObject>().softness == "hard")
             collisionHard.Play();
         else collisionSoft.Play();

@@ -159,6 +159,7 @@ public class TCPClient : MonoBehaviour
 	private void WriteString(string content)
 	{
 		string path = "Assets/Resources/Points.txt";
+		File.WriteAllText(path, String.Empty);  // clear the old content
 		//Write some text to the test.txt file
 		StreamWriter writer = new StreamWriter(path, true);
 		writer.WriteLine(content);
