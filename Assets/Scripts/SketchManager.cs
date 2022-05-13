@@ -10,7 +10,7 @@ public class SketchManager : MonoBehaviour
 
     public static GameObject _curEditingObject;
     public static GameObject _parentObject;
-    public static SketchedObject curEditingObject;
+    public static SketchEntity curEditingObject;
 
     void Awake()
     {

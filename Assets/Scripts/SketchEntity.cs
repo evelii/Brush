@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public class SketchedObject : MonoBehaviour
+public class SketchEntity : MonoBehaviour
 {
     public AudioSource selfSound;
     public AudioSource movingSound;
@@ -23,6 +23,9 @@ public class SketchedObject : MonoBehaviour
     bool editingMode;
     List<GameObject> soundMarkCollection;
     public bool bouncyAdded = false;
+
+    public float moveSpeed; // the speed when moving along the path
+    public float rotationSpeed;
 
     // Start is called before the first frame update
     void Start()
@@ -45,6 +48,9 @@ public class SketchedObject : MonoBehaviour
         supportedSketches.Add("dog", true);
         supportedSketches.Add("police car", true);
         supportedSketches.Add("basketball", true);
+
+        moveSpeed = 6f;
+        rotationSpeed = 10f;
 
         if (gameObject.name == "Floor")
         {
@@ -168,8 +174,8 @@ public class SketchedObject : MonoBehaviour
         inCollision = true;
         movingSound.Stop();
         selfSound.Stop();
-        if (collision.gameObject.GetComponent<SketchedObject>() == null) Debug.LogWarning("is null! " + collision.gameObject.name);
-        if (collision.gameObject.GetComponent<SketchedObject>().softness == "hard")
+        if (collision.gameObject.GetComponent<SketchEntity>() == null) Debug.LogWarning("is null! " + collision.gameObject.name);
+        if (collision.gameObject.GetComponent<SketchEntity>().softness == "hard")
             collisionHard.Play();
         else collisionSoft.Play();
     }

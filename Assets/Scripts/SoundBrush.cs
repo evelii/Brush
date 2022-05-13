@@ -16,7 +16,7 @@ public class SoundBrush : MonoBehaviour
     public float width;
     int lineCount;
 
-    public SketchedObject editingSketch; // the object to be animated
+    public SketchEntity editingSketch; // the object to be animated
 
     // Colors
     public ColorPickerTriangle CP;

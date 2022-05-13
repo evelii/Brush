@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class AddAnimation : MonoBehaviour
 {
-    public SketchedObject sketch;
+    public SketchEntity sketch;
     public GameObject _childObject;
     public GameObject _animatedObject; // the object which moves along the path
 
@@ -19,8 +19,6 @@ public class AddAnimation : MonoBehaviour
     public GameObject keyframeObject; // object which is inserted as a key frame
     public bool passedKeyframe = false;
 
-    public float moveSpeed; // the speed when moving along the path
-    public float rotationSpeed;
     int curIdx;
     static Vector3 currentPosHolder;
     public PathFollower path;
@@ -41,7 +39,7 @@ public class AddAnimation : MonoBehaviour
         if (_animatedObject)
         {
             _childObject = SketchManager._curEditingObject;
-            sketch = SketchManager._parentObject.GetComponent<SketchedObject>();
+            sketch = SketchManager._parentObject.GetComponent<SketchEntity>();
 
             if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
             {
@@ -189,8 +187,8 @@ public class AddAnimation : MonoBehaviour
         float distance = Vector3.Distance(currentPosHolder, _animatedObject.transform.position);
         tarPos = currentPosHolder;  // TODO: tarpos and change moveSpeed*Time.deltaTime to moveSpeed
 
-        _animatedObject.transform.right = Vector3.RotateTowards(_animatedObject.transform.right, tarPos - _animatedObject.transform.position, rotationSpeed * Time.deltaTime, 0.0f);
-        _animatedObject.transform.position = Vector3.MoveTowards(_animatedObject.transform.position, tarPos, moveSpeed*Time.deltaTime);
+        _animatedObject.transform.right = Vector3.RotateTowards(_animatedObject.transform.right, tarPos - _animatedObject.transform.position, sketch.rotationSpeed * Time.deltaTime, 0.0f);
+        _animatedObject.transform.position = Vector3.MoveTowards(_animatedObject.transform.position, tarPos, sketch.moveSpeed*Time.deltaTime);
 
         if (distance <= 0.3f)
         {
@@ -211,8 +209,8 @@ public class AddAnimation : MonoBehaviour
 
         if (direction == "right")
         {
-            _animatedObject.transform.right = Vector3.RotateTowards(_animatedObject.transform.right, tarPos - _animatedObject.transform.position, rotationSpeed * Time.deltaTime, 0.0f);
-            _animatedObject.transform.position = Vector3.MoveTowards(_animatedObject.transform.position, tarPos, moveSpeed * Time.deltaTime);
+            _animatedObject.transform.right = Vector3.RotateTowards(_animatedObject.transform.right, tarPos - _animatedObject.transform.position, sketch.rotationSpeed * Time.deltaTime, 0.0f);
+            _animatedObject.transform.position = Vector3.MoveTowards(_animatedObject.transform.position, tarPos, sketch.moveSpeed * Time.deltaTime);
 
             if (distance <= 0.3f)
             {
@@ -222,8 +220,8 @@ public class AddAnimation : MonoBehaviour
         }
         else if(direction == "left")
         {
-            _animatedObject.transform.right = Vector3.RotateTowards(_animatedObject.transform.right, - tarPos + _animatedObject.transform.position, rotationSpeed * Time.deltaTime, 0.0f);
-            _animatedObject.transform.position = Vector3.MoveTowards(_animatedObject.transform.position, tarPos, moveSpeed * Time.deltaTime);
+            _animatedObject.transform.right = Vector3.RotateTowards(_animatedObject.transform.right, - tarPos + _animatedObject.transform.position, sketch.rotationSpeed * Time.deltaTime, 0.0f);
+            _animatedObject.transform.position = Vector3.MoveTowards(_animatedObject.transform.position, tarPos, sketch.moveSpeed * Time.deltaTime);
 
             if (distance <= 0.3f)
             {
@@ -314,8 +312,8 @@ public class AddAnimation : MonoBehaviour
         {
             float distance = Vector3.Distance(currentPosHolderKeyframe, keyframeObject.transform.position);
 
-            keyframeObject.transform.right = Vector3.RotateTowards(keyframeObject.transform.right, currentPosHolderKeyframe - keyframeObject.transform.position, rotationSpeed * Time.deltaTime, 0.0f);
-            keyframeObject.transform.position = Vector3.MoveTowards(keyframeObject.transform.position, currentPosHolderKeyframe, moveSpeed * 1.6f * Time.deltaTime);
+            keyframeObject.transform.right = Vector3.RotateTowards(keyframeObject.transform.right, currentPosHolderKeyframe - keyframeObject.transform.position, sketch.rotationSpeed * Time.deltaTime, 0.0f);
+            keyframeObject.transform.position = Vector3.MoveTowards(keyframeObject.transform.position, currentPosHolderKeyframe, sketch.moveSpeed * 1.6f * Time.deltaTime);
 
             if (distance <= 0.3f)
             {
@@ -346,7 +344,7 @@ public class AddAnimation : MonoBehaviour
 
     public void AddColliderToSketch()
     {
-        _animatedObject.GetComponent<SketchedObject>().AddColliders();
+        _animatedObject.GetComponent<SketchEntity>().AddColliders();
         FitColliderToChildren(_animatedObject);
     }
 }

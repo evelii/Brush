@@ -11,7 +11,7 @@ public class TCPClient : MonoBehaviour
 {
 	public DrawTubes tubes;
 	public GameObject bestFitPlane;
-	public SketchedObject curObjectForRecognition;
+	public SketchEntity curObjectForRecognition;
 	public string address;
 	public int port;
 	string result;

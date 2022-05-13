@@ -85,7 +85,7 @@ public class DrawTubes : MonoBehaviour
 
             TCPClient client = (TCPClient)clientObject.GetComponent(typeof(TCPClient));
             client.strokesList = strokesList;
-            client.curObjectForRecognition = curSketch.GetComponent<SketchedObject>();
+            client.curObjectForRecognition = curSketch.GetComponent<SketchEntity>();
         }
     }
 
@@ -107,14 +107,14 @@ public class DrawTubes : MonoBehaviour
             newStroke = new GameObject("NewStroke");
             newStroke.transform.position = cursor.transform.position;
             curSketch = newStroke;
-            newStroke.AddComponent<SketchedObject>();
+            newStroke.AddComponent<SketchEntity>();
         }
 
         GameObject go = new GameObject("TubeStroke");
         go.transform.parent = newStroke.transform;
         curSketch = newStroke;
         newStroke.AddComponent<BoxCollider>();
-        newStroke.GetComponent<SketchedObject>().AddChildStroke(go);
+        newStroke.GetComponent<SketchEntity>().AddChildStroke(go);
 
         _currentTubeStroke = go.AddComponent<TubeStroke>();
         TubeRenderer tube = go.AddComponent<TubeRenderer>();
@@ -131,7 +131,7 @@ public class DrawTubes : MonoBehaviour
         {
             SketchManager._parentObject = curSketch;
             SketchManager._curEditingObject = go;
-            SketchManager.curEditingObject = curSketch.GetComponent<SketchedObject>();
+            SketchManager.curEditingObject = curSketch.GetComponent<SketchEntity>();
         }
     }
 
