@@ -64,8 +64,6 @@ public class MotionBrush : MonoBehaviour
 
         else if(verticalLineCount == 3)
         {
-            addAnimation.bounce = true;
-
             // hide the motion lines from the display
             foreach (GameObject l in lineCollection)
             {

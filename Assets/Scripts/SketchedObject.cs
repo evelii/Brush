@@ -13,6 +13,7 @@ public class SketchedObject : MonoBehaviour
     public string softness; // hard or soft
     public bool aniStart;
     public bool rigidBodyAdded = false;
+    public Vector3[] trajectory; // null or a customized path
     public List<GameObject> childStrokes;
 
     bool inCollision;

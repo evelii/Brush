@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AddAnimation : MonoBehaviour
@@ -7,10 +9,7 @@ public class AddAnimation : MonoBehaviour
     public GameObject _childObject;
     public GameObject _animatedObject; // the object which moves along the path
 
-    public bool bounce;
-    private bool movementPrepare;
     public bool movement;
-    public bool addCollider = true;
     public bool insertKeyframe = false;
 
     private Vector3[] pos; // the movement path for the main object
@@ -32,8 +31,7 @@ public class AddAnimation : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        movementPrepare = false;
-        addCollider = true;
+
     }
 
     // Update is called once per frame
@@ -59,7 +57,7 @@ public class AddAnimation : MonoBehaviour
             if (sketch.aniStart)
             {
                 // Check if there is user defined path
-                if (pos == null) pos = path.getPathPoints();
+                if (sketch.trajectory == null) sketch.trajectory = path.getPathPoints();
                 if (insertKeyframe)
                 {
                     ResetPath();
@@ -67,7 +65,7 @@ public class AddAnimation : MonoBehaviour
                     sketch.TurnOffEditingMode();
                 }
                 // 1. There is a customized movement path, just follow the path
-                if (pos != null)
+                if (sketch.trajectory != null)
                 {
                     _animatedObject.GetComponent<Rigidbody>().useGravity = false;
                     MovementInit();
@@ -154,24 +152,22 @@ public class AddAnimation : MonoBehaviour
 
     void MovementInit()
     {
-        if (movementPrepare) return;
-
-        if (pos == null) pos = path.getPathPoints();
-
         CheckPos();
-        movementPrepare = true;
+
+        if (sketch.trajectory != null) return;
+
+        sketch.trajectory = path.getPathPoints();        
     }
 
     void CheckPos()
     {
-        if (curIdx >= 0 && curIdx < pos.Length)
+        if (curIdx >= 0 && curIdx < sketch.trajectory.Length)
         {
-            currentPosHolder = pos[curIdx];
+            currentPosHolder = sketch.trajectory[curIdx];
         }
         else
         {
             ResetPath();
-            //movement = false;
             passedKeyframe = false;
         }
     }
@@ -189,7 +185,7 @@ public class AddAnimation : MonoBehaviour
         }
 
         currentPathPercent += percentsPerSecond * Time.deltaTime;
-        Vector3 tarPos = Interp(pos, currentPathPercent);
+        Vector3 tarPos = Interp(sketch.trajectory, currentPathPercent);
         float distance = Vector3.Distance(currentPosHolder, _animatedObject.transform.position);
         tarPos = currentPosHolder;  // TODO: tarpos and change moveSpeed*Time.deltaTime to moveSpeed
 
@@ -270,10 +266,10 @@ public class AddAnimation : MonoBehaviour
     {
         curIdx = 0;
         currentPathPercent = 0;
-        if (pos != null)
+        if (sketch.trajectory != null)
         {
-            _animatedObject.transform.position = pos[0];
-            currentPosHolder = pos[0];
+            _animatedObject.transform.position = sketch.trajectory[0];
+            currentPosHolder = sketch.trajectory[0];
         }
     }
 
