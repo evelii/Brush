@@ -32,13 +32,13 @@ public class PathFollower : MonoBehaviour
     void Update()
     {
 
-        if (OVRInput.GetDown(OVRInput.Button.Two))
+        if (OVRInput.GetDown(OVRInput.Button.PrimaryHandTrigger))
         {
             _createNewPath();
             state = PathSetState.DRAW;
         }
 
-        else if (OVRInput.GetUp(OVRInput.Button.Two))
+        else if (OVRInput.GetUp(OVRInput.Button.PrimaryHandTrigger))
         {
             state = PathSetState.WAITING;
         }
@@ -54,6 +54,7 @@ public class PathFollower : MonoBehaviour
             _currLine = newPath.AddComponent<LineRenderer>();
             _currLine.startWidth = .05f;
             _currLine.endWidth = .05f;
+            _currLine.material.color = Color.white;
         } else
         {
             GameObject newPath = new GameObject("New Keyframe Path");

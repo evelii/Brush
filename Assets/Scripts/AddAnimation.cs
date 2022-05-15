@@ -19,7 +19,6 @@ public class AddAnimation : MonoBehaviour
     public GameObject keyframeObject; // object which is inserted as a key frame
     public bool passedKeyframe = false;
 
-    int curIdx;
     static Vector3 currentPosHolder;
     public PathFollower path;
 
@@ -115,7 +114,7 @@ public class AddAnimation : MonoBehaviour
         //FitColliderToChildren(_parentObject);
         sketch.bouncyAdded = true;  // necessary components have been added, so turned off the bool
         sketch.aniStart = false;
-        motionBrush.ResetBrush();
+        //motionBrush.ResetBrush();
     }
 
     private void FitColliderToChildren(GameObject parentObj)
@@ -159,9 +158,9 @@ public class AddAnimation : MonoBehaviour
 
     void CheckPos()
     {
-        if (curIdx >= 0 && curIdx < sketch.trajectory.Length)
+        if (sketch.curIdx >= 0 && sketch.curIdx < sketch.trajectory.Length)
         {
-            currentPosHolder = sketch.trajectory[curIdx];
+            currentPosHolder = sketch.trajectory[sketch.curIdx];
         }
         else
         {
@@ -192,7 +191,7 @@ public class AddAnimation : MonoBehaviour
 
         if (distance <= 0.3f)
         {
-            curIdx += 1;
+            sketch.curIdx += 1;
             CheckPos();
         }
 
@@ -214,7 +213,7 @@ public class AddAnimation : MonoBehaviour
 
             if (distance <= 0.3f)
             {
-                curIdx += 1;
+                sketch.curIdx += 1;
                 CheckPos();
             }
         }
@@ -225,44 +224,44 @@ public class AddAnimation : MonoBehaviour
 
             if (distance <= 0.3f)
             {
-                curIdx -= 1;
+                sketch.curIdx -= 1;
                 CheckPos();
             }
         }
     }
 
-    void DefaultMovement()
-    {
-        if (motionBrush.moveDirection == "right")
-        {
-            if (_animatedObject.transform.position.x < 7)
-                _animatedObject.transform.Translate(Vector3.right * 9 * Time.deltaTime);
-            else
-            {
-                motionBrush.ResetBrush();
-                movement = false;
-            }
-        }
+    //void DefaultMovement()
+    //{
+    //    if (motionBrush.moveDirection == "right")
+    //    {
+    //        if (_animatedObject.transform.position.x < 7)
+    //            _animatedObject.transform.Translate(Vector3.right * 9 * Time.deltaTime);
+    //        else
+    //        {
+    //            motionBrush.ResetBrush();
+    //            movement = false;
+    //        }
+    //    }
 
-        else if (motionBrush.moveDirection == "left")
-        {
-            if (_animatedObject.transform.position.x > -7)
-                _animatedObject.transform.Translate(Vector3.left * 9 * Time.deltaTime);
-            else
-            {
-                motionBrush.ResetBrush();
-                movement = false;
-            }
-        }
+    //    else if (motionBrush.moveDirection == "left")
+    //    {
+    //        if (_animatedObject.transform.position.x > -7)
+    //            _animatedObject.transform.Translate(Vector3.left * 9 * Time.deltaTime);
+    //        else
+    //        {
+    //            motionBrush.ResetBrush();
+    //            movement = false;
+    //        }
+    //    }
 
-        else {
-            Debug.LogError("No motion direction is given by speed lines!");
-        }
-    }
+    //    else {
+    //        Debug.LogError("No motion direction is given by speed lines!");
+    //    }
+    //}
 
     void ResetPath()
     {
-        curIdx = 0;
+        sketch.curIdx = 0;
         currentPathPercent = 0;
         if (sketch.trajectory != null)
         {

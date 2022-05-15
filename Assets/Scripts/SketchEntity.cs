@@ -14,6 +14,7 @@ public class SketchEntity : MonoBehaviour
     public bool aniStart;
     public bool rigidBodyAdded = false;
     public Vector3[] trajectory; // null or a customized path
+    public int curIdx = 0;
     public List<GameObject> childStrokes;
 
     bool inCollision;
@@ -49,8 +50,8 @@ public class SketchEntity : MonoBehaviour
         supportedSketches.Add("police car", true);
         supportedSketches.Add("basketball", true);
 
-        moveSpeed = 6f;
-        rotationSpeed = 10f;
+        moveSpeed = 1f;
+        rotationSpeed = 20f;
 
         if (gameObject.name == "Floor")
         {
@@ -62,7 +63,7 @@ public class SketchEntity : MonoBehaviour
             identity = "wall";
             softness = "hard";
         }
-        ObjectIdentity("police car");
+        //ObjectIdentity("police car");
     }
 
     public void ObjectIdentity(string recognitionResult)
@@ -74,6 +75,7 @@ public class SketchEntity : MonoBehaviour
 
     void AddSound()
     {
+        identity = identity.Replace("_", " ");
         if (supportedSketches.ContainsKey(identity))
         {
             selfSound.clip = Resources.Load<AudioClip>(rootFolder + "/" + identity + "/" + "self");

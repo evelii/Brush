@@ -4,218 +4,110 @@ using UnityEngine;
 
 public class MotionBrush : MonoBehaviour
 {
-    public bool active; // motion brush is activated
+    public PathSetState state;
+    public Transform motionCursor; // a path cursor user used to defince the movement path
+    private LineRenderer _currLine; // path for the main object
+    private LineRenderer _currKeyframeLine;
+    private Vector3 lastPos, curPos;
+    public int numClicks = 0;
+    public bool canDraw = true;
 
-    List<Vector3> linePoints;
-    float timer;
-    public float timerDelay;
-
-    GameObject newLine;
-    List<GameObject> lineCollection;
-    LineRenderer lineRenderer;
-    public float width;
-
-    public GameObject animatedObject; // the object to be animated
-    int lineCount = 0; // horizontal
-    int verticalLineCount = 0;
-    public string moveDirection = "";
-
-    // AddAnimation script
     public AddAnimation addAnimation;
-
-    // Colors
-    public ColorPickerTriangle CP;
-
-    // Stroke Recognizer
-    enum StrokeType
-    {
-        Line, // horizontal, diagonal
-        VerticalLine,
-        Point,
-        Curve,
-        Unknown
-    }
+    public DrawTubes drawTubes; // to retrieve stroke lists
 
     // Start is called before the first frame update
     void Start()
     {
-        linePoints = new List<Vector3>();
-        timer = timerDelay;
-        lineCollection = new List<GameObject>();
-        active = false;
+        state = PathSetState.WAITING;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(SketchManager.curEditingObject != null) animatedObject = SketchManager.curEditingObject.gameObject;
 
-        if (lineCount == 3)
+        if (OVRInput.GetDown(OVRInput.Button.Two))
         {
-            addAnimation.movement = true;
-
-            // hide the motion lines from the display
-            foreach (GameObject l in lineCollection)
-            {
-                l.SetActive(false);
-            }
-            ResetBrush();
+            _createNewPath();
+            state = PathSetState.DRAW;
         }
 
-        else if(verticalLineCount == 3)
+        else if (OVRInput.GetUp(OVRInput.Button.Two))
         {
-            // hide the motion lines from the display
-            foreach (GameObject l in lineCollection)
-            {
-                l.SetActive(false);
-            }
-            ResetBrush();
+            state = PathSetState.WAITING;
         }
 
-        if(active)
+    }
+
+    private void _createNewPath()
+    {
+        lastPos = transform.position;
+        if (!addAnimation.insertKeyframe)
         {
-            // returns true only on the first frame during which the mouse button is clicked
-            if (Input.GetMouseButtonDown(0))
-            {
-                newLine = new GameObject();
-                lineRenderer = newLine.AddComponent<LineRenderer>();
-                lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+            GameObject newPath = new GameObject("New Path");
+            _currLine = newPath.AddComponent<LineRenderer>();
+            _currLine.startWidth = .05f;
+            _currLine.endWidth = .05f;
+            _currLine.material.color = Color.green;
+        }
+        else
+        {
+            GameObject newPath = new GameObject("New Keyframe Path");
+            _currKeyframeLine = newPath.AddComponent<LineRenderer>();
+            _currKeyframeLine.startWidth = .05f;
+            _currKeyframeLine.endWidth = .05f;
+        }
 
-                Color c = ColorManager.Instance.GetColor();
-                c = Color.cyan;
-                lineRenderer.material.color = c;
+        numClicks = 0;
+    }
 
-                lineRenderer.startWidth = width;
-                lineRenderer.endWidth = width;
+    public void FixedUpdate()
+    {
+        if (state == PathSetState.DRAW)
+        {
+            curPos = motionCursor.transform.position;
 
-                lineCollection.Add(newLine);
-            }
-
-            // returns true always if the mouse button is being pressed
-            if (Input.GetMouseButton(0))
-            {
-                //Debug.DrawRay(Camera.main.ScreenToWorldPoint(Input.mousePosition), GetMousePosition(), Color.red);
-                timer -= Time.deltaTime;
-                if (timer <= 0)
+            if (curPos != lastPos)
+            {  // when the controller is held
+                if (!addAnimation.insertKeyframe)
                 {
-                    Vector3 mousePos = GetMousePosition();
-                    linePoints.Add(mousePos);  // the end of the ray
-                    lineRenderer.positionCount = linePoints.Count;
-                    lineRenderer.SetPositions(linePoints.ToArray());
-                    timer = timerDelay;
-
-                    if (moveDirection == "")
-                    {
-                        if (mousePos.x < animatedObject.transform.position.x) moveDirection = "right";
-                        else moveDirection = "left";
-                    }
+                    _currLine.positionCount = numClicks + 1;
+                    _currLine.SetPosition(numClicks, curPos);
                 }
-            }
-
-            if (Input.GetMouseButtonUp(0))
-            {
-                StrokeType strokeType = RecognizeStroke(linePoints);
-                if (strokeType == StrokeType.Line)
+                else
                 {
-                    lineCount++;
-                }
-                else if (strokeType == StrokeType.VerticalLine)
-                {
-                    verticalLineCount++;
+                    _currKeyframeLine.positionCount = numClicks + 1;
+                    _currKeyframeLine.SetPosition(numClicks, curPos);
                 }
 
-                linePoints.Clear();
+                numClicks++;
+                lastPos = curPos;
             }
         }
+    }
 
-        else if (Input.GetMouseButtonDown(0))
+    public Vector3[] getPathPoints()
+    {
+        if (_currLine == null) return null;  // no path is drawn
+
+        Vector3[] pos;
+        if (!addAnimation.insertKeyframe || _currKeyframeLine == null)
         {
-            Debug.Log("Mouse is down");
-
-            RaycastHit hitInfo = new RaycastHit();
-            bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
-            if (hit)
-            {
-                Debug.Log("Hit " + hitInfo.transform.gameObject.name);
-            }
-            else
-            {
-                Debug.Log("No hit");
-            }
+            pos = new Vector3[_currLine.positionCount];
+            _currLine.GetPositions(pos);
         }
-    }
-
-    Vector3 GetMousePosition()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        return ray.origin + ray.direction * 10;
-    }
-
-    public void ResetBrush()
-    {
-        lineCount = 0;
-        verticalLineCount = 0;
-        moveDirection = "";
-    }
-
-    /// <summary>
-    /// Method which takes a list of points for a stroke and returns the stroke type
-    /// </summary>
-    /// <param name="points"></param>
-    /// <returns></returns>
-    StrokeType RecognizeStroke(List<Vector3> points)
-    {
-        // guarantee there are at least two points in the list
-        if (points.Count < 2) return StrokeType.Unknown;
-
-        bool isLine = true;
-
-        Vector3 firstPoint = points[0];
-        Vector3 secondPoint = points[0];
-        int startIndex = 0;
-
-        for(int i = 0; i < points.Count; i++)
+        else
         {
-            if(!points[i].Equals(firstPoint))
-            {
-                secondPoint = points[i+1]; // try excluding some points which are at beginning
-                startIndex = i+1;
-                break;
-            }
+            pos = new Vector3[_currKeyframeLine.positionCount];
+            _currKeyframeLine.GetPositions(pos);
         }
 
-        if (startIndex == 0) return StrokeType.Point; // all positions are the same
-
-        float initSlope = Slope(secondPoint, firstPoint);
-        bool isVerticalLine = CanBeVerticalLine(initSlope);
-
-        for (int i = startIndex; i < points.Count; i++)
-        {
-            float curSlope = Slope(points[i], firstPoint);
-            //Debug.LogWarning(initSlope + ", " + curSlope);
-            if (Mathf.Abs(curSlope - initSlope) > 0.4f)
-            {
-                isLine = false;
-                //break;
-            }
-            if (!CanBeVerticalLine(curSlope)) isVerticalLine = false;
-        }
-        
-        if(isLine) return StrokeType.Line;
-        if(isVerticalLine) return StrokeType.VerticalLine;
-
-        return StrokeType.Unknown;
+        return pos;
     }
 
-    bool CanBeVerticalLine(float s)
+    public Vector3[] getPathKeyframe()
     {
-        if (s == 0f ||  Mathf.Abs(s) >= 6f) return true;
-        return false;
-    }
-
-    float Slope(Vector3 p1, Vector3 p2)
-    {
-        if (p2.x - p1.x == 0) return 0;
-        return (p2.y - p1.y) / (p2.x - p1.x);
+        Vector3[] pos = new Vector3[_currKeyframeLine.positionCount];
+        _currKeyframeLine.GetPositions(pos);
+        return pos;
     }
 }

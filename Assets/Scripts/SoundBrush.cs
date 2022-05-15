@@ -85,6 +85,22 @@ public class SoundBrush : MonoBehaviour
             }
         }
 
+        else if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("Mouse is down");
+
+            RaycastHit hitInfo = new RaycastHit();
+            bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
+            if (hit)
+            {
+                Debug.Log("Hit " + hitInfo.transform.gameObject.name);
+            }
+            else
+            {
+                Debug.Log("No hit");
+            }
+        }
+
         // turn on the self sound
         if (editingSketch && editingSketch.InEditingMode() && editingSketch.SoundStartNotMarked()
             && editingSketch.GetSoundMarkCount() >= 4)
