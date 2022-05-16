@@ -53,17 +53,11 @@ public class SketchEntity : MonoBehaviour
         moveSpeed = 1f;
         rotationSpeed = 20f;
 
-        if (gameObject.name == "Floor")
+        if (gameObject.name != "Floor" && gameObject.name != "Wall" && gameObject.name != "Table" && gameObject.name != "Chair")
         {
-            identity = "floor";
-            softness = "hard";
+            ObjectIdentity("basketball");
         }
-        else if (gameObject.name == "Wall")
-        {
-            identity = "wall";
-            softness = "hard";
-        }
-        //ObjectIdentity("police car");
+       
     }
 
     public void ObjectIdentity(string recognitionResult)
@@ -176,6 +170,7 @@ public class SketchEntity : MonoBehaviour
         inCollision = true;
         movingSound.Stop();
         selfSound.Stop();
+        Debug.LogWarning("collide!");
         if (collision.gameObject.GetComponent<SketchEntity>() == null) Debug.LogWarning("is null! " + collision.gameObject.name);
         if (collision.gameObject.GetComponent<SketchEntity>().softness == "hard")
             collisionHard.Play();

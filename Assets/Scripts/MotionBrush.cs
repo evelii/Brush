@@ -25,16 +25,16 @@ public class MotionBrush : MonoBehaviour
     void Update()
     {
 
-        if (OVRInput.GetDown(OVRInput.Button.Two))
-        {
-            _createNewPath();
-            state = PathSetState.DRAW;
-        }
+        //if (OVRInput.GetDown(OVRInput.Button.Two))
+        //{
+        //    _createNewPath();
+        //    state = PathSetState.DRAW;
+        //}
 
-        else if (OVRInput.GetUp(OVRInput.Button.Two))
-        {
-            state = PathSetState.WAITING;
-        }
+        //else if (OVRInput.GetUp(OVRInput.Button.Two))
+        //{
+        //    state = PathSetState.WAITING;
+        //}
 
     }
 

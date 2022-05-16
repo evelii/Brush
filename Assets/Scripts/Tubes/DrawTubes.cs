@@ -107,13 +107,13 @@ public class DrawTubes : MonoBehaviour
             newStroke = new GameObject("NewStroke");
             newStroke.transform.position = cursor.transform.position;
             curSketch = newStroke;
+            newStroke.AddComponent<BoxCollider>();
             newStroke.AddComponent<SketchEntity>();
         }
 
         GameObject go = new GameObject("TubeStroke");
         go.transform.parent = newStroke.transform;
         curSketch = newStroke;
-        newStroke.AddComponent<BoxCollider>();
         newStroke.GetComponent<SketchEntity>().AddChildStroke(go);
 
         _currentTubeStroke = go.AddComponent<TubeStroke>();
