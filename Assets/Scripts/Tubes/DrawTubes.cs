@@ -97,7 +97,6 @@ public class DrawTubes : MonoBehaviour
         }
         newStroke = null;
         strokesList.Clear();
-        //cursorScript.TurnOffNewSketch();
     }
 
     private void _createNewTube()
