@@ -28,6 +28,7 @@ public class OVRRaycaster : GraphicRaycaster, IPointerEnterHandler
 {
     [Tooltip("A world space pointer for this canvas")]
     public GameObject pointer;
+    public GameObject laserPointer;
 
     public int sortOrder = 0;
 
@@ -88,6 +89,8 @@ public class OVRRaycaster : GraphicRaycaster, IPointerEnterHandler
 
         if (canvas == null)
             return;
+
+        if (!laserPointer.activeSelf) return;
 
         float hitDistance = float.MaxValue;
 
