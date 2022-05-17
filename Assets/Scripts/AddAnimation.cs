@@ -40,10 +40,10 @@ public class AddAnimation : MonoBehaviour
             _childObject = SketchManager._curEditingObject;
             sketch = SketchManager._parentObject.GetComponent<SketchEntity>();
 
-            if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
-            {
-                sketch.aniStart = true;
-            }
+            //if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
+            //{
+            //    sketch.aniStart = true;
+            //}
 
             if (sketch.aniStart && !sketch.rigidBodyAdded)
             {
