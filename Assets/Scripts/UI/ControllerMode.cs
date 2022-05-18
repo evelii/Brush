@@ -10,6 +10,9 @@ public class ControllerMode : MonoBehaviour
     public GameObject brushTip;
     public Cursor cursorScript;
     public DrawTubes drawTubes;
+    public CanvasHandler canvas;
+
+    public bool readyForSketch = true;
 
     // Start is called before the first frame update
     void Start()
@@ -26,11 +29,20 @@ public class ControllerMode : MonoBehaviour
     {
         if (OVRInput.GetDown(OVRInput.Button.One))
         {
-            laserPointer.GetComponent<LineRenderer>().enabled = false;
-            laserPointer.SetActive(false);
-            laserTip.SetActive(false);
-            brushTip.SetActive(true);
-            cursorScript.canDraw = true;
+            if (!readyForSketch)
+            {
+                laserPointer.GetComponent<LineRenderer>().enabled = false;
+                laserPointer.SetActive(false);
+                laserTip.SetActive(false);
+                brushTip.SetActive(true);
+                readyForSketch = true;
+            }
+            
+            else if (readyForSketch && canvas.curBrush == "sketch")
+            {
+                cursorScript.canDraw = true;
+            }
+            
         }
         else if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
         {
@@ -40,6 +52,7 @@ public class ControllerMode : MonoBehaviour
             brushTip.SetActive(false);
             drawTubes.state = StrokeState.WAITING;
             cursorScript.canDraw = false;
+            readyForSketch = false;
         }
     }
 }

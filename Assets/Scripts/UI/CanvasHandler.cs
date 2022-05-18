@@ -59,19 +59,19 @@ public class CanvasHandler : MonoBehaviour
 
     void PathTaskOnClick()
     {
-        sketchBtn.Select();
+        pathBtn.Select();
         curBrush = "path";
     }
 
     void MotionTaskOnClick()
     {
-        sketchBtn.Select();
+        motionBtn.Select();
         curBrush = "motion";
     }
 
     void SoundTaskOnClick()
     {
-        sketchBtn.Select();
+        soundBtn.Select();
         curBrush = "sound";
     }
 }

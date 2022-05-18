@@ -158,11 +158,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
-  pathSetter: {fileID: 47116413}
+  pathSetter: {fileID: 685610042}
   numClicks: 0
   canDraw: 1
   addAnimation: {fileID: 1336290716}
   drawTubes: {fileID: 2033916452}
+  canvas: {fileID: 1613778226}
+  controllerMode: {fileID: 1758020947}
 --- !u!4 &41646996
 Transform:
   m_ObjectHideFlags: 0
@@ -2881,6 +2883,8 @@ MonoBehaviour:
   brushTip: {fileID: 1592718247}
   cursorScript: {fileID: 685610043}
   drawTubes: {fileID: 2033916452}
+  canvas: {fileID: 1613778226}
+  readyForSketch: 0
 --- !u!1 &1868850115
 GameObject:
   m_ObjectHideFlags: 0

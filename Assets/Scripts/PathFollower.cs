@@ -21,6 +21,8 @@ public class PathFollower : MonoBehaviour
 
     public AddAnimation addAnimation;
     public DrawTubes drawTubes; // to retrieve stroke lists
+    public CanvasHandler canvas;
+    public ControllerMode controllerMode;
 
     // Start is called before the first frame update
     void Start()
@@ -32,13 +34,13 @@ public class PathFollower : MonoBehaviour
     void Update()
     {
 
-        if (OVRInput.GetDown(OVRInput.Button.PrimaryHandTrigger))
+        if (controllerMode.readyForSketch && canvas.curBrush == "path" && OVRInput.GetDown(OVRInput.Button.One))
         {
             _createNewPath();
             state = PathSetState.DRAW;
         }
 
-        else if (OVRInput.GetUp(OVRInput.Button.PrimaryHandTrigger))
+        else if (canvas.curBrush == "path" && OVRInput.GetUp(OVRInput.Button.One))
         {
             state = PathSetState.WAITING;
         }
