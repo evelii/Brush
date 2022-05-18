@@ -20,7 +20,7 @@ public class iTweenScript : MonoBehaviour
     {
         if (start)
         {
-            waypointArray = path.getPathPoints();
+            waypointArray = path.GetPathPoints();
             iTween.MoveTo(gameObject, iTween.Hash("path", waypointArray,
      "orienttopath", true, "looktime", 0.2f, "speed", speed, "easetype", iTween.EaseType.linear));
             start = false;

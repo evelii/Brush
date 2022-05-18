@@ -54,7 +54,7 @@ public class AddAnimation : MonoBehaviour
             if (sketch.aniStart)
             {
                 // Check if there is user defined path
-                if (sketch.trajectory == null) sketch.trajectory = path.getPathPoints();
+                if (sketch.trajectory == null) sketch.trajectory = path.GetPathPoints();
                 if (insertKeyframe)
                 {
                     ResetPath();
@@ -153,7 +153,7 @@ public class AddAnimation : MonoBehaviour
 
         if (sketch.trajectory != null) return;
 
-        sketch.trajectory = path.getPathPoints();        
+        sketch.trajectory = path.GetPathPoints();        
     }
 
     void CheckPos()
@@ -304,7 +304,7 @@ public class AddAnimation : MonoBehaviour
 
         if(movement && posKeyframe==null && keyframeObject != null)
         {
-            posKeyframe = path.getPathKeyframe();
+            posKeyframe = path.GetPathKeyframe();
         }
 
         if(posKeyframe!=null && passedKeyframe)

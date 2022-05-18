@@ -180,37 +180,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &47116412
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 47116413}
-  m_Layer: 0
-  m_Name: PathSetterCursor
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &47116413
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 47116412}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 571906926}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &70201783
 GameObject:
   m_ObjectHideFlags: 0
@@ -2201,11 +2170,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9220402610e4b4fa7871b047c7afe338, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  active: 0
-  timerDelay: 0.01
-  width: 0.1
-  editingSketch: {fileID: 0}
-  CP: {fileID: 114000013784935286, guid: f24822f355d009d409e4bfb5c585f135, type: 3}
+  state: 0
+  soundCursor: {fileID: 685610042}
+  numClicks: 0
+  canDraw: 1
+  addAnimation: {fileID: 1336290716}
+  drawTubes: {fileID: 2033916452}
+  canvas: {fileID: 1613778226}
+  controllerMode: {fileID: 1758020947}
 --- !u!1 &1458427562
 GameObject:
   m_ObjectHideFlags: 0
@@ -2884,6 +2856,7 @@ MonoBehaviour:
   cursorScript: {fileID: 685610043}
   drawTubes: {fileID: 2033916452}
   canvas: {fileID: 1613778226}
+  motionBrush: {fileID: 1868850116}
   readyForSketch: 0
 --- !u!1 &1868850115
 GameObject:
@@ -2916,11 +2889,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
-  motionCursor: {fileID: 2108293271}
+  motionCursor: {fileID: 685610042}
   numClicks: 0
   canDraw: 1
   addAnimation: {fileID: 1336290716}
-  drawTubes: {fileID: 0}
+  drawTubes: {fileID: 2033916452}
+  canvas: {fileID: 1613778226}
+  controllerMode: {fileID: 1758020947}
+  ready: 0
 --- !u!33 &1868850117
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -3150,7 +3126,7 @@ MonoBehaviour:
   cursor: {fileID: 685610042}
   strokeColor: {r: 0, g: 0, b: 0, a: 0}
   CP: {fileID: 0}
-  strokeRadius: 0.02
+  strokeRadius: 0.0101
   updateLineInterval: 0.01
   state: 0
   fullPoints: []
@@ -3331,34 +3307,3 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2063342700}
   m_CullTransparentMesh: 1
---- !u!1 &2108293270
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2108293271}
-  m_Layer: 0
-  m_Name: MotionCursor
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2108293271
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2108293270}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 571906926}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

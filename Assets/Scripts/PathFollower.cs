@@ -92,7 +92,7 @@ public class PathFollower : MonoBehaviour
         }
     }
 
-    public Vector3[] getPathPoints()
+    public Vector3[] GetPathPoints()
     {
         if (_currLine == null) return null;  // no path is drawn
 
@@ -110,7 +110,7 @@ public class PathFollower : MonoBehaviour
         return pos;
     }
 
-    public Vector3[] getPathKeyframe()
+    public Vector3[] GetPathKeyframe()
     {
         Vector3[] pos = new Vector3[_currKeyframeLine.positionCount];
         _currKeyframeLine.GetPositions(pos);

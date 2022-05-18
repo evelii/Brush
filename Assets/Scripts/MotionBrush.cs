@@ -14,6 +14,10 @@ public class MotionBrush : MonoBehaviour
 
     public AddAnimation addAnimation;
     public DrawTubes drawTubes; // to retrieve stroke lists
+    public CanvasHandler canvas;
+    public ControllerMode controllerMode;
+
+    public bool ready = false;
 
     // Start is called before the first frame update
     void Start()
@@ -25,16 +29,16 @@ public class MotionBrush : MonoBehaviour
     void Update()
     {
 
-        //if (OVRInput.GetDown(OVRInput.Button.Two))
-        //{
-        //    _createNewPath();
-        //    state = PathSetState.DRAW;
-        //}
+        if (ready && canvas.curBrush == "motion" && OVRInput.GetDown(OVRInput.Button.One))
+        {
+            _createNewPath();
+            state = PathSetState.DRAW;
+        }
 
-        //else if (OVRInput.GetUp(OVRInput.Button.Two))
-        //{
-        //    state = PathSetState.WAITING;
-        //}
+        else if (canvas.curBrush == "motion" && OVRInput.GetUp(OVRInput.Button.One))
+        {
+            state = PathSetState.WAITING;
+        }
 
     }
 
@@ -43,18 +47,18 @@ public class MotionBrush : MonoBehaviour
         lastPos = transform.position;
         if (!addAnimation.insertKeyframe)
         {
-            GameObject newPath = new GameObject("New Path");
+            GameObject newPath = new GameObject("Motion Line");
             _currLine = newPath.AddComponent<LineRenderer>();
-            _currLine.startWidth = .05f;
-            _currLine.endWidth = .05f;
+            _currLine.startWidth = .01f;
+            _currLine.endWidth = .01f;
             _currLine.material.color = Color.green;
         }
         else
         {
             GameObject newPath = new GameObject("New Keyframe Path");
             _currKeyframeLine = newPath.AddComponent<LineRenderer>();
-            _currKeyframeLine.startWidth = .05f;
-            _currKeyframeLine.endWidth = .05f;
+            _currKeyframeLine.startWidth = .01f;
+            _currKeyframeLine.endWidth = .01f;
         }
 
         numClicks = 0;
@@ -85,7 +89,7 @@ public class MotionBrush : MonoBehaviour
         }
     }
 
-    public Vector3[] getPathPoints()
+    public Vector3[] GetPathPoints()
     {
         if (_currLine == null) return null;  // no path is drawn
 
@@ -104,7 +108,7 @@ public class MotionBrush : MonoBehaviour
         return pos;
     }
 
-    public Vector3[] getPathKeyframe()
+    public Vector3[] GetPathKeyframe()
     {
         Vector3[] pos = new Vector3[_currKeyframeLine.positionCount];
         _currKeyframeLine.GetPositions(pos);

@@ -11,6 +11,7 @@ public class ControllerMode : MonoBehaviour
     public Cursor cursorScript;
     public DrawTubes drawTubes;
     public CanvasHandler canvas;
+    public MotionBrush motionBrush;
 
     public bool readyForSketch = true;
 
@@ -22,6 +23,7 @@ public class ControllerMode : MonoBehaviour
         laserTip.SetActive(false);
         brushTip.SetActive(true);
         cursorScript.canDraw = true;
+        motionBrush.ready = false;
     }
 
     // Update is called once per frame
@@ -37,11 +39,13 @@ public class ControllerMode : MonoBehaviour
                 brushTip.SetActive(true);
                 readyForSketch = true;
             }
-            
+
             else if (readyForSketch && canvas.curBrush == "sketch")
             {
                 cursorScript.canDraw = true;
             }
+
+            else if (readyForSketch && canvas.curBrush == "motion") motionBrush.ready = true;
             
         }
         else if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
@@ -53,6 +57,7 @@ public class ControllerMode : MonoBehaviour
             drawTubes.state = StrokeState.WAITING;
             cursorScript.canDraw = false;
             readyForSketch = false;
+            motionBrush.ready = false;
         }
     }
 }
