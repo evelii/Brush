@@ -6,6 +6,7 @@ public class MotionBrush : MonoBehaviour
 {
     public PathSetState state;
     public Transform motionCursor; // a path cursor user used to defince the movement path
+    private List<GameObject> motionLines;
     private LineRenderer _currLine; // path for the main object
     private LineRenderer _currKeyframeLine;
     private Vector3 lastPos, curPos;
@@ -23,6 +24,7 @@ public class MotionBrush : MonoBehaviour
     void Start()
     {
         state = PathSetState.WAITING;
+        motionLines = new List<GameObject>();
     }
 
     // Update is called once per frame
@@ -40,6 +42,18 @@ public class MotionBrush : MonoBehaviour
             state = PathSetState.WAITING;
         }
 
+        if (motionLines.Count == 3)
+        {
+            SketchManager.curEditingObject.aniStart = true;
+
+            // hide the motion lines from the display
+            foreach (GameObject l in motionLines)
+            {
+                l.SetActive(false);
+            }
+
+            motionLines.Clear();
+        }
     }
 
     private void _createNewPath()
@@ -47,8 +61,9 @@ public class MotionBrush : MonoBehaviour
         lastPos = transform.position;
         if (!addAnimation.insertKeyframe)
         {
-            GameObject newPath = new GameObject("Motion Line");
-            _currLine = newPath.AddComponent<LineRenderer>();
+            GameObject newLine = new GameObject("Motion Line");
+            motionLines.Add(newLine);
+            _currLine = newLine.AddComponent<LineRenderer>();
             _currLine.startWidth = .01f;
             _currLine.endWidth = .01f;
             _currLine.material.color = Color.green;

@@ -15,7 +15,9 @@ public class SketchEntity : MonoBehaviour
     public bool rigidBodyAdded = false;
     public Vector3[] trajectory; // null or a customized path
     public int curIdx = 0;
+    static Vector3 currentPosHolder;
     public List<GameObject> childStrokes;
+    public PathFollower path;
 
     bool inCollision;
     string rootFolder;
@@ -49,6 +51,7 @@ public class SketchEntity : MonoBehaviour
         supportedSketches.Add("dog", true);
         supportedSketches.Add("police car", true);
         supportedSketches.Add("basketball", true);
+        path = GameObject.Find("Path").GetComponent<PathFollower>();
 
         moveSpeed = 1f;
         rotationSpeed = 20f;
@@ -99,6 +102,27 @@ public class SketchEntity : MonoBehaviour
         if (aniStart)
         {
             HideSoundMarks();
+
+            if (!rigidBodyAdded)
+            {
+                gameObject.AddComponent<Rigidbody>();
+                rigidBodyAdded = true;
+            }
+
+            // Check if there is user defined path
+            if (trajectory == null) trajectory = path.GetPathPoints();
+
+            // 1. There is a customized movement path, just follow the path
+            if (trajectory != null)
+            {
+                gameObject.GetComponent<Rigidbody>().useGravity = false;
+                MovementInit();
+                FollowMovementPath();
+            }
+
+            // 2. There is no customized path, use the gravity
+            else if (!bouncyAdded) AddBouncingEffect();
+
             if (!movingSound.isPlaying && !inCollision)
             {
                 movingSound.Play();
@@ -113,6 +137,78 @@ public class SketchEntity : MonoBehaviour
                 selfSound.Play();
             }
         }
+    }
+
+    void MovementInit()
+    {
+        CheckPos();
+
+        if (trajectory != null) return;
+
+        trajectory = path.GetPathPoints();
+    }
+
+    void CheckPos()
+    {
+        if (curIdx >= 0 && curIdx < trajectory.Length)
+        {
+            currentPosHolder = trajectory[curIdx];
+        }
+        else
+        {
+            ResetPath();
+        }
+    }
+
+    float percentsPerSecond = 0.15f; // %15 of the path moved per second
+    float currentPathPercent = 0.0f; //min 0, max 1
+
+    private void FollowMovementPath()
+    {
+        if (currentPathPercent >= 1)
+        {
+            // reset
+            currentPathPercent = 0;
+        }
+
+        currentPathPercent += percentsPerSecond * Time.deltaTime;
+        Vector3 tarPos = Interp(trajectory, currentPathPercent);
+        float distance = Vector3.Distance(currentPosHolder, gameObject.transform.position);
+        tarPos = currentPosHolder;  // TODO: tarpos and change moveSpeed*Time.deltaTime to moveSpeed
+
+        gameObject.transform.right = Vector3.RotateTowards(gameObject.transform.right, tarPos - gameObject.transform.position, rotationSpeed * Time.deltaTime, 0.0f);
+        gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, tarPos, moveSpeed * Time.deltaTime);
+
+        if (distance <= 0.3f)
+        {
+            curIdx += 1;
+            CheckPos();
+        }
+    }
+
+    void ResetPath()
+    {
+        curIdx = 0;
+        currentPathPercent = 0;
+        if (trajectory != null)
+        {
+            gameObject.transform.position = trajectory[0];
+            currentPosHolder = trajectory[0];
+        }
+    }
+
+    private void AddBouncingEffect()
+    {
+        SquashAndStretchKit.SquashAndStretch tem = gameObject.AddComponent<SquashAndStretchKit.SquashAndStretch>();
+        tem.enableSquash = true;
+        tem.enableStretch = true;
+        tem.maxSpeedThreshold = 20;
+        tem.minSpeedThreshold = 1;
+        tem.maxSquash = 1.6f;
+        tem.maxStretch = 1.5f;
+
+        bouncyAdded = true;  // necessary components have been added, so turned off the bool
+        aniStart = false;
     }
 
     public void TurnOnEditingMode()
@@ -184,5 +280,24 @@ public class SketchEntity : MonoBehaviour
             Collider collider = child.AddComponent<BoxCollider>();
             collider.material.bounciness = 1.0f;
         }
+    }
+
+    private Vector3 Interp(Vector3[] pts, float t)
+    {
+        int numSections = pts.Length - 3;
+        int currPt = Mathf.Min(Mathf.FloorToInt(t * (float)numSections), numSections - 1);
+        float u = t * (float)numSections - (float)currPt;
+
+        Vector3 a = pts[currPt];
+        Vector3 b = pts[currPt + 1];
+        Vector3 c = pts[currPt + 2];
+        Vector3 d = pts[currPt + 3];
+
+        return .5f * (
+            (-a + 3f * b - 3f * c + d) * (u * u * u)
+            + (2f * a - 5f * b + 4f * c - d) * (u * u)
+            + (-a + c) * u
+            + 2f * b
+        );
     }
 }

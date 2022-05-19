@@ -37,55 +37,19 @@ public class AddAnimation : MonoBehaviour
         _animatedObject = SketchManager._parentObject;
         if (_animatedObject)
         {
-            _childObject = SketchManager._curEditingObject;
-            sketch = SketchManager._parentObject.GetComponent<SketchEntity>();
-
-            //if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
-            //{
-            //    sketch.aniStart = true;
-            //}
-
-            if (sketch.aniStart && !sketch.rigidBodyAdded)
-            {
-                _animatedObject.AddComponent<Rigidbody>();
-                sketch.rigidBodyAdded = true;
-            }
-
-            if (sketch.aniStart)
-            {
-                // Check if there is user defined path
-                if (sketch.trajectory == null) sketch.trajectory = path.GetPathPoints();
-                if (insertKeyframe)
-                {
-                    ResetPath();
-                    insertKeyframe = false;
-                    sketch.TurnOffEditingMode();
-                }
-                // 1. There is a customized movement path, just follow the path
-                if (sketch.trajectory != null)
-                {
-                    _animatedObject.GetComponent<Rigidbody>().useGravity = false;
-                    MovementInit();
-                    FollowMovementPath();
-                }
-
-                // 2. There is no customized path, use the gravity
-                else if (!sketch.bouncyAdded) AddBouncingEffect();
-            }
-
             // press left/right arrow to move along the movement path
             if (Input.GetKey("right"))
             {
                 insertKeyframe = true;
                 sketch.TurnOnEditingMode();
-                MoveAlong("right");
+                //MoveAlong("right");
                 sketch.HideSoundMarks();
             }
             else if (Input.GetKey("left"))
             {
                 insertKeyframe = true;
                 sketch.TurnOnEditingMode();
-                MoveAlong("left");
+                //MoveAlong("left");
                 sketch.HideSoundMarks();
             }
         }
@@ -95,26 +59,6 @@ public class AddAnimation : MonoBehaviour
     public void FixedUpdate()
     {
         
-    }
-
-    private void AddBouncingEffect()
-    {
-        SquashAndStretchKit.SquashAndStretch tem = _animatedObject.AddComponent<SquashAndStretchKit.SquashAndStretch>();
-        tem.enableSquash = true;
-        tem.enableStretch = true;
-        tem.maxSpeedThreshold = 20;
-        tem.minSpeedThreshold = 1;
-        tem.maxSquash = 1.6f;
-        tem.maxStretch = 1.5f;
-        //_parentObject.AddComponent<Rigidbody>();
-        //_parentObject.AddComponent<BoxCollider>();
-
-        //Collider collider = _childObject.GetComponent<BoxCollider>();
-        //collider.material.bounciness = 1.0f;
-        //FitColliderToChildren(_parentObject);
-        sketch.bouncyAdded = true;  // necessary components have been added, so turned off the bool
-        sketch.aniStart = false;
-        //motionBrush.ResetBrush();
     }
 
     private void FitColliderToChildren(GameObject parentObj)
@@ -144,129 +88,6 @@ public class AddAnimation : MonoBehaviour
         {
             bc.size = bc.center = Vector3.zero;
             bc.size = Vector3.zero;
-        }
-    }
-
-    void MovementInit()
-    {
-        CheckPos();
-
-        if (sketch.trajectory != null) return;
-
-        sketch.trajectory = path.GetPathPoints();        
-    }
-
-    void CheckPos()
-    {
-        if (sketch.curIdx >= 0 && sketch.curIdx < sketch.trajectory.Length)
-        {
-            currentPosHolder = sketch.trajectory[sketch.curIdx];
-        }
-        else
-        {
-            ResetPath();
-            passedKeyframe = false;
-        }
-    }
-
-    float percentsPerSecond = 0.15f; // %15 of the path moved per second
-    float currentPathPercent = 0.0f; //min 0, max 1
-
-    private void FollowMovementPath()
-    {
-        if (currentPathPercent >= 1)
-        {
-            // reset
-            movement = false;
-            currentPathPercent = 0;
-        }
-
-        currentPathPercent += percentsPerSecond * Time.deltaTime;
-        Vector3 tarPos = Interp(sketch.trajectory, currentPathPercent);
-        float distance = Vector3.Distance(currentPosHolder, _animatedObject.transform.position);
-        tarPos = currentPosHolder;  // TODO: tarpos and change moveSpeed*Time.deltaTime to moveSpeed
-
-        _animatedObject.transform.right = Vector3.RotateTowards(_animatedObject.transform.right, tarPos - _animatedObject.transform.position, sketch.rotationSpeed * Time.deltaTime, 0.0f);
-        _animatedObject.transform.position = Vector3.MoveTowards(_animatedObject.transform.position, tarPos, sketch.moveSpeed*Time.deltaTime);
-
-        if (distance <= 0.3f)
-        {
-            sketch.curIdx += 1;
-            CheckPos();
-        }
-
-        HandleKeyframe();
-    }
-
-    // use key to move along the movement path: left or right
-    private void MoveAlong(string direction)
-    {
-        MovementInit();
-
-        float distance = Vector3.Distance(currentPosHolder, _animatedObject.transform.position);
-        Vector3 tarPos = currentPosHolder;
-
-        if (direction == "right")
-        {
-            _animatedObject.transform.right = Vector3.RotateTowards(_animatedObject.transform.right, tarPos - _animatedObject.transform.position, sketch.rotationSpeed * Time.deltaTime, 0.0f);
-            _animatedObject.transform.position = Vector3.MoveTowards(_animatedObject.transform.position, tarPos, sketch.moveSpeed * Time.deltaTime);
-
-            if (distance <= 0.3f)
-            {
-                sketch.curIdx += 1;
-                CheckPos();
-            }
-        }
-        else if(direction == "left")
-        {
-            _animatedObject.transform.right = Vector3.RotateTowards(_animatedObject.transform.right, - tarPos + _animatedObject.transform.position, sketch.rotationSpeed * Time.deltaTime, 0.0f);
-            _animatedObject.transform.position = Vector3.MoveTowards(_animatedObject.transform.position, tarPos, sketch.moveSpeed * Time.deltaTime);
-
-            if (distance <= 0.3f)
-            {
-                sketch.curIdx -= 1;
-                CheckPos();
-            }
-        }
-    }
-
-    //void DefaultMovement()
-    //{
-    //    if (motionBrush.moveDirection == "right")
-    //    {
-    //        if (_animatedObject.transform.position.x < 7)
-    //            _animatedObject.transform.Translate(Vector3.right * 9 * Time.deltaTime);
-    //        else
-    //        {
-    //            motionBrush.ResetBrush();
-    //            movement = false;
-    //        }
-    //    }
-
-    //    else if (motionBrush.moveDirection == "left")
-    //    {
-    //        if (_animatedObject.transform.position.x > -7)
-    //            _animatedObject.transform.Translate(Vector3.left * 9 * Time.deltaTime);
-    //        else
-    //        {
-    //            motionBrush.ResetBrush();
-    //            movement = false;
-    //        }
-    //    }
-
-    //    else {
-    //        Debug.LogError("No motion direction is given by speed lines!");
-    //    }
-    //}
-
-    void ResetPath()
-    {
-        sketch.curIdx = 0;
-        currentPathPercent = 0;
-        if (sketch.trajectory != null)
-        {
-            _animatedObject.transform.position = sketch.trajectory[0];
-            currentPosHolder = sketch.trajectory[0];
         }
     }
 

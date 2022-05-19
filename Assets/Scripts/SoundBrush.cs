@@ -16,6 +16,7 @@ public class SoundBrush : MonoBehaviour
     public DrawTubes drawTubes; // to retrieve stroke lists
     public CanvasHandler canvas;
     public ControllerMode controllerMode;
+    public GameObject cursor;
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +37,11 @@ public class SoundBrush : MonoBehaviour
         else if (canvas.curBrush == "sound" && OVRInput.GetUp(OVRInput.Button.One))
         {
             state = PathSetState.WAITING;
+        }
+
+        if (canvas.curBrush == "sound" && OVRInput.GetDown(OVRInput.Button.PrimaryHandTrigger))
+        {
+            Vector3 cursorPos = cursor.transform.position;
         }
 
     }

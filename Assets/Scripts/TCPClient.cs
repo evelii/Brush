@@ -35,7 +35,7 @@ public class TCPClient : MonoBehaviour
 	{
 		if (OVRInput.GetDown(OVRInput.Button.Two))
 		{
-			Debug.LogWarning("press!");
+			Debug.LogWarning("Current sketch is done!");
 			SendMessage();
 			tubes.FinishSketch();
 		}
