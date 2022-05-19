@@ -38,12 +38,6 @@ public class SoundBrush : MonoBehaviour
         {
             state = PathSetState.WAITING;
         }
-
-        if (canvas.curBrush == "sound" && OVRInput.GetDown(OVRInput.Button.PrimaryHandTrigger))
-        {
-            Vector3 cursorPos = cursor.transform.position;
-        }
-
     }
 
     private void _createNewPath()
@@ -51,8 +45,9 @@ public class SoundBrush : MonoBehaviour
         lastPos = transform.position;
         if (!addAnimation.insertKeyframe)
         {
-            GameObject newPath = new GameObject("Sound Line");
-            _currLine = newPath.AddComponent<LineRenderer>();
+            GameObject newLine = new GameObject("Sound Line");
+            SketchManager.curEditingObject.AddSoundMark(newLine);
+            _currLine = newLine.AddComponent<LineRenderer>();
             _currLine.startWidth = .01f;
             _currLine.endWidth = .01f;
             _currLine.material.color = Color.red;

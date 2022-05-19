@@ -5,6 +5,10 @@ using UnityEditor;
 
 public class SketchEntity : MonoBehaviour
 {
+    public Transform cam;
+    public GameObject cursor;
+    public CanvasHandler canvas;
+
     public AudioSource selfSound;
     public AudioSource movingSound;
     public AudioSource collisionHard;
@@ -51,6 +55,9 @@ public class SketchEntity : MonoBehaviour
         supportedSketches.Add("dog", true);
         supportedSketches.Add("police car", true);
         supportedSketches.Add("basketball", true);
+        cam = GameObject.Find("CenterEyeAnchor").transform;
+        cursor = GameObject.Find("3DCursor");
+        canvas = GameObject.Find("Canvas").GetComponent<CanvasHandler>();
         path = GameObject.Find("Path").GetComponent<PathFollower>();
 
         moveSpeed = 1f;
@@ -60,7 +67,7 @@ public class SketchEntity : MonoBehaviour
         {
             ObjectIdentity("basketball");
         }
-       
+
     }
 
     public void ObjectIdentity(string recognitionResult)
@@ -99,6 +106,9 @@ public class SketchEntity : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (gameObject.name == "Wall" || gameObject.name == "Floor" || gameObject.name == "Table" || gameObject.name == "Chair") return;
+
+
         if (aniStart)
         {
             HideSoundMarks();
@@ -137,6 +147,37 @@ public class SketchEntity : MonoBehaviour
                 selfSound.Play();
             }
         }
+
+        // mark along the trajectory
+        if (canvas.curBrush == "sound" && OVRInput.GetDown(OVRInput.Button.PrimaryHandTrigger))
+        {
+            Vector3 stampPos = cursor.transform.position;
+
+            if (trajectory == null) trajectory = path.GetPathPoints();
+            if (trajectory == null) Debug.LogError("No trajectory is given!");
+            else
+            {
+                float dist = Vector3.Distance(stampPos, trajectory[0]);
+                Vector3 closest = trajectory[0];
+
+                // find the point of the trajectory which is the closest to the stamped point
+                for (int i = 1; i < trajectory.Length; i++)
+                {
+                    if (Vector3.Distance(stampPos, trajectory[i]) < dist)
+                    {
+                        dist = Vector3.Distance(stampPos, trajectory[i]);
+                        closest = trajectory[i];
+                    }
+                }
+
+                GameObject go = GameObject.Instantiate(gameObject);
+                go.transform.position = closest;
+                go.transform.rotation = Quaternion.LookRotation(go.transform.position - cam.position);
+
+                selfSoundStartPoint = closest;
+            }
+        }
+
     }
 
     void MovementInit()
