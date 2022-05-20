@@ -8,6 +8,8 @@ public class SketchEntity : MonoBehaviour
     public Transform cam;
     public GameObject cursor;
     public CanvasHandler canvas;
+    public SoundBrush soundBrush;
+    public ControllerMode controllerMode;
 
     public AudioSource selfSound;
     public AudioSource movingSound;
@@ -22,10 +24,12 @@ public class SketchEntity : MonoBehaviour
     static Vector3 currentPosHolder;
     public List<GameObject> childStrokes;
     public PathFollower path;
+    GameObject go;
 
     bool inCollision;
     string rootFolder;
     Dictionary<string, bool> supportedSketches = new Dictionary<string, bool>();
+    Vector3 closest;
     Vector3 selfSoundStartPoint;
     bool editingMode;
     List<GameObject> soundMarkCollection;
@@ -59,13 +63,16 @@ public class SketchEntity : MonoBehaviour
         cursor = GameObject.Find("3DCursor");
         canvas = GameObject.Find("Canvas").GetComponent<CanvasHandler>();
         path = GameObject.Find("Path").GetComponent<PathFollower>();
+        soundBrush = GameObject.Find("SoundLayer").GetComponent<SoundBrush>();
+        controllerMode = GameObject.Find("RightControllerPf").GetComponent<ControllerMode>();
+        go = null;
 
-        moveSpeed = 1f;
+        moveSpeed = 0.7f;
         rotationSpeed = 20f;
 
         if (gameObject.name != "Floor" && gameObject.name != "Wall" && gameObject.name != "Table" && gameObject.name != "Chair")
         {
-            ObjectIdentity("basketball");
+            //ObjectIdentity("police car");
         }
 
     }
@@ -112,6 +119,8 @@ public class SketchEntity : MonoBehaviour
         if (aniStart)
         {
             HideSoundMarks();
+            soundBrush.sketchSwitch(false);
+            if (go != null) go.SetActive(false);
 
             if (!rigidBodyAdded)
             {
@@ -149,7 +158,7 @@ public class SketchEntity : MonoBehaviour
         }
 
         // mark along the trajectory
-        if (canvas.curBrush == "sound" && OVRInput.GetDown(OVRInput.Button.PrimaryHandTrigger))
+        if (soundBrush.ready && canvas.curBrush == "sound" && OVRInput.GetDown(OVRInput.Button.One) && !soundBrush.isSketchShown())
         {
             Vector3 stampPos = cursor.transform.position;
 
@@ -158,7 +167,7 @@ public class SketchEntity : MonoBehaviour
             else
             {
                 float dist = Vector3.Distance(stampPos, trajectory[0]);
-                Vector3 closest = trajectory[0];
+                closest = trajectory[0];
 
                 // find the point of the trajectory which is the closest to the stamped point
                 for (int i = 1; i < trajectory.Length; i++)
@@ -170,12 +179,23 @@ public class SketchEntity : MonoBehaviour
                     }
                 }
 
-                GameObject go = GameObject.Instantiate(gameObject);
+                go = GameObject.Instantiate(gameObject);
                 go.transform.position = closest;
-                go.transform.rotation = Quaternion.LookRotation(go.transform.position - cam.position);
+                Vector3 relativePos = cam.position - go.transform.position;
 
-                selfSoundStartPoint = closest;
+                // the second argument, upwards, defaults to Vector3.up
+                Quaternion rotation = Quaternion.LookRotation(relativePos);
+                rotation *= Quaternion.Euler(0, 47, 0);
+                go.transform.rotation = rotation;
+                //go.transform.LookAt(cam);
+
+                soundBrush.sketchSwitch(true);
             }
+        }
+
+        if (canvas.curBrush == "sound" && soundMarkCollection.Count == 4)
+        {
+            selfSoundStartPoint = closest;
         }
 
     }
@@ -217,8 +237,15 @@ public class SketchEntity : MonoBehaviour
         float distance = Vector3.Distance(currentPosHolder, gameObject.transform.position);
         tarPos = currentPosHolder;  // TODO: tarpos and change moveSpeed*Time.deltaTime to moveSpeed
 
-        gameObject.transform.right = Vector3.RotateTowards(gameObject.transform.right, tarPos - gameObject.transform.position, rotationSpeed * Time.deltaTime, 0.0f);
+        //gameObject.transform.right = Vector3.RotateTowards(gameObject.transform.right, tarPos - gameObject.transform.position, rotationSpeed * Time.deltaTime, 0.0f);
         gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, tarPos, moveSpeed * Time.deltaTime);
+
+        Vector3 relativePos = cam.position - gameObject.transform.position;
+
+        // the second argument, upwards, defaults to Vector3.up
+        Quaternion rotation = Quaternion.LookRotation(relativePos);
+        rotation *= Quaternion.Euler(0, 50, 0);
+        gameObject.transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * rotationSpeed);
 
         if (distance <= 0.3f)
         {
@@ -312,6 +339,11 @@ public class SketchEntity : MonoBehaviour
         if (collision.gameObject.GetComponent<SketchEntity>().softness == "hard")
             collisionHard.Play();
         else collisionSoft.Play();
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        inCollision = false;
     }
 
     public void AddColliders()

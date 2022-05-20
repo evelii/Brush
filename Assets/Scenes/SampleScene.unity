@@ -526,6 +526,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 538840546f4ff4b168e4c60d850c76f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cam: {fileID: 0}
+  cursor: {fileID: 0}
+  canvas: {fileID: 0}
+  soundBrush: {fileID: 0}
+  controllerMode: {fileID: 0}
   selfSound: {fileID: 0}
   movingSound: {fileID: 0}
   collisionHard: {fileID: 0}
@@ -537,6 +542,7 @@ MonoBehaviour:
   trajectory: []
   curIdx: 0
   childStrokes: []
+  path: {fileID: 0}
   bouncyAdded: 0
   moveSpeed: 0
   rotationSpeed: 0
@@ -802,6 +808,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 538840546f4ff4b168e4c60d850c76f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cam: {fileID: 0}
+  cursor: {fileID: 0}
+  canvas: {fileID: 0}
+  soundBrush: {fileID: 0}
+  controllerMode: {fileID: 0}
   selfSound: {fileID: 0}
   movingSound: {fileID: 0}
   collisionHard: {fileID: 0}
@@ -813,6 +824,7 @@ MonoBehaviour:
   trajectory: []
   curIdx: 0
   childStrokes: []
+  path: {fileID: 0}
   bouncyAdded: 0
   moveSpeed: 0
   rotationSpeed: 0
@@ -1438,6 +1450,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 538840546f4ff4b168e4c60d850c76f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cam: {fileID: 0}
+  cursor: {fileID: 0}
+  canvas: {fileID: 0}
+  soundBrush: {fileID: 0}
+  controllerMode: {fileID: 0}
   selfSound: {fileID: 0}
   movingSound: {fileID: 0}
   collisionHard: {fileID: 0}
@@ -1449,6 +1466,7 @@ MonoBehaviour:
   trajectory: []
   curIdx: 0
   childStrokes: []
+  path: {fileID: 0}
   bouncyAdded: 0
   moveSpeed: 0
   rotationSpeed: 0
@@ -2033,6 +2051,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 538840546f4ff4b168e4c60d850c76f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cam: {fileID: 0}
+  cursor: {fileID: 0}
+  canvas: {fileID: 0}
+  soundBrush: {fileID: 0}
+  controllerMode: {fileID: 0}
   selfSound: {fileID: 0}
   movingSound: {fileID: 0}
   collisionHard: {fileID: 0}
@@ -2044,6 +2067,7 @@ MonoBehaviour:
   trajectory: []
   curIdx: 0
   childStrokes: []
+  path: {fileID: 0}
   bouncyAdded: 0
   moveSpeed: 0
   rotationSpeed: 0
@@ -2179,6 +2203,7 @@ MonoBehaviour:
   canvas: {fileID: 1613778226}
   controllerMode: {fileID: 1758020947}
   cursor: {fileID: 685610041}
+  ready: 0
 --- !u!1 &1458427562
 GameObject:
   m_ObjectHideFlags: 0
@@ -2742,6 +2767,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 538840546f4ff4b168e4c60d850c76f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cam: {fileID: 0}
+  cursor: {fileID: 0}
+  canvas: {fileID: 0}
+  soundBrush: {fileID: 0}
+  controllerMode: {fileID: 0}
   selfSound: {fileID: 0}
   movingSound: {fileID: 0}
   collisionHard: {fileID: 0}
@@ -2753,6 +2783,7 @@ MonoBehaviour:
   trajectory: []
   curIdx: 0
   childStrokes: []
+  path: {fileID: 0}
   bouncyAdded: 0
   moveSpeed: 0
   rotationSpeed: 0
@@ -2827,7 +2858,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1750869927}
   m_LocalRotation: {x: 0.5, y: 0.5, z: -0.5, w: 0.5}
-  m_LocalPosition: {x: 30.924, y: 7.79, z: 16.72}
+  m_LocalPosition: {x: 30.21, y: 7.79, z: 16.72}
   m_LocalScale: {x: 21.11749, y: 1, z: 5.156325}
   m_ConstrainProportionsScale: 0
   m_Children: []

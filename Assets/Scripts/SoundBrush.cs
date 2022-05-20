@@ -17,6 +17,9 @@ public class SoundBrush : MonoBehaviour
     public CanvasHandler canvas;
     public ControllerMode controllerMode;
     public GameObject cursor;
+    public bool ready = false;
+
+    private bool showSketchDone = false;
 
     // Start is called before the first frame update
     void Start()
@@ -27,8 +30,20 @@ public class SoundBrush : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (controllerMode.readyForSketch && canvas.curBrush == "sound")
+        {
+            ready = true;
+        } else if (!controllerMode.readyForSketch)
+        {
+            ready = false;
+        }
 
-        if (controllerMode.readyForSketch && canvas.curBrush == "sound" && OVRInput.GetDown(OVRInput.Button.One))
+        if (!showSketchDone && controllerMode.readyForSketch && canvas.curBrush == "sound" && OVRInput.GetDown(OVRInput.Button.One))
+        {
+
+        }
+
+        else if (controllerMode.readyForSketch && canvas.curBrush == "sound" && OVRInput.GetDown(OVRInput.Button.One))
         {
             _createNewPath();
             state = PathSetState.DRAW;
@@ -38,6 +53,16 @@ public class SoundBrush : MonoBehaviour
         {
             state = PathSetState.WAITING;
         }
+    }
+
+    public bool isSketchShown()
+    {
+        return showSketchDone;
+    }
+
+    public void sketchSwitch(bool val)
+    {
+        showSketchDone = val;
     }
 
     private void _createNewPath()

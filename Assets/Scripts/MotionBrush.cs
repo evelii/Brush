@@ -12,6 +12,7 @@ public class MotionBrush : MonoBehaviour
     private Vector3 lastPos, curPos;
     public int numClicks = 0;
     public bool canDraw = true;
+    private int count = 0;
 
     public AddAnimation addAnimation;
     public DrawTubes drawTubes; // to retrieve stroke lists
@@ -39,10 +40,11 @@ public class MotionBrush : MonoBehaviour
 
         else if (canvas.curBrush == "motion" && OVRInput.GetUp(OVRInput.Button.One))
         {
+            count++;
             state = PathSetState.WAITING;
         }
 
-        if (motionLines.Count == 3)
+        if (count == 4)
         {
             SketchManager.curEditingObject.aniStart = true;
 
@@ -53,6 +55,7 @@ public class MotionBrush : MonoBehaviour
             }
 
             motionLines.Clear();
+            count = 0;
         }
     }
 
