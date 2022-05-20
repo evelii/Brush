@@ -240,7 +240,7 @@ public class SketchEntity : MonoBehaviour
         //gameObject.transform.right = Vector3.RotateTowards(gameObject.transform.right, tarPos - gameObject.transform.position, rotationSpeed * Time.deltaTime, 0.0f);
         gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, tarPos, moveSpeed * Time.deltaTime);
 
-        Vector3 relativePos = cam.position - gameObject.transform.position;
+        Vector3 relativePos = - cam.position + gameObject.transform.position;
 
         // the second argument, upwards, defaults to Vector3.up
         Quaternion rotation = Quaternion.LookRotation(relativePos);
