@@ -61,36 +61,6 @@ public class AddAnimation : MonoBehaviour
         
     }
 
-    private void FitColliderToChildren(GameObject parentObj)
-    {
-        BoxCollider bc = parentObj.GetComponent<BoxCollider>();
-        Bounds bounds = new Bounds(Vector3.zero, Vector3.zero); // center, size
-        bool hasBounds = false;
-        Renderer[] renderers = parentObj.GetComponentsInChildren<Renderer>();
-        foreach (Renderer render in renderers)
-        {
-            if (hasBounds)
-            {
-                bounds.Encapsulate(render.bounds);
-            }
-            else
-            {
-                bounds = render.bounds;
-                hasBounds = true;
-            }
-        }
-        if (hasBounds)
-        {
-            bc.center = bounds.center - parentObj.transform.position;
-            bc.size = bounds.size;
-        }
-        else
-        {
-            bc.size = bc.center = Vector3.zero;
-            bc.size = Vector3.zero;
-        }
-    }
-
     int curIdxKeyframe = 0;
     Vector3 currentPosHolderKeyframe;
 
@@ -160,11 +130,5 @@ public class AddAnimation : MonoBehaviour
             + (-a + c) * u
             + 2f * b
         );
-    }
-
-    public void AddColliderToSketch()
-    {
-        _animatedObject.GetComponent<SketchEntity>().AddColliders();
-        FitColliderToChildren(_animatedObject);
     }
 }

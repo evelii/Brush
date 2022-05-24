@@ -6,43 +6,47 @@ using UnityEngine.EventSystems;
 
 public class PointerEvent : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerClickHandler
 {
-    [SerializeField] private Color normalColor = Color.white;
+    [SerializeField] private Color normalColor = Color.black;
     [SerializeField] private Color enterColor = Color.white;
     [SerializeField] private Color downColor = Color.white;
     [SerializeField] private UnityEvent onClick = new UnityEvent();
 
-    private MeshRenderer meshRenderer = null;
+    private MeshRenderer[] meshRenderers = null;
     bool isSelected = false;
 
     private void Awake()
     {
-        meshRenderer = GetComponent<MeshRenderer>();
+        meshRenderers = gameObject.GetComponentsInChildren<MeshRenderer>();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (isSelected) return;
-        meshRenderer.material.color = enterColor;
+        foreach (MeshRenderer render in meshRenderers)
+            render.material.color = enterColor;
         print("Enter");
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         if (isSelected) return;
-        meshRenderer.material.color = normalColor;
+        foreach (MeshRenderer render in meshRenderers)
+            render.material.color = normalColor;
         print("Exit");
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        meshRenderer.material.color = downColor;
+        foreach (MeshRenderer render in meshRenderers)
+            render.material.color = downColor;
         print("Down");
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
         if (isSelected) return;
-        meshRenderer.material.color = enterColor;
+        foreach (MeshRenderer render in meshRenderers)
+            render.material.color = enterColor;
         print("Up");
     }
 

@@ -93,7 +93,7 @@ public class DrawTubes : MonoBehaviour
     {
         if (SketchManager.curEditingObject != null)
         {
-            addAnimation.AddColliderToSketch();
+            SketchManager.curEditingObject.SketchWrapUp();
         }
         newStroke = null;
         strokesList.Clear();
