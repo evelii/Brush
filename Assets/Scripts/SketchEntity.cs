@@ -38,6 +38,9 @@ public class SketchEntity : MonoBehaviour
     public float moveSpeed; // the speed when moving along the path
     public float rotationSpeed;
 
+    // dependencies
+    public List<Dependency> dependencies;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -53,6 +56,7 @@ public class SketchEntity : MonoBehaviour
         inCollision = false;
         editingMode = false;
         soundMarkCollection = new List<GameObject>();
+        dependencies = new List<Dependency>();
         selfSoundStartPoint = Vector3.zero;
         supportedSketches.Add("ambulance", true);
         supportedSketches.Add("airplane", true);
@@ -121,6 +125,16 @@ public class SketchEntity : MonoBehaviour
             HideSoundMarks();
             soundBrush.sketchSwitch(false);
             if (go != null) go.SetActive(false);
+
+            // dependencies
+            if (dependencies.Count > 1) Debug.LogError("more than one dependencies");
+            else if (dependencies.Count > 0)
+            {
+                if (!dependencies[0].visible) dependencies[0].depSketch.gameObject.SetActive(false);
+                else dependencies[0].depSketch.gameObject.SetActive(true);
+                float distance = Vector3.Distance(dependencies[0].showupPos, gameObject.transform.position);
+                if (distance <= 0.3f) dependencies[0].visible = true;
+            }
 
             if (!rigidBodyAdded)
             {
@@ -237,15 +251,15 @@ public class SketchEntity : MonoBehaviour
         float distance = Vector3.Distance(currentPosHolder, gameObject.transform.position);
         tarPos = currentPosHolder;  // TODO: tarpos and change moveSpeed*Time.deltaTime to moveSpeed
 
-        //gameObject.transform.right = Vector3.RotateTowards(gameObject.transform.right, tarPos - gameObject.transform.position, rotationSpeed * Time.deltaTime, 0.0f);
+        gameObject.transform.right = Vector3.RotateTowards(gameObject.transform.right, tarPos - gameObject.transform.position, rotationSpeed * Time.deltaTime, 0.0f);
         gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, tarPos, moveSpeed * Time.deltaTime);
 
         Vector3 relativePos = - cam.position + gameObject.transform.position;
 
         // the second argument, upwards, defaults to Vector3.up
-        Quaternion rotation = Quaternion.LookRotation(relativePos);
-        rotation *= Quaternion.Euler(0, 50, 0);
-        gameObject.transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * rotationSpeed);
+        //Quaternion rotation = Quaternion.LookRotation(relativePos);
+        //rotation *= Quaternion.Euler(0, 50, 0);
+        //gameObject.transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * rotationSpeed);
 
         if (distance <= 0.3f)
         {
@@ -331,12 +345,19 @@ public class SketchEntity : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        string softness;
+        if (collision.gameObject.name == "TubeStroke")
+        {
+            softness = collision.gameObject.transform.parent.gameObject.GetComponent<SketchEntity>().softness;
+        }
+        else softness = collision.gameObject.GetComponent<SketchEntity>().softness;
+
         inCollision = true;
         movingSound.Stop();
         selfSound.Stop();
         Debug.LogWarning("collide!");
-        if (collision.gameObject.GetComponent<SketchEntity>() == null) Debug.LogWarning("is null! " + collision.gameObject.name);
-        if (collision.gameObject.GetComponent<SketchEntity>().softness == "hard")
+        
+        if (softness == "hard")
             collisionHard.Play();
         else collisionSoft.Play();
     }
@@ -409,5 +430,31 @@ public class SketchEntity : MonoBehaviour
             bc.size = bc.center = Vector3.zero;
             bc.size = Vector3.zero;
         }
+    }
+
+    public void AddDependency(Dependency newDependency)
+    {
+        float dist = Vector3.Distance(newDependency.selfPos, trajectory[0]);
+        closest = trajectory[0];
+
+        // find the point of the trajectory which is the closest to the stamped point
+        for (int i = 1; i < trajectory.Length; i++)
+        {
+            if (Vector3.Distance(newDependency.selfPos, trajectory[i]) < dist)
+            {
+                dist = Vector3.Distance(newDependency.selfPos, trajectory[i]);
+                closest = trajectory[i];
+            }
+        }
+
+        newDependency.showupPos = closest;
+
+        dependencies.Add(newDependency);
+        
+    }
+
+    public bool IsSelected()
+    {
+        return gameObject.GetComponentsInChildren<MeshRenderer>()[0].material.color == Color.white;
     }
 }

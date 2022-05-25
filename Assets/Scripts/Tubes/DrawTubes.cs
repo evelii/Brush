@@ -47,7 +47,6 @@ public class DrawTubes : MonoBehaviour
     public void Update()
     {
         bool canDraw = cursorScript.canDraw;
-        //bool newSketch = cursorScript.newSketch;
 
         if (state == StrokeState.DRAW)
         {
@@ -108,6 +107,18 @@ public class DrawTubes : MonoBehaviour
             curSketch = newStroke;
             newStroke.AddComponent<BoxCollider>();
             newStroke.AddComponent<SketchEntity>();
+
+            // check if the current sketch means to be a dependency of another existing sketch
+            if (SketchManager.curEditingObject != null && SketchManager.curEditingObject.IsSelected())
+            {
+                Dependency dependent = new Dependency(curSketch.GetComponent<SketchEntity>(), newStroke.transform.position, SketchManager.curEditingObject.gameObject);
+                SketchManager.curEditingObject.AddDependency(dependent);
+            }
+            else
+            {
+                SketchManager._parentObject = curSketch;
+                SketchManager.curEditingObject = curSketch.GetComponent<SketchEntity>();
+            }
         }
 
         GameObject go = new GameObject("TubeStroke");
@@ -121,16 +132,6 @@ public class DrawTubes : MonoBehaviour
         go.GetComponent<MeshRenderer>().material.color = ColorManager.Instance.GetColor();
         tube.radius = strokeRadius;
 
-        if (addAnimation.insertKeyframe)
-        {
-            addAnimation.keyframeObject = curSketch;
-            addAnimation.keyframePos = addAnimation._animatedObject.transform.position;
-        }
-        else
-        {
-            SketchManager._parentObject = curSketch;
-            SketchManager.curEditingObject = curSketch.GetComponent<SketchEntity>();
-        }
     }
 
     public void FixedUpdate()

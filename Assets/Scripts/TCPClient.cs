@@ -100,27 +100,6 @@ public class TCPClient : MonoBehaviour
 		}
 	}
 
-	private string PrepareData()
-    {
-		string res = "";
-		foreach (List<Vector3> strokes in strokesList)
-		{
-			string strokeStr = "";
-			for (int i = 0; i < strokes.Count; i++)
-			{
-				Vector2 v2 = strokes[i];
-				strokeStr += v2.ToString();
-				if (i != strokes.Count - 1) strokeStr += ",";
-
-			}
-			strokeStr = strokeStr.Replace(" ", "");
-			Debug.LogError(strokeStr);
-			strokeStr += "#"; // delimiter of different strokes
-			res += strokeStr;
-		}
-		return res;
-	}
-
 	/// <summary> 	
 	/// Send message to server using socket connection. 	
 	/// </summary> 	

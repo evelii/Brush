@@ -25,21 +25,6 @@ public class FindPlane : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (getBestFit)
-        //{
-        //    List<List<Vector3>> strokes = tubes.strokesList;
-        //    if (strokes == null) return;
-        //    foreach (List<Vector3> stroke in strokes)
-        //    {
-        //        points.AddRange(stroke);
-        //    }
-        //    compute(points.ToArray());
-        //    plRotated = pl;
-        //    drawPlane = true;
-        //    getBestFit = false;
-        //    rotatePlaneToParallelToXY();
-        //}
-
         if (drawPlane)
         {
             //Debug.LogWarning(pl.distance);
@@ -143,6 +128,32 @@ public class FindPlane : MonoBehaviour
         {
             xyPoint.Add(point);
         }
+
+        //// find the lowest point
+        //Vector2 pivot = xyPoint[0];
+        //foreach(Vector2 point in xyPoint)
+        //{
+        //    if (point[1] < pivot[1]) pivot = point;
+        //}
+
+        //float s = Mathf.Sin(Mathf.PI/12); // 180 -> pi, 
+        //float c = Mathf.Cos(Mathf.PI / 12);
+
+        //List<Vector2> pythonPoints = new List<Vector2>();
+
+        //foreach (Vector2 point in xyPoint)
+        //{
+        //    Vector2 newPoint = new Vector2(point[0] - pivot[0], point[1] - pivot[1]);
+
+        //    // rotate point
+        //    float xnew = newPoint[0] * c - newPoint[1] * s;
+        //    float ynew = newPoint[0] * s + newPoint[1] * c;
+
+        //    newPoint[0] = xnew + pivot[0];
+        //    newPoint[1] = ynew + pivot[1];
+
+        //    pythonPoints.Add(newPoint);
+        //}
 
         PrintPoints(xyPoint);
 
