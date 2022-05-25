@@ -129,7 +129,6 @@ public class DrawTubes : MonoBehaviour
         else
         {
             SketchManager._parentObject = curSketch;
-            SketchManager._curEditingObject = go;
             SketchManager.curEditingObject = curSketch.GetComponent<SketchEntity>();
         }
     }

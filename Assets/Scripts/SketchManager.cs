@@ -8,7 +8,6 @@ public class SketchManager : MonoBehaviour
 
     public static SketchManager manager;
 
-    public static GameObject _curEditingObject;
     public static GameObject _parentObject;
     public static SketchEntity curEditingObject;
 

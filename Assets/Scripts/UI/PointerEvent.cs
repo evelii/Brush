@@ -11,17 +11,19 @@ public class PointerEvent : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     [SerializeField] private Color downColor = Color.white;
     [SerializeField] private UnityEvent onClick = new UnityEvent();
 
+    public CanvasHandler canvas;
     private MeshRenderer[] meshRenderers = null;
     bool isSelected = false;
 
     private void Awake()
     {
+        canvas = GameObject.Find("Canvas").GetComponent<CanvasHandler>();
         meshRenderers = gameObject.GetComponentsInChildren<MeshRenderer>();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (isSelected) return;
+        if (canvas.curBrush != "select" || isSelected) return;
         foreach (MeshRenderer render in meshRenderers)
             render.material.color = enterColor;
         print("Enter");
@@ -29,7 +31,7 @@ public class PointerEvent : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (isSelected) return;
+        if (canvas.curBrush != "select" || isSelected) return;
         foreach (MeshRenderer render in meshRenderers)
             render.material.color = normalColor;
         print("Exit");
@@ -37,6 +39,7 @@ public class PointerEvent : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (canvas.curBrush != "select") return; 
         foreach (MeshRenderer render in meshRenderers)
             render.material.color = downColor;
         print("Down");
@@ -44,7 +47,7 @@ public class PointerEvent : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (isSelected) return;
+        if (canvas.curBrush != "select" || isSelected) return;
         foreach (MeshRenderer render in meshRenderers)
             render.material.color = enterColor;
         print("Up");
@@ -52,8 +55,11 @@ public class PointerEvent : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (canvas.curBrush != "select") return;
         isSelected = true;
         onClick.Invoke();
         print("Click");
+        SketchManager._parentObject = gameObject;
+        SketchManager.curEditingObject = gameObject.GetComponent<SketchEntity>();
     }
 }

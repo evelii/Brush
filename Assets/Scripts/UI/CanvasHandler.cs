@@ -7,27 +7,21 @@ public class CanvasHandler : MonoBehaviour
 {
     public Transform cam;
     public Button sketchBtn;
+    public Button selectBtn;
     public Button pathBtn;
     public Button motionBtn;
     public Button soundBtn;
     public string curBrush;
-    private Color highlightColor;
-    private Color normalColor;
 
     void Start()
     {
         sketchBtn.Select();
         curBrush = "sketch";
         sketchBtn.onClick.AddListener(SketchTaskOnClick);
+        selectBtn.onClick.AddListener(SelectTaskOnClick);
         pathBtn.onClick.AddListener(PathTaskOnClick);
         motionBtn.onClick.AddListener(MotionTaskOnClick);
         soundBtn.onClick.AddListener(SoundTaskOnClick);
-
-        float r = 150;  // red component
-        float g = 208;  // green component
-        float b = 243;  // blue component
-        highlightColor = new Color(r, g, b);
-        normalColor = Color.white;
     }
 
     // Update is called once per frame
@@ -36,6 +30,10 @@ public class CanvasHandler : MonoBehaviour
         if (curBrush == "sketch")
         {
             sketchBtn.Select();  // highlight the button
+        }
+        else if (curBrush == "select")
+        {
+            selectBtn.Select();
         }
         else if (curBrush == "path")
         {
@@ -55,6 +53,12 @@ public class CanvasHandler : MonoBehaviour
     {
         sketchBtn.Select();
         curBrush = "sketch";
+    }
+
+    void SelectTaskOnClick()
+    {
+        selectBtn.Select();
+        curBrush = "select";
     }
 
     void PathTaskOnClick()
