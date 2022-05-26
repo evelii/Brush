@@ -109,7 +109,7 @@ public class DrawTubes : MonoBehaviour
             newStroke.AddComponent<SketchEntity>();
 
             // check if the current sketch means to be a dependency of another existing sketch
-            if (SketchManager.curEditingObject != null && SketchManager.curEditingObject.IsSelected())
+            if (SketchManager.curSelected != null)
             {
                 Dependency dependent = new Dependency(curSketch.GetComponent<SketchEntity>(), newStroke.transform.position, SketchManager.curEditingObject.gameObject);
                 SketchManager.curEditingObject.AddDependency(dependent);

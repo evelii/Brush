@@ -277,6 +277,11 @@ public class SketchEntity : MonoBehaviour
             gameObject.transform.position = trajectory[0];
             currentPosHolder = trajectory[0];
         }
+
+        if (dependencies.Count > 0)
+        {
+            dependencies[0].visible = false;
+        }
     }
 
     private void AddBouncingEffect()
@@ -434,8 +439,9 @@ public class SketchEntity : MonoBehaviour
 
     public void AddDependency(Dependency newDependency)
     {
+        if (trajectory == null) trajectory = path.GetPathPoints();
         float dist = Vector3.Distance(newDependency.selfPos, trajectory[0]);
-        closest = trajectory[0];
+        Vector3 closestPoint = trajectory[0];
 
         // find the point of the trajectory which is the closest to the stamped point
         for (int i = 1; i < trajectory.Length; i++)
@@ -443,11 +449,11 @@ public class SketchEntity : MonoBehaviour
             if (Vector3.Distance(newDependency.selfPos, trajectory[i]) < dist)
             {
                 dist = Vector3.Distance(newDependency.selfPos, trajectory[i]);
-                closest = trajectory[i];
+                closestPoint = trajectory[i];
             }
         }
 
-        newDependency.showupPos = closest;
+        newDependency.showupPos = closestPoint;
 
         dependencies.Add(newDependency);
         

@@ -46,7 +46,8 @@ public class MotionBrush : MonoBehaviour
 
         if (count == 4)
         {
-            SketchManager.curEditingObject.aniStart = true;
+            if (SketchManager.curSelected != null) SketchManager.curSelected.aniStart = true;
+            else SketchManager.curEditingObject.aniStart = true;
 
             // hide the motion lines from the display
             foreach (GameObject l in motionLines)

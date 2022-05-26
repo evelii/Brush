@@ -59,7 +59,6 @@ public class PointerEvent : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         isSelected = true;
         onClick.Invoke();
         print("Click");
-        SketchManager._parentObject = gameObject;
-        SketchManager.curEditingObject = gameObject.GetComponent<SketchEntity>();
+        SketchManager.curSelected = gameObject.GetComponent<SketchEntity>();
     }
 }

@@ -71,7 +71,8 @@ public class SoundBrush : MonoBehaviour
         if (!addAnimation.insertKeyframe)
         {
             GameObject newLine = new GameObject("Sound Line");
-            SketchManager.curEditingObject.AddSoundMark(newLine);
+            if (SketchManager.curSelected != null) SketchManager.curSelected.AddSoundMark(newLine);
+            else SketchManager.curEditingObject.AddSoundMark(newLine);
             _currLine = newLine.AddComponent<LineRenderer>();
             _currLine.startWidth = .01f;
             _currLine.endWidth = .01f;
