@@ -11,6 +11,7 @@ public class SketchManager : MonoBehaviour
     public static GameObject _parentObject;
     public static SketchEntity curEditingObject;
     public static SketchEntity curSelected;
+    public static int labelCounter = 0;
 
     void Awake()
     {

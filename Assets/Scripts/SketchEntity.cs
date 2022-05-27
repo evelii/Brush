@@ -26,6 +26,9 @@ public class SketchEntity : MonoBehaviour
     public PathFollower path;
     GameObject go;
 
+    public string label;
+    public SketchEntity guardian;
+
     bool inCollision;
     string rootFolder;
     Dictionary<string, bool> supportedSketches = new Dictionary<string, bool>();
@@ -162,6 +165,12 @@ public class SketchEntity : MonoBehaviour
             }
         }
 
+        // guardian start moving, so I need to start too
+        if (label.Contains("dependency") && guardian.aniStart)
+        {
+            aniStart = true;
+        }
+
         if (selfSoundStartPoint != Vector3.zero && !editingMode)
         { 
             float distance = Vector3.Distance(selfSoundStartPoint, gameObject.transform.position);
@@ -281,6 +290,7 @@ public class SketchEntity : MonoBehaviour
         if (dependencies.Count > 0)
         {
             dependencies[0].visible = false;
+            dependencies[0].depSketch.ResetPath();
         }
     }
 
@@ -374,10 +384,14 @@ public class SketchEntity : MonoBehaviour
 
     public void AddColliders()
     {
+        Debug.LogWarning(childStrokes.Count);
         foreach (GameObject child in childStrokes)
         {
-            Collider collider = child.AddComponent<BoxCollider>();
-            collider.material.bounciness = 1.0f;
+            if (child.GetComponent<BoxCollider>() == null)
+            {
+                Collider collider = child.AddComponent<BoxCollider>();
+                collider.material.bounciness = 1.0f;
+            }
         }
     }
 

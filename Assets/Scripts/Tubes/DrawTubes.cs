@@ -30,7 +30,6 @@ public class DrawTubes : MonoBehaviour
     Vector3 lastPos;
     public List<Vector3> fullPoints; // all points drawn by the controller
 
-    public AddAnimation addAnimation;
     public GameObject clientObject;
 
     GameObject newStroke;
@@ -106,23 +105,35 @@ public class DrawTubes : MonoBehaviour
             newStroke.transform.position = cursor.transform.position;
             curSketch = newStroke;
             newStroke.AddComponent<BoxCollider>();
-            newStroke.AddComponent<SketchEntity>();
+            SketchEntity se = newStroke.AddComponent<SketchEntity>() as SketchEntity;
+            CollisionIgnore ci = newStroke.AddComponent<CollisionIgnore>() as CollisionIgnore;
 
             // check if the current sketch means to be a dependency of another existing sketch
             if (SketchManager.curSelected != null)
             {
-                Dependency dependent = new Dependency(curSketch.GetComponent<SketchEntity>(), newStroke.transform.position, SketchManager.curEditingObject.gameObject);
-                SketchManager.curEditingObject.AddDependency(dependent);
+                Dependency dependent = new Dependency(curSketch.GetComponent<SketchEntity>(), newStroke.transform.position, SketchManager.curSelected.gameObject);
+                SketchManager.curSelected.AddDependency(dependent);
+                ci.label = SketchManager.curSelected.gameObject.GetComponent<CollisionIgnore>().label + "_dependency";
+                ci.guardian = SketchManager.curSelected.gameObject;
+                ci.AvoidCollision();
+                se.label = ci.label;
+                se.guardian = ci.guardian.GetComponent<SketchEntity>();
             }
             else
-            {
-                SketchManager._parentObject = curSketch;
-                SketchManager.curEditingObject = curSketch.GetComponent<SketchEntity>();
+            { 
+                ci.label = SketchManager.labelCounter.ToString();
+                se.label = ci.label;
+                SketchManager.labelCounter++;
             }
+            SketchManager._parentObject = curSketch;
+            SketchManager.curEditingObject = curSketch.GetComponent<SketchEntity>();
         }
 
         GameObject go = new GameObject("TubeStroke");
         go.transform.parent = newStroke.transform;
+        CollisionIgnore goCI = go.AddComponent<CollisionIgnore>() as CollisionIgnore;
+        goCI.label = newStroke.GetComponent<CollisionIgnore>().label + "_child";
+        goCI.guardian = go.transform.parent.gameObject.GetComponent<CollisionIgnore>().guardian;
         curSketch = newStroke;
         newStroke.GetComponent<SketchEntity>().AddChildStroke(go);
 

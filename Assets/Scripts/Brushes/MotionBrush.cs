@@ -14,7 +14,6 @@ public class MotionBrush : MonoBehaviour
     public bool canDraw = true;
     private int count = 0;
 
-    public AddAnimation addAnimation;
     public DrawTubes drawTubes; // to retrieve stroke lists
     public CanvasHandler canvas;
     public ControllerMode controllerMode;
@@ -63,23 +62,12 @@ public class MotionBrush : MonoBehaviour
     private void _createNewPath()
     {
         lastPos = transform.position;
-        if (!addAnimation.insertKeyframe)
-        {
-            GameObject newLine = new GameObject("Motion Line");
-            motionLines.Add(newLine);
-            _currLine = newLine.AddComponent<LineRenderer>();
-            _currLine.startWidth = .01f;
-            _currLine.endWidth = .01f;
-            _currLine.material.color = Color.green;
-        }
-        else
-        {
-            GameObject newPath = new GameObject("New Keyframe Path");
-            _currKeyframeLine = newPath.AddComponent<LineRenderer>();
-            _currKeyframeLine.startWidth = .01f;
-            _currKeyframeLine.endWidth = .01f;
-        }
-
+        GameObject newLine = new GameObject("Motion Line");
+        motionLines.Add(newLine);
+        _currLine = newLine.AddComponent<LineRenderer>();
+        _currLine.startWidth = .01f;
+        _currLine.endWidth = .01f;
+        _currLine.material.color = Color.green;
         numClicks = 0;
     }
 
@@ -91,17 +79,10 @@ public class MotionBrush : MonoBehaviour
 
             if (curPos != lastPos)
             {  // when the controller is held
-                if (!addAnimation.insertKeyframe)
-                {
-                    _currLine.positionCount = numClicks + 1;
-                    _currLine.SetPosition(numClicks, curPos);
-                }
-                else
-                {
-                    _currKeyframeLine.positionCount = numClicks + 1;
-                    _currKeyframeLine.SetPosition(numClicks, curPos);
-                }
-
+               
+                _currLine.positionCount = numClicks + 1;
+                _currLine.SetPosition(numClicks, curPos);
+                
                 numClicks++;
                 lastPos = curPos;
             }
@@ -113,16 +94,8 @@ public class MotionBrush : MonoBehaviour
         if (_currLine == null) return null;  // no path is drawn
 
         Vector3[] pos;
-        if (!addAnimation.insertKeyframe || _currKeyframeLine == null)
-        {
-            pos = new Vector3[_currLine.positionCount];
-            _currLine.GetPositions(pos);
-        }
-        else
-        {
-            pos = new Vector3[_currKeyframeLine.positionCount];
-            _currKeyframeLine.GetPositions(pos);
-        }
+        pos = new Vector3[_currLine.positionCount];
+        _currLine.GetPositions(pos);
 
         return pos;
     }
