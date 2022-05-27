@@ -5,6 +5,7 @@ using UnityEditor;
 
 public class SketchEntity : MonoBehaviour
 {
+    public Vector3 initPos;
     public Transform cam;
     public GameObject cursor;
     public CanvasHandler canvas;
@@ -286,6 +287,18 @@ public class SketchEntity : MonoBehaviour
             gameObject.transform.position = trajectory[0];
             currentPosHolder = trajectory[0];
         }
+        else if (label.Contains("dependency"))
+        {
+            gameObject.transform.position = initPos;
+            gameObject.GetComponent<Rigidbody>().useGravity = false;
+            bouncyAdded = false;
+            aniStart = false;
+            Transform[] ts = gameObject.GetComponentsInChildren<Transform>();
+            foreach (Transform child in ts)
+            {
+                child.gameObject.transform.parent = gameObject.transform;
+            }
+        }
 
         if (dependencies.Count > 0)
         {
@@ -296,14 +309,18 @@ public class SketchEntity : MonoBehaviour
 
     private void AddBouncingEffect()
     {
-        SquashAndStretchKit.SquashAndStretch tem = gameObject.AddComponent<SquashAndStretchKit.SquashAndStretch>();
-        tem.enableSquash = true;
-        tem.enableStretch = true;
-        tem.maxSpeedThreshold = 20;
-        tem.minSpeedThreshold = 1;
-        tem.maxSquash = 1.6f;
-        tem.maxStretch = 1.5f;
+        if (gameObject.GetComponent<SquashAndStretchKit.SquashAndStretch>() == null)
+        {
+            SquashAndStretchKit.SquashAndStretch tem = gameObject.AddComponent<SquashAndStretchKit.SquashAndStretch>();
+            tem.enableSquash = true;
+            tem.enableStretch = true;
+            tem.maxSpeedThreshold = 20;
+            tem.minSpeedThreshold = 1;
+            tem.maxSquash = 1.6f;
+            tem.maxStretch = 1.5f;
+        }
 
+        gameObject.GetComponent<Rigidbody>().useGravity = true;
         bouncyAdded = true;  // necessary components have been added, so turned off the bool
         aniStart = false;
     }
@@ -360,17 +377,22 @@ public class SketchEntity : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        string softness;
+        string softness = "";
         if (collision.gameObject.name == "TubeStroke")
         {
             softness = collision.gameObject.transform.parent.gameObject.GetComponent<SketchEntity>().softness;
         }
+        else if (collision.gameObject.GetComponent<SketchEntity>() == null)
+        {
+            Debug.LogWarning(collision.gameObject.name);
+        }
+            
         else softness = collision.gameObject.GetComponent<SketchEntity>().softness;
 
         inCollision = true;
         movingSound.Stop();
         selfSound.Stop();
-        Debug.LogWarning("collide!");
+        //Debug.LogWarning("collide!");
         
         if (softness == "hard")
             collisionHard.Play();
@@ -384,7 +406,6 @@ public class SketchEntity : MonoBehaviour
 
     public void AddColliders()
     {
-        Debug.LogWarning(childStrokes.Count);
         foreach (GameObject child in childStrokes)
         {
             if (child.GetComponent<BoxCollider>() == null)
@@ -392,6 +413,8 @@ public class SketchEntity : MonoBehaviour
                 Collider collider = child.AddComponent<BoxCollider>();
                 collider.material.bounciness = 1.0f;
             }
+            CollisionIgnore childCI = child.GetComponent<CollisionIgnore>();
+            if (childCI.label.Contains("dependency")) childCI.AvoidCollision();
         }
     }
 

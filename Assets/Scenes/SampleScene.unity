@@ -161,7 +161,6 @@ MonoBehaviour:
   pathSetter: {fileID: 685610042}
   numClicks: 0
   canDraw: 1
-  addAnimation: {fileID: 1336290716}
   drawTubes: {fileID: 2033916452}
   canvas: {fileID: 1613778226}
   controllerMode: {fileID: 1758020947}
@@ -526,6 +525,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 538840546f4ff4b168e4c60d850c76f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initPos: {x: 0, y: 0, z: 0}
   cam: {fileID: 0}
   cursor: {fileID: 0}
   canvas: {fileID: 0}
@@ -543,6 +543,8 @@ MonoBehaviour:
   curIdx: 0
   childStrokes: []
   path: {fileID: 0}
+  label: 
+  guardian: {fileID: 0}
   bouncyAdded: 0
   moveSpeed: 0
   rotationSpeed: 0
@@ -808,6 +810,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 538840546f4ff4b168e4c60d850c76f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initPos: {x: 0, y: 0, z: 0}
   cam: {fileID: 0}
   cursor: {fileID: 0}
   canvas: {fileID: 0}
@@ -825,6 +828,8 @@ MonoBehaviour:
   curIdx: 0
   childStrokes: []
   path: {fileID: 0}
+  label: 
+  guardian: {fileID: 0}
   bouncyAdded: 0
   moveSpeed: 0
   rotationSpeed: 0
@@ -1471,6 +1476,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 538840546f4ff4b168e4c60d850c76f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initPos: {x: 0, y: 0, z: 0}
   cam: {fileID: 0}
   cursor: {fileID: 0}
   canvas: {fileID: 0}
@@ -1488,6 +1494,8 @@ MonoBehaviour:
   curIdx: 0
   childStrokes: []
   path: {fileID: 0}
+  label: 
+  guardian: {fileID: 0}
   bouncyAdded: 0
   moveSpeed: 0
   rotationSpeed: 0
@@ -2039,16 +2047,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e6d362e95b5441b2b8f24156ec504e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sketch: {fileID: 0}
-  _childObject: {fileID: 0}
-  _animatedObject: {fileID: 0}
-  movement: 0
-  insertKeyframe: 0
-  keyframePos: {x: 0, y: 0, z: 0}
-  keyframeObject: {fileID: 0}
-  passedKeyframe: 0
-  path: {fileID: 41646995}
-  motionBrush: {fileID: 1868850116}
 --- !u!4 &1336290717
 Transform:
   m_ObjectHideFlags: 0
@@ -2141,6 +2139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 538840546f4ff4b168e4c60d850c76f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initPos: {x: 0, y: 0, z: 0}
   cam: {fileID: 0}
   cursor: {fileID: 0}
   canvas: {fileID: 0}
@@ -2158,6 +2157,8 @@ MonoBehaviour:
   curIdx: 0
   childStrokes: []
   path: {fileID: 0}
+  label: 
+  guardian: {fileID: 0}
   bouncyAdded: 0
   moveSpeed: 0
   rotationSpeed: 0
@@ -2233,7 +2234,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1396229140}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 29.626, y: 5.83, z: 16.677}
+  m_LocalPosition: {x: 29.626, y: 5.632, z: 16.677}
   m_LocalScale: {x: 1, y: 0.33501, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2288,7 +2289,6 @@ MonoBehaviour:
   soundCursor: {fileID: 685610042}
   numClicks: 0
   canDraw: 1
-  addAnimation: {fileID: 1336290716}
   drawTubes: {fileID: 2033916452}
   canvas: {fileID: 1613778226}
   controllerMode: {fileID: 1758020947}
@@ -2858,6 +2858,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 538840546f4ff4b168e4c60d850c76f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initPos: {x: 0, y: 0, z: 0}
   cam: {fileID: 0}
   cursor: {fileID: 0}
   canvas: {fileID: 0}
@@ -2875,6 +2876,8 @@ MonoBehaviour:
   curIdx: 0
   childStrokes: []
   path: {fileID: 0}
+  label: 
+  guardian: {fileID: 0}
   bouncyAdded: 0
   moveSpeed: 0
   rotationSpeed: 0
@@ -3015,7 +3018,6 @@ MonoBehaviour:
   motionCursor: {fileID: 685610042}
   numClicks: 0
   canDraw: 1
-  addAnimation: {fileID: 1336290716}
   drawTubes: {fileID: 2033916452}
   canvas: {fileID: 1613778226}
   controllerMode: {fileID: 1758020947}
@@ -3346,8 +3348,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2033916453}
   - component: {fileID: 2033916452}
-  - component: {fileID: 2033916454}
-  - component: {fileID: 2033916455}
   m_Layer: 0
   m_Name: Tubes
   m_TagString: Untagged
@@ -3375,7 +3375,6 @@ MonoBehaviour:
   updateLineInterval: 0.01
   state: 0
   fullPoints: []
-  addAnimation: {fileID: 1336290716}
   clientObject: {fileID: 610419568}
 --- !u!4 &2033916453
 Transform:
@@ -3392,39 +3391,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2033916454
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2033916451}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c164a20ad38a09647a5ea7638ec1fd69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enableSquash: 1
-  maxSquash: 1.6
-  enableStretch: 1
-  maxStretch: 1.5
-  mode: 0
-  springHalfLife: 0.01
-  minSpeedThreshold: 1
-  maxSpeedThreshold: 20
---- !u!65 &2033916455
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2033916451}
-  m_Material: {fileID: 13400000, guid: f770ebb23566948498c95f369e77492d, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2050444999 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1525749097544336, guid: a9d2de84afb308a4796cc671d3432b4d, type: 3}

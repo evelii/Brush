@@ -106,6 +106,7 @@ public class DrawTubes : MonoBehaviour
             curSketch = newStroke;
             newStroke.AddComponent<BoxCollider>();
             SketchEntity se = newStroke.AddComponent<SketchEntity>() as SketchEntity;
+            se.initPos = newStroke.transform.position;
             CollisionIgnore ci = newStroke.AddComponent<CollisionIgnore>() as CollisionIgnore;
 
             // check if the current sketch means to be a dependency of another existing sketch

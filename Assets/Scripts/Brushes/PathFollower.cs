@@ -82,7 +82,8 @@ public class PathFollower : MonoBehaviour
         Vector3[] pos;
         pos = new Vector3[_currLine.positionCount];
         _currLine.GetPositions(pos);
-        
+
+        _currLine = null;
         return pos;
     }
 }
