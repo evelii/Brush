@@ -309,7 +309,7 @@ public class SketchEntity : MonoBehaviour
 
     private void AddBouncingEffect()
     {
-        if (gameObject.GetComponent<SquashAndStretchKit.SquashAndStretch>() == null)
+        if (SketchManager.curSelected == null && gameObject.GetComponent<SquashAndStretchKit.SquashAndStretch>() == null)
         {
             SquashAndStretchKit.SquashAndStretch tem = gameObject.AddComponent<SquashAndStretchKit.SquashAndStretch>();
             tem.enableSquash = true;
