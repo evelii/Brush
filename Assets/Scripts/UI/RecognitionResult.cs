@@ -10,8 +10,10 @@ public class RecognitionResult : MonoBehaviour
     public Transform cam;
     public GameObject canvas;
     public GameObject panel;
-    public GameObject resultA;
-    public GameObject resultB;
+    public Button resultABtn;
+    public Button resultBBtn;
+    public GameObject resultAText;
+    public GameObject resultBText;
 
     public TextMeshProUGUI textA;
     public TextMeshProUGUI textB;
@@ -20,8 +22,10 @@ public class RecognitionResult : MonoBehaviour
     void Start()
     {
         canvas.SetActive(false);
-        textA = resultA.GetComponent<TextMeshProUGUI>();
-        textB = resultB.GetComponent<TextMeshProUGUI>();
+        textA = resultAText.GetComponent<TextMeshProUGUI>();
+        textB = resultBText.GetComponent<TextMeshProUGUI>();
+        resultABtn.onClick.AddListener(ButtonAOnClick);
+        resultBBtn.onClick.AddListener(ButtonBOnClick);
     }
 
     // Update is called once per frame
@@ -37,5 +41,15 @@ public class RecognitionResult : MonoBehaviour
         Vector3 offset = new Vector3(0, 0.09f, 0);
         canvas.transform.position = client.curObjectForRecognition.gameObject.transform.position + offset;
         canvas.SetActive(true);
+    }
+
+    void ButtonAOnClick()
+    {
+        Debug.LogWarning("A is selected");
+    }
+
+    void ButtonBOnClick()
+    {
+        Debug.LogWarning("B is selected");
     }
 }
