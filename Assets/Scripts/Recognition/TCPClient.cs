@@ -11,10 +11,12 @@ public class TCPClient : MonoBehaviour
 {
 	public DrawTubes tubes;
 	public GameObject bestFitPlane;
+	public RecognitionResult recognitionResult;
 	public SketchEntity curObjectForRecognition;
 	public string address;
 	public int port;
 	string result;
+	string userChoice; // decision made by the user
 
 	#region private members 	
 	private TcpClient socketConnection;
@@ -28,6 +30,7 @@ public class TCPClient : MonoBehaviour
 	{
 		ConnectToTcpServer();
 		result = "";
+		userChoice = "";
 	}
 
 	// Update is called once per frame
@@ -42,10 +45,16 @@ public class TCPClient : MonoBehaviour
 
 		if (result != "")
         {
-			Debug.Log(result);
-			if (result[result.Length - 1] == '\n') result = result.Substring(0, result.Length - 1);
-			curObjectForRecognition.ObjectIdentity(result);
+			Debug.LogWarning(result);  // result containing the top 2 results, separated by newline char
+			string[] tokens = result.Split('\n');
+			recognitionResult.ShowPredictionResults(tokens[0], tokens[1]);
 			result = "";
+		}
+
+		if (userChoice != "")
+        {
+			curObjectForRecognition.ObjectIdentity(result);
+			userChoice = "";
 		}
 	}
 
