@@ -45,11 +45,13 @@ public class RecognitionResult : MonoBehaviour
 
     void ButtonAOnClick()
     {
-        Debug.LogWarning("A is selected");
+        client.userChoice = textA.text;
+        canvas.SetActive(false);
     }
 
     void ButtonBOnClick()
     {
-        Debug.LogWarning("B is selected");
+        client.userChoice = textB.text;
+        canvas.SetActive(false);
     }
 }

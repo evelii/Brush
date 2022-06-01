@@ -16,7 +16,7 @@ public class TCPClient : MonoBehaviour
 	public string address;
 	public int port;
 	string result;
-	string userChoice; // decision made by the user
+	public string userChoice; // decision made by the user
 
 	#region private members 	
 	private TcpClient socketConnection;
@@ -53,7 +53,7 @@ public class TCPClient : MonoBehaviour
 
 		if (userChoice != "")
         {
-			curObjectForRecognition.ObjectIdentity(result);
+			curObjectForRecognition.ObjectIdentity(userChoice);
 			userChoice = "";
 		}
 	}
