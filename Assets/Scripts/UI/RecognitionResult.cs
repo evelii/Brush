@@ -38,7 +38,7 @@ public class RecognitionResult : MonoBehaviour
     {
         textA.SetText(A);
         textB.SetText(B);
-        Vector3 offset = new Vector3(0, 0.09f, 0);
+        Vector3 offset = new Vector3(0, 0.09f, -0.15f);
         canvas.transform.position = client.curObjectForRecognition.gameObject.transform.position + offset;
         canvas.SetActive(true);
     }

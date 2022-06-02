@@ -39,8 +39,12 @@ public class SketchEntity : MonoBehaviour
     List<GameObject> soundMarkCollection;
     public bool bouncyAdded = false;
 
+    public string defaultDirection; // the direction of the default movement
     public float moveSpeed; // the speed when moving along the path
     public float rotationSpeed;
+    float width = 4;
+    float height = 7;
+    float timeCounter = 0;
 
     // dependencies
     public List<Dependency> dependencies;
@@ -75,9 +79,6 @@ public class SketchEntity : MonoBehaviour
         controllerMode = GameObject.Find("RightControllerPf").GetComponent<ControllerMode>();
         go = null;
 
-        moveSpeed = 0.7f;
-        rotationSpeed = 20f;
-
         if (gameObject.name != "Floor" && gameObject.name != "Wall" && gameObject.name != "Table" && gameObject.name != "Chair")
         {
             //ObjectIdentity("police car");
@@ -89,12 +90,31 @@ public class SketchEntity : MonoBehaviour
     {
         identity = recognitionResult;
         Debug.LogWarning(identity);
+        identity = identity.Replace("_", " ");
+
+        if (identity == "police car" || identity == "ambulance")
+        {
+            moveSpeed = 0.7f;
+        }
+        else if (identity == "airplane")
+        {
+            moveSpeed = 1.0f;
+        }
+        else if (identity == "flying saucer")
+        {
+            moveSpeed = 0.3f;
+        }
+        else
+        {
+            moveSpeed = 0.5f;
+        }
+        rotationSpeed = 20f;
+
         AddSound();
     }
 
     void AddSound()
     {
-        identity = identity.Replace("_", " ");
         if (supportedSketches.ContainsKey(identity))
         {
             selfSound.clip = Resources.Load<AudioClip>(rootFolder + "/" + identity + "/" + "self");
@@ -143,6 +163,7 @@ public class SketchEntity : MonoBehaviour
             if (!rigidBodyAdded)
             {
                 gameObject.AddComponent<Rigidbody>();
+                gameObject.GetComponent<Rigidbody>().useGravity = false;
                 rigidBodyAdded = true;
             }
 
@@ -152,13 +173,31 @@ public class SketchEntity : MonoBehaviour
             // 1. There is a customized movement path, just follow the path
             if (trajectory != null)
             {
-                gameObject.GetComponent<Rigidbody>().useGravity = false;
                 MovementInit();
                 FollowMovementPath();
             }
 
             // 2. There is no customized path, use the gravity
-            else if (!bouncyAdded) AddBouncingEffect();
+            else
+            {
+                if (identity == "police car" || identity == "ambulance" || identity == "dog")
+                {
+                    DefaultRunningBehaviour();
+                }
+
+                else if (identity == "flying saucer")
+                {
+                    DefaultFlyingBehavious();
+                }
+
+                else if (identity == "airplane")
+                {
+                    DefaultLoopBehavious();
+                }
+
+                else if (identity == "basketball" && !bouncyAdded) AddBouncingEffect();
+
+            }
 
             if (!movingSound.isPlaying && !inCollision)
             {
@@ -224,6 +263,24 @@ public class SketchEntity : MonoBehaviour
 
     }
 
+    void DefaultRunningBehaviour()
+    {
+        if (defaultDirection == "right") gameObject.transform.position += Vector3.right * Time.deltaTime * moveSpeed;
+        else gameObject.transform.position += Vector3.left * Time.deltaTime * moveSpeed;
+    }
+
+    void DefaultFlyingBehavious()
+    {
+        gameObject.transform.position += Vector3.up * Time.deltaTime * moveSpeed;
+    }
+
+    void DefaultLoopBehavious()
+    {
+        gameObject.transform.Rotate(0f, rotationSpeed * Time.deltaTime * 2, 0f);
+        if (defaultDirection == "right") gameObject.transform.position += gameObject.transform.right * Time.deltaTime * moveSpeed;
+        else gameObject.transform.position += -gameObject.transform.right * Time.deltaTime * moveSpeed;
+    }
+
     void MovementInit()
     {
         CheckPos();
@@ -246,7 +303,7 @@ public class SketchEntity : MonoBehaviour
     }
 
     float percentsPerSecond = 0.15f; // %15 of the path moved per second
-    float currentPathPercent = 0.0f; //min 0, max 1
+    float currentPathPercent = 0.0f; // min 0, max 1
 
     private void FollowMovementPath()
     {

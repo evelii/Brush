@@ -45,8 +45,18 @@ public class MotionBrush : MonoBehaviour
 
         if (count == 4)
         {
-            if (SketchManager.curSelected != null) SketchManager.curSelected.aniStart = true;
-            else SketchManager.curEditingObject.aniStart = true;
+            if (SketchManager.curSelected != null)
+            {
+                if (_currLine.GetPosition(0).x < SketchManager.curSelected.gameObject.transform.position.x) SketchManager.curSelected.defaultDirection = "right";
+                else SketchManager.curSelected.defaultDirection = "left";
+                SketchManager.curSelected.aniStart = true;
+            }
+            else
+            {
+                if (_currLine.GetPosition(0).x < SketchManager.curEditingObject.gameObject.transform.position.x) SketchManager.curEditingObject.defaultDirection = "right";
+                else SketchManager.curEditingObject.defaultDirection = "left";
+                SketchManager.curEditingObject.aniStart = true;
+            }
 
             // hide the motion lines from the display
             foreach (GameObject l in motionLines)
