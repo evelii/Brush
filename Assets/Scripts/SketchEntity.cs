@@ -42,9 +42,6 @@ public class SketchEntity : MonoBehaviour
     public string defaultDirection; // the direction of the default movement
     public float moveSpeed; // the speed when moving along the path
     public float rotationSpeed;
-    float width = 4;
-    float height = 7;
-    float timeCounter = 0;
 
     // dependencies
     public List<Dependency> dependencies;
@@ -307,6 +304,8 @@ public class SketchEntity : MonoBehaviour
 
     private void FollowMovementPath()
     {
+        if (trajectory == null) return;
+
         if (currentPathPercent >= 1)
         {
             // reset

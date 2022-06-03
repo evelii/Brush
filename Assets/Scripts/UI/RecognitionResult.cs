@@ -12,11 +12,15 @@ public class RecognitionResult : MonoBehaviour
     public GameObject panel;
     public Button resultABtn;
     public Button resultBBtn;
+    public Image imageA;
+    public Image imageB;
     public GameObject resultAText;
     public GameObject resultBText;
 
     public TextMeshProUGUI textA;
     public TextMeshProUGUI textB;
+
+    public Sprite sprite;
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +29,7 @@ public class RecognitionResult : MonoBehaviour
         textA = resultAText.GetComponent<TextMeshProUGUI>();
         textB = resultBText.GetComponent<TextMeshProUGUI>();
         resultABtn.onClick.AddListener(ButtonAOnClick);
-        resultBBtn.onClick.AddListener(ButtonBOnClick);
+        resultBBtn.onClick.AddListener(ButtonBOnClick);        
     }
 
     // Update is called once per frame
@@ -37,8 +41,16 @@ public class RecognitionResult : MonoBehaviour
     public void ShowPredictionResults(string A, string B)
     {
         textA.SetText(A);
+        string path = "Images/" + A + "_img"; // filename.png should be stored in your Assets/Resources folder
+        sprite = Resources.Load<Sprite>(path);
+        imageA.sprite = sprite;
+
         textB.SetText(B);
-        Vector3 offset = new Vector3(0, 0.09f, -0.15f);
+        path = "Images/" + B + "_img"; // filename.png should be stored in your Assets/Resources folder
+        sprite = Resources.Load<Sprite>(path);
+        imageB.sprite = sprite;
+
+        Vector3 offset = new Vector3(0.03f, 0.09f, -0.15f);
         canvas.transform.position = client.curObjectForRecognition.gameObject.transform.position + offset;
         canvas.SetActive(true);
     }

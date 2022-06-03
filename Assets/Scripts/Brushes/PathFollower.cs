@@ -14,7 +14,6 @@ public class PathFollower : MonoBehaviour
     public PathSetState state;
     public Transform pathSetter; // a path cursor user used to defince the movement path
     private LineRenderer _currLine; // path for the main object
-    private LineRenderer _currKeyframeLine; 
     private Vector3 lastPos, curPos;
     public int numClicks = 0;
     public bool canDraw = true;
@@ -64,7 +63,7 @@ public class PathFollower : MonoBehaviour
         {
             curPos = pathSetter.transform.position;
 
-            if (curPos != lastPos)
+            if (curPos != lastPos && _currLine != null)
             {  // when the controller is held
                 _currLine.positionCount = numClicks + 1;
                 _currLine.SetPosition(numClicks, curPos);
