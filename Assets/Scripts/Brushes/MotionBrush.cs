@@ -8,11 +8,12 @@ public class MotionBrush : MonoBehaviour
     public Transform motionCursor; // a path cursor user used to defince the movement path
     private List<GameObject> motionLines;
     private LineRenderer _currLine; // path for the main object
-    private LineRenderer _currKeyframeLine;
     private Vector3 lastPos, curPos;
     public int numClicks = 0;
     public bool canDraw = true;
-    private int count = 0;
+    public int count;
+    private float totalLen = 0;
+    private float baseline;
 
     public DrawTubes drawTubes; // to retrieve stroke lists
     public CanvasHandler canvas;
@@ -23,6 +24,8 @@ public class MotionBrush : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        count = -1;
+        baseline = 0.1f;
         state = PathSetState.WAITING;
         motionLines = new List<GameObject>();
     }
@@ -39,23 +42,39 @@ public class MotionBrush : MonoBehaviour
 
         else if (canvas.curBrush == "motion" && OVRInput.GetUp(OVRInput.Button.One))
         {
+            if (count > -1)
+            {
+                Vector3 pos = _currLine.GetPosition(0);
+                for (int i = 1; i < _currLine.positionCount; i++)
+                {
+                    totalLen += (_currLine.GetPosition(i) - pos).magnitude;
+                    pos = _currLine.GetPosition(i);
+                }
+            }
+            
             count++;
             state = PathSetState.WAITING;
         }
 
-        if (count == 4)
+        if (count == 3)
         {
+            // calculate the length of the speed lines
+            float avgLen = totalLen / count;
+            Debug.LogWarning("average length is " + avgLen);
+
             if (SketchManager.curSelected != null)
             {
                 if (_currLine.GetPosition(0).x < SketchManager.curSelected.gameObject.transform.position.x) SketchManager.curSelected.defaultDirection = "right";
                 else SketchManager.curSelected.defaultDirection = "left";
                 SketchManager.curSelected.aniStart = true;
+                SketchManager.curSelected.moveSpeed *= (avgLen / baseline);
             }
             else
             {
                 if (_currLine.GetPosition(0).x < SketchManager.curEditingObject.gameObject.transform.position.x) SketchManager.curEditingObject.defaultDirection = "right";
                 else SketchManager.curEditingObject.defaultDirection = "left";
                 SketchManager.curEditingObject.aniStart = true;
+                SketchManager.curEditingObject.moveSpeed *= (avgLen / baseline);
             }
 
             // hide the motion lines from the display
@@ -65,7 +84,8 @@ public class MotionBrush : MonoBehaviour
             }
 
             motionLines.Clear();
-            count = 0;
+            count = -1;
+            totalLen = 0;
         }
     }
 
@@ -92,7 +112,7 @@ public class MotionBrush : MonoBehaviour
                
                 _currLine.positionCount = numClicks + 1;
                 _currLine.SetPosition(numClicks, curPos);
-                
+
                 numClicks++;
                 lastPos = curPos;
             }
@@ -107,13 +127,6 @@ public class MotionBrush : MonoBehaviour
         pos = new Vector3[_currLine.positionCount];
         _currLine.GetPositions(pos);
 
-        return pos;
-    }
-
-    public Vector3[] GetPathKeyframe()
-    {
-        Vector3[] pos = new Vector3[_currKeyframeLine.positionCount];
-        _currKeyframeLine.GetPositions(pos);
         return pos;
     }
 }

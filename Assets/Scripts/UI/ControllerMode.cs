@@ -48,7 +48,7 @@ public class ControllerMode : MonoBehaviour
             else if (readyForSketch && canvas.curBrush == "motion") motionBrush.ready = true;
             
         }
-        else if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
+        else if (OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger))
         {
             laserPointer.SetActive(true);
             laserPointer.GetComponent<LineRenderer>().enabled = true;

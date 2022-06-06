@@ -50,7 +50,7 @@ public class RecognitionResult : MonoBehaviour
         sprite = Resources.Load<Sprite>(path);
         imageB.sprite = sprite;
 
-        Vector3 offset = new Vector3(0.03f, 0.09f, -0.15f);
+        Vector3 offset = new Vector3(0.03f, 0.09f, 0.2f);
         canvas.transform.position = client.curObjectForRecognition.gameObject.transform.position + offset;
         canvas.SetActive(true);
     }
