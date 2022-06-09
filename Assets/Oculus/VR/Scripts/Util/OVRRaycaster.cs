@@ -18,6 +18,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
+using UnityEditor;
 
 /// <summary>
 /// Extension of GraphicRaycaster to support ray casting with world space rays instead of just screen-space
@@ -29,6 +30,7 @@ public class OVRRaycaster : GraphicRaycaster, IPointerEnterHandler
     [Tooltip("A world space pointer for this canvas")]
     public GameObject pointer;
     public GameObject laserPointer;
+    static public bool interactHit;
 
     public int sortOrder = 0;
 
@@ -68,7 +70,8 @@ public class OVRRaycaster : GraphicRaycaster, IPointerEnterHandler
 
 	protected override void Start()
 	{
-		if(!canvas.worldCamera)
+        interactHit = false;
+        if (!canvas.worldCamera)
 		{
 			Debug.Log("Canvas does not have an event camera attached. Attaching OVRCameraRig.centerEyeAnchor as default.");
 			OVRCameraRig rig = FindObjectOfType<OVRCameraRig>();
@@ -90,7 +93,7 @@ public class OVRRaycaster : GraphicRaycaster, IPointerEnterHandler
         if (canvas == null)
             return;
 
-        if (!laserPointer.activeSelf) return;
+        //if (!laserPointer.activeSelf) return;
 
         float hitDistance = float.MaxValue;
 
@@ -260,6 +263,8 @@ public class OVRRaycaster : GraphicRaycaster, IPointerEnterHandler
     /// <returns></returns>
     static bool RayIntersectsRectTransform(RectTransform rectTransform, Ray ray, out Vector3 worldPos)
     {
+        interactHit = false;
+
         Vector3[] corners = new Vector3[4];
         rectTransform.GetWorldCorners(corners);
         Plane plane = new Plane(corners[0], corners[1], corners[2]);
@@ -283,6 +288,8 @@ public class OVRRaycaster : GraphicRaycaster, IPointerEnterHandler
                 LeftDot >= 0)
         {
             worldPos = corners[0] + LeftDot * LeftEdge / LeftEdge.sqrMagnitude + BottomDot * BottomEdge / BottomEdge.sqrMagnitude;
+            interactHit = true;
+            Debug.LogWarning("true!");
             return true;
         }
         else

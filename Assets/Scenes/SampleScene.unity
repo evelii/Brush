@@ -902,7 +902,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 109308, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -954,6 +954,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 482130, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
       propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1983321904398200, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -3208,8 +3212,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 985618883}
-  m_Father: {fileID: 623931978}
-  m_RootOrder: 0
+  m_Father: {fileID: 2035807165}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3254,6 +3258,7 @@ MonoBehaviour:
     m_Bits: 4294967295
   pointer: {fileID: 0}
   laserPointer: {fileID: 1624088380}
+  interactHit: 0
   sortOrder: 0
 --- !u!1001 &1624088379
 PrefabInstance:
@@ -3577,6 +3582,7 @@ MonoBehaviour:
     m_Bits: 4294967295
   pointer: {fileID: 0}
   laserPointer: {fileID: 1624088380}
+  interactHit: 0
   sortOrder: 0
 --- !u!1 &1750869927
 GameObject:
@@ -3736,6 +3742,7 @@ MonoBehaviour:
   drawTubes: {fileID: 2033916452}
   canvas: {fileID: 1613778226}
   motionBrush: {fileID: 1868850116}
+  raycaster: {fileID: 1613778227}
   readyForSketch: 0
 --- !u!1 &1868850115
 GameObject:
@@ -3771,6 +3778,7 @@ MonoBehaviour:
   motionCursor: {fileID: 685610042}
   numClicks: 0
   canDraw: 1
+  count: 0
   drawTubes: {fileID: 2033916452}
   canvas: {fileID: 1613778226}
   controllerMode: {fileID: 1758020947}
@@ -4144,6 +4152,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &2035807165 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 482130, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
+  m_PrefabInstance: {fileID: 512016261}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2050444999 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1525749097544336, guid: a9d2de84afb308a4796cc671d3432b4d, type: 3}

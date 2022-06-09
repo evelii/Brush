@@ -68,6 +68,7 @@ public class SketchEntity : MonoBehaviour
         supportedSketches.Add("dog", true);
         supportedSketches.Add("police car", true);
         supportedSketches.Add("basketball", true);
+        supportedSketches.Add("sheep", true);
         cam = GameObject.Find("CenterEyeAnchor").transform;
         cursor = GameObject.Find("3DCursor");
         canvas = GameObject.Find("Canvas").GetComponent<CanvasHandler>();
@@ -177,7 +178,7 @@ public class SketchEntity : MonoBehaviour
             // 2. There is no customized path, use the gravity
             else
             {
-                if (identity == "police car" || identity == "ambulance" || identity == "dog")
+                if (identity == "police car" || identity == "ambulance" || identity == "dog" || identity == "sheep")
                 {
                     DefaultRunningBehaviour();
                 }
