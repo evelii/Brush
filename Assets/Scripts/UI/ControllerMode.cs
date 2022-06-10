@@ -30,40 +30,8 @@ public class ControllerMode : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (OVRInput.GetDown(OVRInput.Button.One))
-        //{
-        //    if (!readyForSketch)
-        //    {
-        //        laserPointer.GetComponent<LineRenderer>().enabled = false;
-        //        laserPointer.SetActive(false);
-        //        laserTip.SetActive(false);
-        //        brushTip.SetActive(true);
-        //        readyForSketch = true;
-        //    }
-
-        //    else if (readyForSketch && canvas.curBrush == "sketch")
-        //    {
-        //        cursorScript.canDraw = true;
-        //    }
-
-        //    else if (readyForSketch && canvas.curBrush == "motion") motionBrush.ready = true;
-            
-        //}
-        //else if (OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger))
-        //{
-        //    laserPointer.SetActive(true);
-        //    laserPointer.GetComponent<LineRenderer>().enabled = true;
-        //    laserTip.SetActive(true);
-        //    brushTip.SetActive(false);
-        //    drawTubes.state = StrokeState.WAITING;
-        //    cursorScript.canDraw = false;
-        //    readyForSketch = false;
-        //    motionBrush.ready = false;
-        //}
-
-        if (OVRRaycaster.interactHit)
+        if (OVRRaycaster.intersectHit)
         {
-            Debug.LogWarning("+++++++++++++++++++");
             laserPointer.SetActive(true);
             laserPointer.GetComponent<LineRenderer>().enabled = true;
             laserTip.SetActive(true);

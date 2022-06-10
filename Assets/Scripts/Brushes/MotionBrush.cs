@@ -24,7 +24,7 @@ public class MotionBrush : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        count = -1;
+        count = 0;
         baseline = 0.1f;
         state = PathSetState.WAITING;
         motionLines = new List<GameObject>();
@@ -42,14 +42,12 @@ public class MotionBrush : MonoBehaviour
 
         else if (canvas.curBrush == "motion" && OVRInput.GetUp(OVRInput.Button.One))
         {
-            if (count > -1)
+
+            Vector3 pos = _currLine.GetPosition(0);
+            for (int i = 1; i < _currLine.positionCount; i++)
             {
-                Vector3 pos = _currLine.GetPosition(0);
-                for (int i = 1; i < _currLine.positionCount; i++)
-                {
-                    totalLen += (_currLine.GetPosition(i) - pos).magnitude;
-                    pos = _currLine.GetPosition(i);
-                }
+                totalLen += (_currLine.GetPosition(i) - pos).magnitude;
+                pos = _currLine.GetPosition(i);
             }
             
             count++;

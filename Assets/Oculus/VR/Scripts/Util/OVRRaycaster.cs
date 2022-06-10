@@ -30,7 +30,7 @@ public class OVRRaycaster : GraphicRaycaster, IPointerEnterHandler
     [Tooltip("A world space pointer for this canvas")]
     public GameObject pointer;
     public GameObject laserPointer;
-    static public bool interactHit;
+    static public bool intersectHit;
 
     public int sortOrder = 0;
 
@@ -70,7 +70,6 @@ public class OVRRaycaster : GraphicRaycaster, IPointerEnterHandler
 
 	protected override void Start()
 	{
-        interactHit = false;
         if (!canvas.worldCamera)
 		{
 			Debug.Log("Canvas does not have an event camera attached. Attaching OVRCameraRig.centerEyeAnchor as default.");
@@ -210,6 +209,9 @@ public class OVRRaycaster : GraphicRaycaster, IPointerEnterHandler
         // Necessary for the event system
         var foundGraphics = GraphicRegistry.GetGraphicsForCanvas(canvas);
         s_SortedGraphics.Clear();
+
+        bool localIntersect = false;
+
         for (int i = 0; i < foundGraphics.Count; ++i)
         {
             Graphic graphic = foundGraphics[i];
@@ -220,6 +222,7 @@ public class OVRRaycaster : GraphicRaycaster, IPointerEnterHandler
             Vector3 worldPos;
             if (RayIntersectsRectTransform(graphic.rectTransform, ray, out worldPos))
             {
+                localIntersect = true;
                 //Work out where this is on the screen for compatibility with existing Unity UI code
                 Vector2 screenPos = eventCamera.WorldToScreenPoint(worldPos);
                 // mask/image intersection - See Unity docs on eventAlphaThreshold for when this does anything
@@ -233,6 +236,9 @@ public class OVRRaycaster : GraphicRaycaster, IPointerEnterHandler
                 }
             }
         }
+
+        if (localIntersect) intersectHit = true;
+        else intersectHit = false;
 
         s_SortedGraphics.Sort((g1, g2) => g2.graphic.depth.CompareTo(g1.graphic.depth));
 
@@ -263,8 +269,6 @@ public class OVRRaycaster : GraphicRaycaster, IPointerEnterHandler
     /// <returns></returns>
     static bool RayIntersectsRectTransform(RectTransform rectTransform, Ray ray, out Vector3 worldPos)
     {
-        interactHit = false;
-
         Vector3[] corners = new Vector3[4];
         rectTransform.GetWorldCorners(corners);
         Plane plane = new Plane(corners[0], corners[1], corners[2]);
@@ -288,8 +292,6 @@ public class OVRRaycaster : GraphicRaycaster, IPointerEnterHandler
                 LeftDot >= 0)
         {
             worldPos = corners[0] + LeftDot * LeftEdge / LeftEdge.sqrMagnitude + BottomDot * BottomEdge / BottomEdge.sqrMagnitude;
-            interactHit = true;
-            Debug.LogWarning("true!");
             return true;
         }
         else
