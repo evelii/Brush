@@ -8,7 +8,7 @@ public class ControllerMode : MonoBehaviour
     public GameObject laserPointer;
     public GameObject laserTip; // Sphere
     public GameObject brushTip;
-    public Cursor cursorScript;
+    public ControllerCursor cursorScript;
     public DrawTubes drawTubes;
     public CanvasHandler canvas;
     public MotionBrush motionBrush;

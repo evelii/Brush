@@ -16,6 +16,8 @@ public class TCPClient : MonoBehaviour
 	public string address;
 	public int port;
 	string result;
+	string verbA;
+	string verbB;
 	public string userChoice; // decision made by the user
 
 	#region private members 	
@@ -30,6 +32,8 @@ public class TCPClient : MonoBehaviour
 	{
 		ConnectToTcpServer();
 		result = "";
+		verbA = "";
+		verbB = "";
 		userChoice = "";
 	}
 
@@ -98,7 +102,15 @@ public class TCPClient : MonoBehaviour
 						// Convert byte array to string message. 						
 						string serverMessage = Encoding.ASCII.GetString(incommingData);
 						Debug.Log("server message received as: " + serverMessage);
-						result = serverMessage;
+						if (result == "") result = serverMessage;
+						else
+						{
+							string verbs = serverMessage;
+							verbA = verbs.Split("&")[0];
+							verbB = verbs.Split("&")[1];
+							Debug.Log("verbs: " + verbA);
+							Debug.Log("verbs: " + verbB);
+						}
 					}
 				}
 			}

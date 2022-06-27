@@ -33,14 +33,14 @@ public class DrawTubes : MonoBehaviour
     public GameObject clientObject;
 
     GameObject newStroke;
-    Cursor cursorScript;
+    ControllerCursor cursorScript;
 
     public void Start()
     { 
         state = StrokeState.WAITING;
         strokesList = new List<List<Vector3>>();
         fullPoints = new List<Vector3>();
-        cursorScript = cursor.gameObject.GetComponent<Cursor>();
+        cursorScript = cursor.gameObject.GetComponent<ControllerCursor>();
     }
 
     public void Update()
