@@ -36,7 +36,8 @@ public class DrawTubes : MonoBehaviour
     ControllerCursor cursorScript;
 
     public void Start()
-    { 
+    {
+        newStroke = null;
         state = StrokeState.WAITING;
         strokesList = new List<List<Vector3>>();
         fullPoints = new List<Vector3>();
@@ -59,6 +60,7 @@ public class DrawTubes : MonoBehaviour
 
         if (OVRInput.GetDown(OVRInput.Button.One) && canDraw)
         {
+            
             if (state == StrokeState.WAITING)
             {
                 state = StrokeState.START_STROKE;
@@ -85,6 +87,8 @@ public class DrawTubes : MonoBehaviour
             client.strokesList = strokesList;
             client.curObjectForRecognition = curSketch.GetComponent<SketchEntity>();
         }
+
+        OVRInput.Update();
     }
 
     public void FinishSketch()
@@ -141,7 +145,7 @@ public class DrawTubes : MonoBehaviour
         _currentTubeStroke = go.AddComponent<TubeStroke>();
         TubeRenderer tube = go.AddComponent<TubeRenderer>();
         tube.MarkDynamic();
-        go.GetComponent<MeshRenderer>().material.color = ColorManager.Instance.GetColor();
+        go.GetComponent<MeshRenderer>().material.color = strokeColor;
         tube.radius = strokeRadius;
 
     }

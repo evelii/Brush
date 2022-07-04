@@ -199,6 +199,8 @@ public class ZEDControllerTracker : MonoBehaviour
         {
             if (OVRInput.GetConnectedControllers().ToString().ToLower().Contains("touch"))
             {
+                //if (OVRInput.GetDown(OVRInput.Button.One)) Debug.LogWarning("detect! in zed");
+
                 //Depending on which tracked device we are looking for, start tracking it.
                 if (deviceToTrack == Devices.LeftController) //Track the Left Oculus Controller.
                     RegisterPosition(1, OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch), OVRInput.GetLocalControllerRotation(OVRInput.Controller.LTouch));
@@ -229,7 +231,7 @@ public class ZEDControllerTracker : MonoBehaviour
             }
         }
         //Enable updating the internal state of OVRInput.
-        OVRInput.Update();
+        //OVRInput.Update();
 
 #endif
 

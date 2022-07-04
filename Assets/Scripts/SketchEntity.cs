@@ -69,12 +69,12 @@ public class SketchEntity : MonoBehaviour
         supportedSketches.Add("police car", true);
         supportedSketches.Add("basketball", true);
         supportedSketches.Add("sheep", true);
-        cam = GameObject.Find("CenterEyeAnchor").transform;
+        cam = GameObject.Find("Camera_eyes").transform;
         cursor = GameObject.Find("3DCursor");
         canvas = GameObject.Find("Canvas").GetComponent<CanvasHandler>();
         path = GameObject.Find("Path").GetComponent<PathFollower>();
         soundBrush = GameObject.Find("SoundLayer").GetComponent<SoundBrush>();
-        controllerMode = GameObject.Find("RightControllerPf").GetComponent<ControllerMode>();
+        controllerMode = GameObject.Find("rightHand").GetComponent<ControllerMode>();
         go = null;
 
         if (gameObject.name != "Floor" && gameObject.name != "Wall" && gameObject.name != "Table" && gameObject.name != "Chair")
