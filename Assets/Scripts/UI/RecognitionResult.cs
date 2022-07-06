@@ -66,4 +66,10 @@ public class RecognitionResult : MonoBehaviour
         client.userChoice = textB.text;
         canvas.SetActive(false);
     }
+
+    public void userChoice(string choice)
+    {
+        client.userChoice = choice;
+        canvas.SetActive(false);
+    }
 }

@@ -20,6 +20,9 @@ namespace UnityEngine.EventSystems
     /// </summary>
     public class OVRInputModule : PointerInputModule
     {
+        public static bool buttonDown = false;
+        public bool unchanged = false;
+
         [Tooltip("Object which points with Z axis. E.g. CentreEyeAnchor from OVRCameraRig")]
         public Transform rayTransform;
 
@@ -869,10 +872,10 @@ namespace UnityEngine.EventSystems
         /// <returns></returns>
         virtual protected PointerEventData.FramePressState GetGazeButtonState()
         {
-			//todo: enable for Unity Input System
+            //todo: enable for Unity Input System
 #if ENABLE_LEGACY_INPUT_MANAGER
-			var pressed = Input.GetKeyDown(gazeClickKey) || OVRInput.GetDown(joyPadClickButton);
-            var released = Input.GetKeyUp(gazeClickKey) || OVRInput.GetUp(joyPadClickButton);
+            var pressed = Input.GetKeyDown(gazeClickKey) || OVRInput.GetDown(joyPadClickButton) || buttonDown;
+            var released = Input.GetKeyUp(gazeClickKey) || OVRInput.GetUp(joyPadClickButton) || (!buttonDown && !unchanged);
 
 #if UNITY_ANDROID && !UNITY_EDITOR
             pressed |= Input.GetMouseButtonDown(0);
@@ -882,13 +885,19 @@ namespace UnityEngine.EventSystems
 			var pressed = OVRInput.GetDown(joyPadClickButton);
 			var released = OVRInput.GetUp(joyPadClickButton);
 #endif
-
+            if (OVRInput.GetDown(OVRInput.Button.One)) Debug.LogWarning("pressed!");
 			if (pressed && released)
                 return PointerEventData.FramePressState.PressedAndReleased;
             if (pressed)
+            {
+                unchanged = false;
                 return PointerEventData.FramePressState.Pressed;
+            }
             if (released)
+            {
+                unchanged = true;
                 return PointerEventData.FramePressState.Released;
+            }
             return PointerEventData.FramePressState.NotChanged;
         }
 

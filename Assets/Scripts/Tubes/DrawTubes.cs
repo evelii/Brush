@@ -48,6 +48,9 @@ public class DrawTubes : MonoBehaviour
     {
         bool canDraw = cursorScript.canDraw;
 
+        if (OVRInput.GetDown(OVRInput.Button.One)) UnityEngine.EventSystems.OVRInputModule.buttonDown = true;
+        if(OVRInput.GetUp(OVRInput.Button.One)) UnityEngine.EventSystems.OVRInputModule.buttonDown = false;
+
         if (state == StrokeState.DRAW)
         {
             if (lastPos != cursor.position)
@@ -57,6 +60,9 @@ public class DrawTubes : MonoBehaviour
             lastPos = cursor.position;
             if (!canDraw) state = StrokeState.WAITING;
         }
+
+        //if (OVRInput.GetDown(OVRInput.Button.One)) Debug.LogWarning("detect!");
+        //if (OVRInput.Get(OVRInput.Button.One)) Debug.LogWarning("detect get!");
 
         if (OVRInput.GetDown(OVRInput.Button.One) && canDraw)
         {
