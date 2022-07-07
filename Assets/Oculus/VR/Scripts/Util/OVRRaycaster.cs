@@ -223,6 +223,7 @@ public class OVRRaycaster : GraphicRaycaster, IPointerEnterHandler
             if (RayIntersectsRectTransform(graphic.rectTransform, ray, out worldPos))
             {
                 localIntersect = true;
+                
                 //Work out where this is on the screen for compatibility with existing Unity UI code
                 Vector2 screenPos = eventCamera.WorldToScreenPoint(worldPos);
                 // mask/image intersection - See Unity docs on eventAlphaThreshold for when this does anything

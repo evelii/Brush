@@ -451,9 +451,9 @@ public class SketchEntity : MonoBehaviour
         selfSound.Stop();
         //Debug.LogWarning("collide!");
         
-        if (softness == "hard")
-            collisionHard.Play();
-        else collisionSoft.Play();
+        if (softness == "soft")
+            collisionSoft.Play();
+        else collisionHard.Play();  // play the hard sound by default
     }
 
     private void OnCollisionExit(Collision collision)
