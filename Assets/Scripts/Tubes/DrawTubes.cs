@@ -35,6 +35,9 @@ public class DrawTubes : MonoBehaviour
     GameObject newStroke;
     ControllerCursor cursorScript;
 
+    static public bool buttonOneIsDown;
+    static public bool buttonOneIsUp;
+
     public void Start()
     {
         newStroke = null;
@@ -48,8 +51,18 @@ public class DrawTubes : MonoBehaviour
     {
         bool canDraw = cursorScript.canDraw;
 
-        if (OVRInput.GetDown(OVRInput.Button.One)) UnityEngine.EventSystems.OVRInputModule.buttonDown = true;
-        if(OVRInput.GetUp(OVRInput.Button.One)) UnityEngine.EventSystems.OVRInputModule.buttonDown = false;
+        if (OVRInput.GetDown(OVRInput.Button.One))
+        {
+            buttonOneIsDown = true;
+            UnityEngine.EventSystems.OVRInputModule.buttonDown = true;
+        } else buttonOneIsDown = false;
+
+        if (OVRInput.GetUp(OVRInput.Button.One))
+        {
+            buttonOneIsUp = true;
+            UnityEngine.EventSystems.OVRInputModule.buttonDown = false;
+        }
+        else buttonOneIsUp = false;
 
         if (state == StrokeState.DRAW)
         {

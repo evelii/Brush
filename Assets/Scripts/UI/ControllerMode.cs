@@ -30,7 +30,7 @@ public class ControllerMode : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (OVRRaycaster.intersectHit)
+        if (OVRRaycaster.intersectHit || canvas.curBrush == "select" || laserTip.activeSelf)
         {
             laserPointer.SetActive(true);
             laserPointer.GetComponent<LineRenderer>().enabled = true;
@@ -45,7 +45,7 @@ public class ControllerMode : MonoBehaviour
             if (!readyForSketch)
             {
                 laserPointer.GetComponent<LineRenderer>().enabled = false;
-                laserPointer.SetActive(false);
+                //laserPointer.SetActive(false);
                 laserTip.SetActive(false);
                 brushTip.SetActive(true);
                 readyForSketch = true;
