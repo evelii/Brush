@@ -14,11 +14,29 @@ public class PointerEvent : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public CanvasHandler canvas;
     private MeshRenderer[] meshRenderers = null;
     bool isSelected = false;
+    public GameObject rightHand;
+    public DrawTubes tubes;
 
     private void Awake()
     {
         canvas = GameObject.Find("Canvas").GetComponent<CanvasHandler>();
         meshRenderers = gameObject.GetComponentsInChildren<MeshRenderer>();
+        rightHand = GameObject.Find("rightHand");
+        tubes = GameObject.Find("Tubes").GetComponent<DrawTubes>();
+    }
+
+    public void Update()
+    {
+        float dis = Vector3.Distance(gameObject.transform.position, rightHand.transform.position);
+        if(dis <= 0.2f)
+        {
+            foreach (MeshRenderer render in meshRenderers)
+                render.material.color = enterColor;
+        } else
+        {
+            foreach (MeshRenderer render in meshRenderers)
+                render.material.color = tubes.strokeColor;
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)

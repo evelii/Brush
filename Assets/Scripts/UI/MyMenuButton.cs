@@ -30,6 +30,10 @@ public class MyMenuButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         }
     }
 
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+    }
+
     public void OnPointerUp(PointerEventData eventData)
     {
         buttonPressed = false;

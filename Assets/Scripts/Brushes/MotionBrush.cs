@@ -40,7 +40,7 @@ public class MotionBrush : MonoBehaviour
             state = PathSetState.DRAW;
         }
 
-        else if (canvas.curBrush == "motion" && OVRInput.GetUp(OVRInput.Button.One))
+        else if (canvas.curBrush == "motion" && OVRInput.GetUp(OVRInput.Button.One) && _currLine != null)
         {
 
             Vector3 pos = _currLine.GetPosition(0);

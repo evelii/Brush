@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class CanvasHandler : MonoBehaviour
 {
-    public Transform cam;
     public Button sketchBtn;
     public Button selectBtn;
     public Button pathBtn;
