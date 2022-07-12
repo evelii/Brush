@@ -59,4 +59,29 @@ public class ControllerMode : MonoBehaviour
             else if (readyForSketch && canvas.curBrush == "motion") motionBrush.ready = true;
         }
     }
+
+    public void SelectionMode()
+    {
+        brushTip.SetActive(false);
+        drawTubes.state = StrokeState.WAITING;
+        cursorScript.canDraw = false;
+        readyForSketch = false;
+        motionBrush.ready = false;
+    }
+
+    public void BrushMode()
+    {
+        if (!readyForSketch)
+        {
+            brushTip.SetActive(true);
+            readyForSketch = true;
+        }
+
+        else if (readyForSketch && canvas.curBrush == "sketch")
+        {
+            cursorScript.canDraw = true;
+        }
+
+        else if (readyForSketch && canvas.curBrush == "motion") motionBrush.ready = true;
+    }
 }

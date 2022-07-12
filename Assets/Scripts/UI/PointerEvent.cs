@@ -16,6 +16,7 @@ public class PointerEvent : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     bool isSelected = false;
     public GameObject rightHand;
     public DrawTubes tubes;
+    public ControllerMode controllerMode;
 
     private void Awake()
     {
@@ -23,6 +24,7 @@ public class PointerEvent : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         meshRenderers = gameObject.GetComponentsInChildren<MeshRenderer>();
         rightHand = GameObject.Find("rightHand");
         tubes = GameObject.Find("Tubes").GetComponent<DrawTubes>();
+        controllerMode = rightHand.GetComponent<ControllerMode>();
     }
 
     public void Update()
@@ -32,10 +34,12 @@ public class PointerEvent : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         {
             foreach (MeshRenderer render in meshRenderers)
                 render.material.color = enterColor;
+            controllerMode.SelectionMode();
         } else
         {
             foreach (MeshRenderer render in meshRenderers)
                 render.material.color = tubes.strokeColor;
+            controllerMode.BrushMode();
         }
     }
 
