@@ -219,7 +219,7 @@ public class SketchEntity : MonoBehaviour
         }
 
         // mark along the trajectory
-        if (soundBrush.ready && canvas.curBrush == "sound" && OVRInput.GetDown(OVRInput.Button.One) && !soundBrush.isSketchShown())
+        if (soundBrush.ready && canvas.curBrush == "SoundButton" && DrawTubes.buttonOneIsDown && !soundBrush.isSketchShown())
         {
             Vector3 stampPos = cursor.transform.position;
 
@@ -247,14 +247,14 @@ public class SketchEntity : MonoBehaviour
                 // the second argument, upwards, defaults to Vector3.up
                 Quaternion rotation = Quaternion.LookRotation(relativePos);
                 rotation *= Quaternion.Euler(0, 47, 0);
-                go.transform.rotation = rotation;
+                //go.transform.rotation = rotation;
                 //go.transform.LookAt(cam);
 
                 soundBrush.sketchSwitch(true);
             }
         }
 
-        if (canvas.curBrush == "sound" && soundMarkCollection.Count == 4)
+        if (canvas.curBrush == "SoundButton" && soundMarkCollection.Count == 4)
         {
             selfSoundStartPoint = closest;
         }

@@ -15,7 +15,7 @@ public class CanvasHandler : MonoBehaviour
     void Start()
     {
         sketchBtn.Select();
-        curBrush = "sketch";
+        curBrush = "SketchButton";
         sketchBtn.onClick.AddListener(SketchTaskOnClick);
         selectBtn.onClick.AddListener(SelectTaskOnClick);
         pathBtn.onClick.AddListener(PathTaskOnClick);
@@ -26,23 +26,23 @@ public class CanvasHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (curBrush == "sketch")
+        if (curBrush == "SketchButton")
         {
             sketchBtn.Select();  // highlight the button
         }
-        else if (curBrush == "select")
+        else if (curBrush == "SelectButton")
         {
             selectBtn.Select();
         }
-        else if (curBrush == "path")
+        else if (curBrush == "PathButton")
         {
             pathBtn.Select();  // highlight the button
         }
-        else if (curBrush == "motion")
+        else if (curBrush == "MotionButton")
         {
             motionBtn.Select();  // highlight the button
         }
-        else if (curBrush == "sound")
+        else if (curBrush == "SoundButton")
         {
             soundBtn.Select();  // highlight the button
         }
@@ -51,30 +51,30 @@ public class CanvasHandler : MonoBehaviour
     public void SketchTaskOnClick()
     {
         sketchBtn.Select();
-        curBrush = "sketch";
+        curBrush = "SketchButton";
     }
 
     public void SelectTaskOnClick()
     {
         selectBtn.Select();
-        curBrush = "select";
+        curBrush = "SelectButton";
     }
 
     public void PathTaskOnClick()
     {
         pathBtn.Select();
-        curBrush = "path";
+        curBrush = "PathButton";
     }
 
     public void MotionTaskOnClick()
     {
         motionBtn.Select();
-        curBrush = "motion";
+        curBrush = "MotionButton";
     }
 
     public void SoundTaskOnClick()
     {
         soundBtn.Select();
-        curBrush = "sound";
+        curBrush = "SoundButton";
     }
 }

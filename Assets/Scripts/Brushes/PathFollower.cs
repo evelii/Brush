@@ -32,13 +32,13 @@ public class PathFollower : MonoBehaviour
     void Update()
     {
 
-        if (controllerMode.readyForSketch && canvas.curBrush == "path" && OVRInput.GetDown(OVRInput.Button.One))
+        if (controllerMode.readyForSketch && canvas.curBrush == "PathButton" && OVRInput.GetDown(OVRInput.Button.One))
         {
             _createNewPath();
             state = PathSetState.DRAW;
         }
 
-        else if (canvas.curBrush == "path" && OVRInput.GetUp(OVRInput.Button.One))
+        else if (canvas.curBrush == "PathButton" && OVRInput.GetUp(OVRInput.Button.One))
         {
             state = PathSetState.WAITING;
         }

@@ -45,7 +45,7 @@ public class PointerEvent : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (canvas.curBrush != "select" || isSelected) return;
+        if (canvas.curBrush != "SelectButton" || isSelected) return;
         foreach (MeshRenderer render in meshRenderers)
             render.material.color = enterColor;
         print("Enter");
@@ -53,7 +53,7 @@ public class PointerEvent : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (canvas.curBrush != "select" || isSelected) return;
+        if (canvas.curBrush != "SelectButton" || isSelected) return;
         foreach (MeshRenderer render in meshRenderers)
             render.material.color = normalColor;
         print("Exit");
@@ -61,7 +61,7 @@ public class PointerEvent : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (canvas.curBrush != "select") return; 
+        if (canvas.curBrush != "SelectButton") return; 
         foreach (MeshRenderer render in meshRenderers)
             render.material.color = downColor;
         print("Down");
@@ -69,7 +69,7 @@ public class PointerEvent : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (canvas.curBrush != "select" || isSelected) return;
+        if (canvas.curBrush != "SelectButton" || isSelected) return;
         foreach (MeshRenderer render in meshRenderers)
             render.material.color = enterColor;
         print("Up");
@@ -77,7 +77,7 @@ public class PointerEvent : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (canvas.curBrush != "select") return;
+        if (canvas.curBrush != "SelectButton") return;
         isSelected = true;
         onClick.Invoke();
         print("Click");

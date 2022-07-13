@@ -29,7 +29,7 @@ public class SoundBrush : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (controllerMode.readyForSketch && canvas.curBrush == "sound")
+        if (controllerMode.readyForSketch && canvas.curBrush == "SoundButton")
         {
             ready = true;
         } else if (!controllerMode.readyForSketch)
@@ -37,18 +37,18 @@ public class SoundBrush : MonoBehaviour
             ready = false;
         }
 
-        if (!showSketchDone && controllerMode.readyForSketch && canvas.curBrush == "sound" && OVRInput.GetDown(OVRInput.Button.One))
+        if (!showSketchDone && controllerMode.readyForSketch && canvas.curBrush == "SoundButton" && OVRInput.GetDown(OVRInput.Button.One))
         {
 
         }
 
-        else if (controllerMode.readyForSketch && canvas.curBrush == "sound" && OVRInput.GetDown(OVRInput.Button.One))
+        else if (controllerMode.readyForSketch && canvas.curBrush == "SoundButton" && OVRInput.GetDown(OVRInput.Button.One))
         {
             _createNewPath();
             state = PathSetState.DRAW;
         }
 
-        else if (canvas.curBrush == "sound" && OVRInput.GetUp(OVRInput.Button.One))
+        else if (canvas.curBrush == "SoundButton" && OVRInput.GetUp(OVRInput.Button.One))
         {
             state = PathSetState.WAITING;
         }

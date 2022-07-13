@@ -34,13 +34,13 @@ public class MotionBrush : MonoBehaviour
     void Update()
     {
 
-        if (ready && canvas.curBrush == "motion" && OVRInput.GetDown(OVRInput.Button.One))
+        if (ready && canvas.curBrush == "MotionButton" && OVRInput.GetDown(OVRInput.Button.One))
         {
             _createNewPath();
             state = PathSetState.DRAW;
         }
 
-        else if (canvas.curBrush == "motion" && OVRInput.GetUp(OVRInput.Button.One) && _currLine != null)
+        else if (canvas.curBrush == "MotionButton" && OVRInput.GetUp(OVRInput.Button.One) && _currLine != null)
         {
 
             Vector3 pos = _currLine.GetPosition(0);

@@ -79,7 +79,6 @@ public class DrawTubes : MonoBehaviour
 
         if (OVRInput.GetDown(OVRInput.Button.One) && canDraw)
         {
-            
             if (state == StrokeState.WAITING)
             {
                 state = StrokeState.START_STROKE;

@@ -30,7 +30,7 @@ public class ControllerMode : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (OVRRaycaster.intersectHit || canvas.curBrush == "select" || laserTip.activeSelf)
+        if (OVRRaycaster.intersectHit || canvas.curBrush == "SelectButton" || laserTip.activeSelf)
         {
             laserPointer.SetActive(true);
             laserPointer.GetComponent<LineRenderer>().enabled = true;
@@ -51,12 +51,12 @@ public class ControllerMode : MonoBehaviour
                 readyForSketch = true;
             }
 
-            else if (readyForSketch && canvas.curBrush == "sketch")
+            else if (readyForSketch && canvas.curBrush == "SketchButton")
             {
                 cursorScript.canDraw = true;
             }
 
-            else if (readyForSketch && canvas.curBrush == "motion") motionBrush.ready = true;
+            else if (readyForSketch && canvas.curBrush == "MotionButton") motionBrush.ready = true;
         }
     }
 
@@ -77,11 +77,11 @@ public class ControllerMode : MonoBehaviour
             readyForSketch = true;
         }
 
-        else if (readyForSketch && canvas.curBrush == "sketch")
+        else if (readyForSketch && canvas.curBrush == "SketchButton")
         {
             cursorScript.canDraw = true;
         }
 
-        else if (readyForSketch && canvas.curBrush == "motion") motionBrush.ready = true;
+        else if (readyForSketch && canvas.curBrush == "MotionButton") motionBrush.ready = true;
     }
 }

@@ -6,26 +6,24 @@ using UnityEngine.UI;
 
 public class MyResultButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    public bool buttonPressed;
     public RecognitionResult recognitionResult;
     public TextMeshProUGUI text;
     public GameObject rightHand;
-    public PanelParent panel;
+    public MenuPanelParent panel;
     public string myTag;
     private Color initColor;
 
     public void Start()
     {
         rightHand = GameObject.Find("rightHand");
-        panel = GameObject.Find("ResultPanel").GetComponent<PanelParent>();
+        panel = GameObject.Find("Panel").GetComponent<MenuPanelParent>();
         initColor = GetComponent<Button>().colors.normalColor;
-        if (gameObject.name == "ResultA") myTag = "ResultA";
-        else myTag = "ResultB";
+        myTag = gameObject.name;
     }
 
     public void Update()
     {
-        float dis = Vector3.Distance(gameObject.transform.position, rightHand.gameObject.transform.position);
+        float dis = Vector3.Distance(gameObject.transform.position, rightHand.transform.position);
         if (dis <= 0.3f)
         {
             var colors = GetComponent<Button>().colors;
@@ -37,7 +35,6 @@ public class MyResultButton : MonoBehaviour, IPointerDownHandler, IPointerUpHand
 
         } else
         {
-            Debug.LogWarning("back!");
             var colors = GetComponent<Button>().colors;
             colors.normalColor = initColor;
             GetComponent<Button>().colors = colors;
@@ -49,13 +46,11 @@ public class MyResultButton : MonoBehaviour, IPointerDownHandler, IPointerUpHand
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        buttonPressed = true;
         recognitionResult.userChoice(text.text);
         OVRRaycaster.intersectHit = false;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        buttonPressed = false;
     }
 }
