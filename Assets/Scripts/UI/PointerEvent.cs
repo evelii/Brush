@@ -17,6 +17,7 @@ public class PointerEvent : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public GameObject rightHand;
     public DrawTubes tubes;
     public ControllerMode controllerMode;
+    public MyOutline outline;
 
     private void Awake()
     {
@@ -25,6 +26,12 @@ public class PointerEvent : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         rightHand = GameObject.Find("rightHand");
         tubes = GameObject.Find("Tubes").GetComponent<DrawTubes>();
         controllerMode = rightHand.GetComponent<ControllerMode>();
+
+        outline = gameObject.AddComponent<MyOutline>();
+        outline.OutlineMode = MyOutline.Mode.OutlineAll;
+        outline.OutlineColor = Color.yellow;
+        outline.OutlineWidth = 15f;
+        outline.enabled = false;
     }
 
     public void Update()
@@ -32,13 +39,11 @@ public class PointerEvent : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         float dis = Vector3.Distance(gameObject.transform.position, rightHand.transform.position);
         if(dis <= 0.2f)
         {
-            foreach (MeshRenderer render in meshRenderers)
-                render.material.color = enterColor;
+            outline.enabled = true;
             controllerMode.SelectionMode();
         } else
         {
-            foreach (MeshRenderer render in meshRenderers)
-                render.material.color = tubes.strokeColor;
+            outline.enabled = false;
             controllerMode.BrushMode();
         }
     }
