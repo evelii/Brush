@@ -40,6 +40,7 @@ public class SketchEntity : MonoBehaviour
     public bool bouncyAdded = false;
 
     public string defaultDirection; // the direction of the default movement
+    public Vector3 strokeDirection; // direction given by the stroke
     public float moveSpeed; // the speed when moving along the path
     public float rotationSpeed;
 
@@ -263,8 +264,7 @@ public class SketchEntity : MonoBehaviour
 
     void DefaultRunningBehaviour()
     {
-        if (defaultDirection == "right") gameObject.transform.position += Vector3.right * Time.deltaTime * moveSpeed;
-        else gameObject.transform.position += Vector3.left * Time.deltaTime * moveSpeed;
+        gameObject.transform.position += strokeDirection * Time.deltaTime * moveSpeed;
     }
 
     void DefaultFlyingBehavious()

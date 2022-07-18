@@ -62,15 +62,34 @@ public class MotionBrush : MonoBehaviour
 
             if (SketchManager.curSelected != null)
             {
-                if (_currLine.GetPosition(0).x < SketchManager.curSelected.gameObject.transform.position.x) SketchManager.curSelected.defaultDirection = "right";
-                else SketchManager.curSelected.defaultDirection = "left";
+                Vector3 dir = _currLine.GetPosition(_currLine.positionCount - 1) - _currLine.GetPosition(0);
+                Vector3 dir1 = dir / dir.magnitude;
+
+                Vector3 dir2 = (SketchManager.curSelected.gameObject.transform.position - _currLine.GetPosition(0));
+                Vector3 dirBetweenStrokeAndObject = dir2 / dir2.magnitude;
+
+                // draw from left to right
+                if (Vector3.Angle(dir1, dir2) < 90) SketchManager.curSelected.strokeDirection = dir1;
+                // draw from right to left
+                else SketchManager.curSelected.strokeDirection = -dir1;
+
                 SketchManager.curSelected.aniStart = true;
                 SketchManager.curSelected.moveSpeed *= (avgLen / baseline);
             }
             else
             {
-                if (_currLine.GetPosition(0).x < SketchManager.curEditingObject.gameObject.transform.position.x) SketchManager.curEditingObject.defaultDirection = "right";
-                else SketchManager.curEditingObject.defaultDirection = "left";
+                Vector3 dir = _currLine.GetPosition(_currLine.positionCount - 1) - _currLine.GetPosition(0);
+                Vector3 dir1 = dir / dir.magnitude;
+                
+                Vector3 dir2 = (SketchManager.curEditingObject.gameObject.transform.position - _currLine.GetPosition(0));
+                Vector3 dirBetweenStrokeAndObject = dir2 / dir2.magnitude;
+
+                // draw from left to right
+                if(Vector3.Angle(dir1, dir2) < 90) SketchManager.curEditingObject.strokeDirection = dir1;
+                // draw from right to left
+                else SketchManager.curEditingObject.strokeDirection = -dir1;
+
+
                 SketchManager.curEditingObject.aniStart = true;
                 SketchManager.curEditingObject.moveSpeed *= (avgLen / baseline);
             }

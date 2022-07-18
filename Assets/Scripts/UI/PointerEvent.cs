@@ -28,7 +28,6 @@ public class PointerEvent : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         controllerMode = rightHand.GetComponent<ControllerMode>();
 
         outline = gameObject.AddComponent<MyOutline>();
-        outline.OutlineMode = MyOutline.Mode.OutlineAll;
         outline.OutlineColor = Color.yellow;
         outline.OutlineWidth = 15f;
         outline.enabled = false;
@@ -36,6 +35,8 @@ public class PointerEvent : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void Update()
     {
+        outline.OutlineMode = MyOutline.Mode.OutlineAll;
+
         float dis = Vector3.Distance(gameObject.transform.position, rightHand.transform.position);
         if(dis <= 0.2f)
         {
