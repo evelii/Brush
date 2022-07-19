@@ -19,6 +19,8 @@ public class PointerEvent : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public ControllerMode controllerMode;
     public MyOutline outline;
 
+    bool outlineAdded = false;
+
     private void Awake()
     {
         canvas = GameObject.Find("Canvas").GetComponent<CanvasHandler>();
@@ -26,16 +28,20 @@ public class PointerEvent : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         rightHand = GameObject.Find("rightHand");
         tubes = GameObject.Find("Tubes").GetComponent<DrawTubes>();
         controllerMode = rightHand.GetComponent<ControllerMode>();
-
-        outline = gameObject.AddComponent<MyOutline>();
-        outline.OutlineColor = Color.yellow;
-        outline.OutlineWidth = 15f;
-        outline.enabled = false;
     }
 
     public void Update()
     {
-        outline.OutlineMode = MyOutline.Mode.OutlineAll;
+        if(!outlineAdded)
+        {
+            outline = gameObject.AddComponent<MyOutline>();
+            outline.OutlineColor = Color.yellow;
+            outline.OutlineWidth = 15f;
+            outline.enabled = false;
+            outline.OutlineMode = MyOutline.Mode.OutlineAll;
+            outlineAdded = true;
+        }
+        
 
         float dis = Vector3.Distance(gameObject.transform.position, rightHand.transform.position);
         if(dis <= 0.2f)

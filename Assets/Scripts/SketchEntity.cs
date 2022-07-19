@@ -275,8 +275,7 @@ public class SketchEntity : MonoBehaviour
     void DefaultLoopBehavious()
     {
         gameObject.transform.Rotate(0f, rotationSpeed * Time.deltaTime * 2, 0f);
-        if (defaultDirection == "right") gameObject.transform.position += gameObject.transform.right * Time.deltaTime * moveSpeed;
-        else gameObject.transform.position += -gameObject.transform.right * Time.deltaTime * moveSpeed;
+        gameObject.transform.position += gameObject.transform.right * Time.deltaTime * moveSpeed;
     }
 
     void MovementInit()

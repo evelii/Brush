@@ -34,6 +34,7 @@ public class Model : MonoBehaviour
         {
             //Debug.LogWarning(dis);
             outline.enabled = true;
+            Debug.LogWarning(myTag);
             if (myTag == "SketchButton") panel.sketchButton = true;
             else if (myTag == "PathButton") panel.pathButton = true;
             else if (myTag == "MotionButton") panel.motionButton = true;

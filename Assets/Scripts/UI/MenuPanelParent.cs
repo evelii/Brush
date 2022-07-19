@@ -25,12 +25,16 @@ public class MenuPanelParent : MonoBehaviour
         if (resultAOn || resultBOn || sketchButton || pathButton || motionButton || soundButton)
         {
             controllerMode.SelectionMode();
-            resultAOn = false;
-            resultBOn = false;
-            sketchButton = false;
-            pathButton = false;
-            motionButton = false;
-            soundButton = false;
+            if(OVRInput.GetDown(OVRInput.Button.One))
+            {
+                resultAOn = false;
+                resultBOn = false;
+                sketchButton = false;
+                pathButton = false;
+                motionButton = false;
+                soundButton = false;
+            }
+            
         }
         else
         {

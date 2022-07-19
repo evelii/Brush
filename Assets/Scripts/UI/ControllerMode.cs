@@ -12,6 +12,8 @@ public class ControllerMode : MonoBehaviour
     public DrawTubes drawTubes;
     public CanvasHandler canvas;
     public MotionBrush motionBrush;
+    public PathFollower pathBrush;
+    public SoundBrush soundBrush;
     public OVRRaycaster raycaster;
 
     public bool readyForSketch = true;
@@ -25,6 +27,8 @@ public class ControllerMode : MonoBehaviour
         brushTip.SetActive(true);
         cursorScript.canDraw = true;
         motionBrush.ready = false;
+        pathBrush.ready = false;
+        soundBrush.ready = false;
     }
 
     // Update is called once per frame
@@ -40,7 +44,10 @@ public class ControllerMode : MonoBehaviour
             cursorScript.canDraw = false;
             readyForSketch = false;
             motionBrush.ready = false;
-        } else
+            pathBrush.ready = false;
+            soundBrush.ready = false;
+        }
+        else
         {
             if (!readyForSketch)
             {
@@ -57,6 +64,10 @@ public class ControllerMode : MonoBehaviour
             }
 
             else if (readyForSketch && canvas.curBrush == "MotionButton") motionBrush.ready = true;
+
+            else if (readyForSketch && canvas.curBrush == "PathButton") pathBrush.ready = true;
+
+            else if (readyForSketch && canvas.curBrush == "SoundButton") soundBrush.ready = true;
         }
     }
 
@@ -67,6 +78,8 @@ public class ControllerMode : MonoBehaviour
         cursorScript.canDraw = false;
         readyForSketch = false;
         motionBrush.ready = false;
+        pathBrush.ready = false;
+        soundBrush.ready = false;
     }
 
     public void BrushMode()
@@ -83,5 +96,9 @@ public class ControllerMode : MonoBehaviour
         }
 
         else if (readyForSketch && canvas.curBrush == "MotionButton") motionBrush.ready = true;
+
+        else if (readyForSketch && canvas.curBrush == "PathButton") pathBrush.ready = true;
+
+        else if (readyForSketch && canvas.curBrush == "SoundButton") soundBrush.ready = true;
     }
 }

@@ -22,6 +22,8 @@ public class PathFollower : MonoBehaviour
     public CanvasHandler canvas;
     public ControllerMode controllerMode;
 
+    public bool ready = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,8 +34,10 @@ public class PathFollower : MonoBehaviour
     void Update()
     {
 
-        if (controllerMode.readyForSketch && canvas.curBrush == "PathButton" && OVRInput.GetDown(OVRInput.Button.One))
+        if (ready && canvas.curBrush == "PathButton" && OVRInput.GetDown(OVRInput.Button.One))
         {
+            Debug.LogWarning("path!");
+
             _createNewPath();
             state = PathSetState.DRAW;
         }

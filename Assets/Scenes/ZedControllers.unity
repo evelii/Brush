@@ -2065,6 +2065,7 @@ MonoBehaviour:
   drawTubes: {fileID: 1787591295}
   canvas: {fileID: 779228879}
   controllerMode: {fileID: 1082816616}
+  ready: 0
 --- !u!4 &903293634
 Transform:
   m_ObjectHideFlags: 0
@@ -2904,6 +2905,8 @@ MonoBehaviour:
   drawTubes: {fileID: 1787591295}
   canvas: {fileID: 779228879}
   motionBrush: {fileID: 475536934}
+  pathBrush: {fileID: 903293633}
+  soundBrush: {fileID: 587184509}
   raycaster: {fileID: 779228874}
   readyForSketch: 0
 --- !u!1 &1119645467

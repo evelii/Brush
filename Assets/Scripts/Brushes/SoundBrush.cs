@@ -29,20 +29,12 @@ public class SoundBrush : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (controllerMode.readyForSketch && canvas.curBrush == "SoundButton")
-        {
-            ready = true;
-        } else if (!controllerMode.readyForSketch)
-        {
-            ready = false;
-        }
-
         if (!showSketchDone && controllerMode.readyForSketch && canvas.curBrush == "SoundButton" && OVRInput.GetDown(OVRInput.Button.One))
         {
 
         }
 
-        else if (controllerMode.readyForSketch && canvas.curBrush == "SoundButton" && OVRInput.GetDown(OVRInput.Button.One))
+        else if (ready && canvas.curBrush == "SoundButton" && OVRInput.GetDown(OVRInput.Button.One))
         {
             _createNewPath();
             state = PathSetState.DRAW;
