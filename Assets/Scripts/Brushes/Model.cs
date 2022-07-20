@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Model : MonoBehaviour
@@ -9,11 +10,15 @@ public class Model : MonoBehaviour
 
     public CanvasHandler canvas;
     public MenuPanelParent panel;
+    public GameObject tooltip;
+    public TextMeshProUGUI tooltipText;
     public string myTag;
 
     // Start is called before the first frame update
     void Start()
     {
+        tooltip.SetActive(false);
+
         outline = gameObject.AddComponent<MyOutline>();
         outline.OutlineMode = MyOutline.Mode.OutlineAll;
         outline.OutlineColor = Color.yellow;
@@ -32,9 +37,9 @@ public class Model : MonoBehaviour
         
         if (dis <= 0.1f)
         {
-            //Debug.LogWarning(dis);
+            tooltip.SetActive(true);
+
             outline.enabled = true;
-            Debug.LogWarning(myTag);
             if (myTag == "SketchButton") panel.sketchButton = true;
             else if (myTag == "PathButton") panel.pathButton = true;
             else if (myTag == "MotionButton") panel.motionButton = true;
@@ -61,10 +66,12 @@ public class Model : MonoBehaviour
         }
         else if (canvas.curBrush == myTag)
         {
+            tooltip.SetActive(true);
             outline.enabled = true;
         }
         else
         {
+            tooltip.SetActive(false);
             outline.enabled = false;
             if (myTag == "SketchButton") panel.sketchButton = false;
             else if (myTag == "PathButton") panel.pathButton = false;
