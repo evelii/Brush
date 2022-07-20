@@ -31,7 +31,7 @@ public class MyResultButton : MonoBehaviour, IPointerDownHandler, IPointerUpHand
             GetComponent<Button>().colors = colors;
             if (myTag == "ResultA") panel.resultAOn = true;
             else panel.resultBOn = true;
-            if (DrawTubes.buttonOneIsDown) recognitionResult.userChoice(text.text);
+            if (DrawTubes.buttonOneIsDown) recognitionResult.UserChoice(text.text);
 
         } else
         {
@@ -46,7 +46,7 @@ public class MyResultButton : MonoBehaviour, IPointerDownHandler, IPointerUpHand
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        recognitionResult.userChoice(text.text);
+        recognitionResult.UserChoice(text.text);
         OVRRaycaster.intersectHit = false;
     }
 

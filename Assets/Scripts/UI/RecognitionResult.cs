@@ -50,8 +50,8 @@ public class RecognitionResult : MonoBehaviour
         sprite = Resources.Load<Sprite>(path);
         imageB.sprite = sprite;
 
-        Vector3 offset = new Vector3(0.03f, 0.09f, 0.2f);
-        canvas.transform.position = client.curObjectForRecognition.gameObject.transform.position + offset;
+        Vector3 offset = new Vector3(0.40f, 0.10f, -0.5f);
+        canvas.transform.position = cam.position + offset;
         canvas.SetActive(true);
     }
 
@@ -67,7 +67,7 @@ public class RecognitionResult : MonoBehaviour
         canvas.SetActive(false);
     }
 
-    public void userChoice(string choice)
+    public void UserChoice(string choice)
     {
         client.userChoice = choice;
         canvas.SetActive(false);
