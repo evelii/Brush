@@ -21,9 +21,9 @@ public class ControllerMode : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        laserPointer.GetComponent<LineRenderer>().enabled = false;
-        laserPointer.SetActive(false);
-        laserTip.SetActive(false);
+        //laserPointer.GetComponent<LineRenderer>().enabled = false;
+        //laserPointer.SetActive(false);
+        //laserTip.SetActive(false);
         brushTip.SetActive(true);
         cursorScript.canDraw = true;
         motionBrush.ready = false;
@@ -34,41 +34,25 @@ public class ControllerMode : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (OVRRaycaster.intersectHit || canvas.curBrush == "SelectButton" || laserTip.activeSelf)
+       if (!readyForSketch)
         {
-            laserPointer.SetActive(true);
-            laserPointer.GetComponent<LineRenderer>().enabled = true;
-            laserTip.SetActive(true);
-            brushTip.SetActive(false);
-            drawTubes.state = StrokeState.WAITING;
-            cursorScript.canDraw = false;
-            readyForSketch = false;
-            motionBrush.ready = false;
-            pathBrush.ready = false;
-            soundBrush.ready = false;
+            //laserPointer.GetComponent<LineRenderer>().enabled = false;
+            //laserPointer.SetActive(false);
+            //laserTip.SetActive(false);
+            brushTip.SetActive(true);
+            readyForSketch = true;
         }
-        else
+
+        else if (readyForSketch && canvas.curBrush == "SketchButton")
         {
-            if (!readyForSketch)
-            {
-                laserPointer.GetComponent<LineRenderer>().enabled = false;
-                //laserPointer.SetActive(false);
-                laserTip.SetActive(false);
-                brushTip.SetActive(true);
-                readyForSketch = true;
-            }
-
-            else if (readyForSketch && canvas.curBrush == "SketchButton")
-            {
-                cursorScript.canDraw = true;
-            }
-
-            else if (readyForSketch && canvas.curBrush == "MotionButton") motionBrush.ready = true;
-
-            else if (readyForSketch && canvas.curBrush == "PathButton") pathBrush.ready = true;
-
-            else if (readyForSketch && canvas.curBrush == "SoundButton") soundBrush.ready = true;
+            cursorScript.canDraw = true;
         }
+
+        else if (readyForSketch && canvas.curBrush == "MotionButton") motionBrush.ready = true;
+
+        else if (readyForSketch && canvas.curBrush == "PathButton") pathBrush.ready = true;
+
+        else if (readyForSketch && canvas.curBrush == "SoundButton") soundBrush.ready = true;
     }
 
     public void SelectionMode()

@@ -21,6 +21,8 @@ public class PointerEvent : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     bool outlineAdded = false;
 
+    string oldBrush;
+
     private void Awake()
     {
         canvas = GameObject.Find("Canvas").GetComponent<CanvasHandler>();
@@ -32,7 +34,9 @@ public class PointerEvent : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void Update()
     {
-        if(!outlineAdded)
+        if(canvas.curBrush != "SelectButton") oldBrush = canvas.curBrush;
+
+        if (!outlineAdded)
         {
             outline = gameObject.AddComponent<MyOutline>();
             outline.OutlineColor = Color.yellow;
@@ -41,17 +45,24 @@ public class PointerEvent : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             outline.OutlineMode = MyOutline.Mode.OutlineAll;
             outlineAdded = true;
         }
-        
+
 
         float dis = Vector3.Distance(gameObject.transform.position, rightHand.transform.position);
-        if(dis <= 0.2f)
+        if (dis <= 0.1f)
         {
             outline.enabled = true;
             controllerMode.SelectionMode();
-        } else
+            canvas.curBrush = "SelectButton";
+            if(DrawTubes.buttonOneIsDown)
+            {
+                SketchManager.curSelected = gameObject.GetComponent<SketchEntity>();
+            }
+        }
+        else
         {
             outline.enabled = false;
             controllerMode.BrushMode();
+            canvas.curBrush = oldBrush;
         }
     }
 

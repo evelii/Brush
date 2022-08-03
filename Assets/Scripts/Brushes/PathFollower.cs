@@ -36,8 +36,6 @@ public class PathFollower : MonoBehaviour
 
         if (ready && canvas.curBrush == "PathButton" && OVRInput.GetDown(OVRInput.Button.One))
         {
-            Debug.LogWarning("path!");
-
             _createNewPath();
             state = PathSetState.DRAW;
         }
