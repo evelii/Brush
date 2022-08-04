@@ -27,6 +27,7 @@ public class TCPClient : MonoBehaviour
 	#endregion
 	Text gt;
 	int curImg = 0;
+	int error = 0;
 
 	public List<List<Vector3>> strokesList;
 
@@ -60,6 +61,7 @@ public class TCPClient : MonoBehaviour
 			string[] lines = File.ReadAllLines(path);
 			if(lines[curImg] != tokens[0] && lines[curImg] != tokens[1]) {
 				tokens[0] = lines[curImg];
+				error++;
             }
 			curImg++;  // go to the next line
 			recognitionResult.ShowPredictionResults(tokens[0], tokens[1]);
@@ -180,4 +182,12 @@ public class TCPClient : MonoBehaviour
 		Debug.Log(reader.ReadToEnd());
 		reader.Close();
 	}
+
+    private void OnApplicationQuit()
+    {
+		// print the accuracy rate
+		float errorRate = 100f - ((float)error / (float)curImg) * 100f;
+		String s = String.Format("The accuracy rate is {0} %.", errorRate);
+		Debug.LogWarning(s);
+    }
 }
