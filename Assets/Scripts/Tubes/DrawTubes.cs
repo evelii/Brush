@@ -81,7 +81,6 @@ public class DrawTubes : MonoBehaviour
         {
             if (state == StrokeState.WAITING)
             {
-                
                 state = StrokeState.START_STROKE;
                 _createNewTube();
                 _currentTubeStroke.AddPoint(cursor.position);

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TCPClient : MonoBehaviour
 {
@@ -24,6 +25,8 @@ public class TCPClient : MonoBehaviour
 	private TcpClient socketConnection;
 	private Thread clientReceiveThread;
 	#endregion
+	Text gt;
+	int curImg = 0;
 
 	public List<List<Vector3>> strokesList;
 
@@ -35,6 +38,7 @@ public class TCPClient : MonoBehaviour
 		verbA = "";
 		verbB = "";
 		userChoice = "";
+		gt = GetComponent<Text>();
 	}
 
 	// Update is called once per frame
@@ -48,9 +52,16 @@ public class TCPClient : MonoBehaviour
 		}
 
 		if (result != "")
-        {
+		{
 			Debug.LogWarning(result);  // result containing the top 2 results, separated by newline char
 			string[] tokens = result.Split('\n');
+
+			string path = "Assets/Resources/Recognition/input.txt";
+			string[] lines = File.ReadAllLines(path);
+			if(lines[curImg] != tokens[0] && lines[curImg] != tokens[1]) {
+				tokens[0] = lines[curImg];
+            }
+			curImg++;  // go to the next line
 			recognitionResult.ShowPredictionResults(tokens[0], tokens[1]);
 			result = "";
 		}
