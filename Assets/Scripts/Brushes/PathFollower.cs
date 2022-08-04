@@ -21,6 +21,8 @@ public class PathFollower : MonoBehaviour
     public DrawTubes drawTubes; // to retrieve stroke lists
     public CanvasHandler canvas;
     public ControllerMode controllerMode;
+    public GameObject motionBrushModel;
+    public MyOutline outline;
 
     public bool ready = false;
 
@@ -33,8 +35,9 @@ public class PathFollower : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(outline == null) outline = motionBrushModel.GetComponent<MyOutline>();
 
-        if (ready && canvas.curBrush == "PathButton" && OVRInput.GetDown(OVRInput.Button.One))
+        if (ready && canvas.curBrush == "PathButton" && !outline.isActiveAndEnabled && OVRInput.GetDown(OVRInput.Button.One))
         {
             _createNewPath();
             state = PathSetState.DRAW;
