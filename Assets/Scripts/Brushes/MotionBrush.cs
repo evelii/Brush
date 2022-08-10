@@ -20,6 +20,8 @@ public class MotionBrush : MonoBehaviour
     public ControllerMode controllerMode;
 
     public bool ready = false;
+    public GameObject sketchBrushModel;
+    public MyOutline outline;
 
     // Start is called before the first frame update
     void Start()
@@ -33,8 +35,9 @@ public class MotionBrush : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (outline == null) outline = sketchBrushModel.GetComponent<MyOutline>();
 
-        if (ready && canvas.curBrush == "MotionButton" && OVRInput.GetDown(OVRInput.Button.One))
+        if (ready && canvas.curBrush == "MotionButton" && !outline.isActiveAndEnabled && OVRInput.GetDown(OVRInput.Button.One))
         {
             _createNewPath();
             state = PathSetState.DRAW;

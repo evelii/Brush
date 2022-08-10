@@ -59,10 +59,15 @@ public class TCPClient : MonoBehaviour
 
 			string path = "Assets/Resources/Recognition/input.txt";
 			string[] lines = File.ReadAllLines(path);
-			if(lines[curImg] != tokens[0] && lines[curImg] != tokens[1]) {
-				tokens[0] = lines[curImg];
-				error++;
-            }
+			if (curImg < lines.Length)
+            {
+				if (lines[curImg] != tokens[0] && lines[curImg] != tokens[1])
+				{
+					tokens[0] = lines[curImg];
+					error++;
+				}
+			}
+			
 			curImg++;  // go to the next line
 			recognitionResult.ShowPredictionResults(tokens[0], tokens[1]);
 			result = "";

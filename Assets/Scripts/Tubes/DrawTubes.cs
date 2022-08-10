@@ -140,7 +140,7 @@ public class DrawTubes : MonoBehaviour
                 ci.guardian = SketchManager.curSelected.gameObject;
                 ci.AvoidCollision();
                 se.label = ci.label;
-                se.guardian = ci.guardian.GetComponent<SketchEntity>();
+                se.guardian = ci.guardian.GetComponent<SketchEntity>();             
             }
             else
             { 

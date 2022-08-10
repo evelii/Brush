@@ -156,7 +156,13 @@ public class SketchEntity : MonoBehaviour
                 if (!dependencies[0].visible) dependencies[0].depSketch.gameObject.SetActive(false);
                 else dependencies[0].depSketch.gameObject.SetActive(true);
                 float distance = Vector3.Distance(dependencies[0].showupPos, gameObject.transform.position);
-                if (distance <= 0.3f) dependencies[0].visible = true;
+                if (distance <= 0.3f)
+                {
+                    dependencies[0].visible = true;
+                    dependencies[0].depSketch.gameObject.AddComponent<Rigidbody>();
+                    dependencies[0].depSketch.gameObject.GetComponent<Rigidbody>().useGravity = true;
+                    SketchManager.curSelected = null; // each sketch supports one dependency
+                }
             }
 
             if (!rigidBodyAdded)
@@ -179,7 +185,7 @@ public class SketchEntity : MonoBehaviour
             // 2. There is no customized path, use the gravity
             else
             {
-                if (identity == "police car" || identity == "ambulance" || identity == "dog" || identity == "sheep")
+                if (identity == "police car" || identity == "ambulance" || identity == "dog" || identity == "cow")
                 {
                     DefaultRunningBehaviour();
                 }
@@ -293,10 +299,10 @@ public class SketchEntity : MonoBehaviour
         {
             currentPosHolder = trajectory[curIdx];
         }
-        else
-        {
-            ResetPath();
-        }
+        //else
+        //{
+        //    ResetPath();
+        //}
     }
 
     float percentsPerSecond = 0.15f; // %15 of the path moved per second
@@ -359,7 +365,7 @@ public class SketchEntity : MonoBehaviour
         if (dependencies.Count > 0)
         {
             dependencies[0].visible = false;
-            dependencies[0].depSketch.ResetPath();
+            //dependencies[0].depSketch.ResetPath();
         }
     }
 
