@@ -69,7 +69,8 @@ public class SketchEntity : MonoBehaviour
         supportedSketches.Add("dog", true);
         supportedSketches.Add("police car", true);
         supportedSketches.Add("basketball", true);
-        supportedSketches.Add("sheep", true);
+        supportedSketches.Add("cow", true);
+        supportedSketches.Add("flying saucer", true);
         cam = GameObject.Find("Camera_eyes").transform;
         cursor = GameObject.Find("3DCursor");
         canvas = GameObject.Find("Canvas").GetComponent<CanvasHandler>();
@@ -182,7 +183,7 @@ public class SketchEntity : MonoBehaviour
                 FollowMovementPath();
             }
 
-            // 2. There is no customized path, use the gravity
+            // 2. There is no customized path, use the default
             else
             {
                 if (identity == "police car" || identity == "ambulance" || identity == "dog" || identity == "cow")
@@ -288,7 +289,11 @@ public class SketchEntity : MonoBehaviour
     {
         CheckPos();
 
-        if (trajectory != null) return;
+        if (trajectory != null)
+        {
+            path.HidePath();
+            return;
+        }
 
         trajectory = path.GetPathPoints();
     }

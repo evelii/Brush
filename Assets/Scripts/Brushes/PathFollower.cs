@@ -26,6 +26,8 @@ public class PathFollower : MonoBehaviour
 
     public bool ready = false;
 
+    GameObject newPath;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -53,10 +55,10 @@ public class PathFollower : MonoBehaviour
     private void _createNewPath()
     {
         lastPos = transform.position;
-         GameObject newPath = new GameObject("New Path");
+        newPath = new GameObject("New Path");
         _currLine = newPath.AddComponent<LineRenderer>();
-        _currLine.startWidth = .05f;
-        _currLine.endWidth = .05f;
+        _currLine.startWidth = .03f;
+        _currLine.endWidth = .03f;
         _currLine.material.color = Color.white;
         
         numClicks = 0;
@@ -89,5 +91,10 @@ public class PathFollower : MonoBehaviour
 
         _currLine = null;
         return pos;
+    }
+
+    public void HidePath()
+    {
+        newPath.SetActive(false);
     }
 }
