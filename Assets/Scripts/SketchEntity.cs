@@ -160,6 +160,13 @@ public class SketchEntity : MonoBehaviour
                 if (distance <= 0.3f)
                 {
                     dependencies[0].visible = true;
+
+                    // for the demo purpose
+                    if (dependencies[0].depSketch.identity == "cow" && !dependencies[0].depSketch.selfSound.isPlaying)
+                    {
+                        dependencies[0].depSketch.selfSound.Play();
+                    }
+
                     dependencies[0].depSketch.gameObject.AddComponent<Rigidbody>();
                     dependencies[0].depSketch.gameObject.GetComponent<Rigidbody>().useGravity = true;
                     SketchManager.curSelected = null; // each sketch supports one dependency
@@ -321,6 +328,7 @@ public class SketchEntity : MonoBehaviour
         {
             // reset
             currentPathPercent = 0;
+            return;
         }
 
         currentPathPercent += percentsPerSecond * Time.deltaTime;
@@ -491,6 +499,8 @@ public class SketchEntity : MonoBehaviour
         int currPt = Mathf.Min(Mathf.FloorToInt(t * (float)numSections), numSections - 1);
         float u = t * (float)numSections - (float)currPt;
 
+        if (currPt >= pts.Length) return pts[pts.Length - 1];
+
         Vector3 a = pts[currPt];
         Vector3 b = pts[currPt + 1];
         Vector3 c = pts[currPt + 2];
@@ -506,8 +516,13 @@ public class SketchEntity : MonoBehaviour
 
     public void SketchWrapUp()
     {
-        AddColliders();
-        FitColliderToChildren(gameObject);
+        // for the demo purpose, don't add collider to the ambulance
+        if(identity != "ambulance")
+        {
+            AddColliders();
+            FitColliderToChildren(gameObject);
+        }
+        
         gameObject.AddComponent<PointerEvent>();
     }
 
