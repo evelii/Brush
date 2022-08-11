@@ -26,7 +26,7 @@ public class PathFollower : MonoBehaviour
 
     public bool ready = false;
 
-    GameObject newPath;
+    public GameObject newPath;
 
     // Start is called before the first frame update
     void Start()
@@ -93,8 +93,8 @@ public class PathFollower : MonoBehaviour
         return pos;
     }
 
-    public void HidePath()
+    public GameObject GetPathObject()
     {
-        newPath.SetActive(false);
+        return newPath;
     }
 }

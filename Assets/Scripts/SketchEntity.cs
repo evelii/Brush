@@ -19,8 +19,10 @@ public class SketchEntity : MonoBehaviour
     public string identity; // sketch recognition result
     public string softness; // hard or soft
     public bool aniStart;
+    public bool checkPathDone = false;
     public bool rigidBodyAdded = false;
     public Vector3[] trajectory; // null or a customized path
+    public GameObject pathObject;
     public int curIdx = 0;
     static Vector3 currentPosHolder;
     public List<GameObject> childStrokes;
@@ -181,11 +183,19 @@ public class SketchEntity : MonoBehaviour
             }
 
             // Check if there is user defined path
-            if (trajectory == null) trajectory = path.GetPathPoints();
+            if(!checkPathDone)
+            {
+                if (trajectory == null)
+                {
+                    trajectory = path.GetPathPoints();
+                }
+                checkPathDone = true;
+            }
 
             // 1. There is a customized movement path, just follow the path
             if (trajectory != null)
             {
+                if(pathObject == null) pathObject = path.GetPathObject();
                 MovementInit();
                 FollowMovementPath();
             }
@@ -193,7 +203,7 @@ public class SketchEntity : MonoBehaviour
             // 2. There is no customized path, use the default
             else
             {
-                if (identity == "police car" || identity == "ambulance" || identity == "dog" || identity == "cow")
+                if (identity == "police car" || identity == "ambulance" || identity == "dog")
                 {
                     DefaultRunningBehaviour();
                 }
@@ -298,7 +308,7 @@ public class SketchEntity : MonoBehaviour
 
         if (trajectory != null)
         {
-            path.HidePath();
+            if (pathObject != null) pathObject.SetActive(false);
             return;
         }
 
@@ -495,6 +505,11 @@ public class SketchEntity : MonoBehaviour
 
     private Vector3 Interp(Vector3[] pts, float t)
     {
+        if (pts.Length < 3)
+        {
+            Debug.LogWarning(identity);
+            return pts[pts.Length - 1];
+        }
         int numSections = pts.Length - 3;
         int currPt = Mathf.Min(Mathf.FloorToInt(t * (float)numSections), numSections - 1);
         float u = t * (float)numSections - (float)currPt;

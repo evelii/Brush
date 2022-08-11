@@ -143,7 +143,7 @@ public class DrawTubes : MonoBehaviour
                 se.guardian = ci.guardian.GetComponent<SketchEntity>();             
             }
             else
-            { 
+            {
                 ci.label = SketchManager.labelCounter.ToString();
                 se.label = ci.label;
                 SketchManager.labelCounter++;
