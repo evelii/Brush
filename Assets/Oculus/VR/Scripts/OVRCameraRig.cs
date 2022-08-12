@@ -96,12 +96,12 @@ public class OVRCameraRig : MonoBehaviour
 	protected readonly string trackingSpaceName = "TrackingSpace";
 	protected readonly string trackerAnchorName = "TrackerAnchor";
 	protected readonly string leftEyeAnchorName = "LeftEyeAnchor";
-	protected readonly string centerEyeAnchorName = "CenterEyeAnchor";
+	protected readonly string centerEyeAnchorName = "Camera_eyes";
 	protected readonly string rightEyeAnchorName = "RightEyeAnchor";
-	protected readonly string leftHandAnchorName = "LeftHandAnchor";
+	protected readonly string leftHandAnchorName = "leftHand";
 	protected readonly string rightHandAnchorName = "rightHand";
-	protected readonly string leftControllerAnchorName = "LeftControllerAnchor";
-	protected readonly string rightControllerAnchorName = "RightControllerAnchor";
+	protected readonly string leftControllerAnchorName = "leftHand";
+	protected readonly string rightControllerAnchorName = "rightHand";
 	protected Camera _centerEyeCamera;
 	protected Camera _leftEyeCamera;
 	protected Camera _rightEyeCamera;
