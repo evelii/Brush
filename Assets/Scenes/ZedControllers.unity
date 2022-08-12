@@ -1400,6 +1400,8 @@ MonoBehaviour:
   canvas: {fileID: 779228879}
   controllerMode: {fileID: 1082816616}
   ready: 0
+  sketchBrushModel: {fileID: 1727783913}
+  outline: {fileID: 0}
 --- !u!33 &475536935
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1715,6 +1717,8 @@ MonoBehaviour:
   controllerMode: {fileID: 1082816616}
   cursor: {fileID: 858342271}
   ready: 0
+  motionBrushModel: {fileID: 576798659}
+  outline: {fileID: 0}
 --- !u!4 &587184510
 Transform:
   m_ObjectHideFlags: 0
@@ -2764,7 +2768,12 @@ MonoBehaviour:
   drawTubes: {fileID: 1787591295}
   canvas: {fileID: 779228879}
   controllerMode: {fileID: 1082816616}
+  motionBrushModel: {fileID: 576798659}
+  soundBrushModel: {fileID: 215835881}
+  outline: {fileID: 0}
+  soundOutline: {fileID: 0}
   ready: 0
+  newPath: {fileID: 0}
 --- !u!4 &903293634
 Transform:
   m_ObjectHideFlags: 0
