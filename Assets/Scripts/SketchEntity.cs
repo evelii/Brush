@@ -29,6 +29,8 @@ public class SketchEntity : MonoBehaviour
     public PathFollower path;
     GameObject go;
 
+    bool reachEnd = false;
+
     public string label;
     public SketchEntity guardian;
 
@@ -39,6 +41,9 @@ public class SketchEntity : MonoBehaviour
     Vector3 selfSoundStartPoint;
     bool editingMode;
     List<GameObject> soundMarkCollection;
+
+    public bool soundFrameShown = false;
+
     public bool bouncyAdded = false;
 
     public string defaultDirection; // the direction of the default movement
@@ -145,11 +150,15 @@ public class SketchEntity : MonoBehaviour
     {
         if (gameObject.name == "Wall" || gameObject.name == "Floor" || gameObject.name == "Table" || gameObject.name == "Chair") return;
 
+        if (reachEnd)
+        {
+            return;
+        }
 
         if (aniStart)
         {
             HideSoundMarks();
-            soundBrush.sketchSwitch(false);
+            soundFrameShown = false;
             if (go != null) go.SetActive(false);
 
             // dependencies
@@ -244,12 +253,17 @@ public class SketchEntity : MonoBehaviour
         }
 
         // mark along the trajectory
-        if (soundBrush.ready && canvas.curBrush == "SoundButton" && DrawTubes.buttonOneIsDown && !soundBrush.isSketchShown())
+        if (soundBrush.ready && canvas.curBrush == "SoundButton" && DrawTubes.buttonOneIsDown && !soundFrameShown 
+            && GameObject.ReferenceEquals(SketchManager.curEditingObject.gameObject, gameObject))
         {
             Vector3 stampPos = cursor.transform.position;
 
             if (trajectory == null) trajectory = path.GetPathPoints();
-            if (trajectory == null) Debug.LogError("No trajectory is given!");
+            if (trajectory == null)
+            {
+                Debug.LogError(identity);
+                Debug.LogError("No trajectory is given!");
+            }
             else
             {
                 float dist = Vector3.Distance(stampPos, trajectory[0]);
@@ -267,6 +281,8 @@ public class SketchEntity : MonoBehaviour
 
                 go = GameObject.Instantiate(gameObject);
                 go.transform.position = closest;
+                Destroy(go.GetComponent<PointerEvent>());
+
                 Vector3 relativePos = cam.position - go.transform.position;
 
                 // the second argument, upwards, defaults to Vector3.up
@@ -275,7 +291,7 @@ public class SketchEntity : MonoBehaviour
                 //go.transform.rotation = rotation;
                 //go.transform.LookAt(cam);
 
-                soundBrush.sketchSwitch(true);
+                soundFrameShown = true;
             }
         }
 
@@ -321,6 +337,7 @@ public class SketchEntity : MonoBehaviour
         {
             currentPosHolder = trajectory[curIdx];
         }
+        else reachEnd = true;
         //else
         //{
         //    ResetPath();
@@ -536,6 +553,9 @@ public class SketchEntity : MonoBehaviour
         {
             AddColliders();
             FitColliderToChildren(gameObject);
+        } else
+        {
+            Destroy(GetComponent<BoxCollider>());
         }
         
         gameObject.AddComponent<PointerEvent>();

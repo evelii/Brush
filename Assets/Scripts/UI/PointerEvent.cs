@@ -38,14 +38,17 @@ public class PointerEvent : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
         if (!outlineAdded)
         {
-            outline = gameObject.AddComponent<MyOutline>();
-            outline.OutlineColor = Color.yellow;
-            outline.OutlineWidth = 15f;
-            outline.enabled = false;
-            outline.OutlineMode = MyOutline.Mode.OutlineAll;
-            outlineAdded = true;
+            gameObject.AddComponent<MyOutline>();
+            outline = gameObject.GetComponent<MyOutline>();
+            if(outline)
+            {
+                outline.OutlineColor = Color.yellow;
+                outline.OutlineWidth = 15f;
+                outline.enabled = false;
+                outline.OutlineMode = MyOutline.Mode.OutlineAll;
+                outlineAdded = true;
+            }
         }
-
 
         float dis = Vector3.Distance(gameObject.transform.position, rightHand.transform.position);
         if (dis <= 0.1f)

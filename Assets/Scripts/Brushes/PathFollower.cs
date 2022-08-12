@@ -22,7 +22,9 @@ public class PathFollower : MonoBehaviour
     public CanvasHandler canvas;
     public ControllerMode controllerMode;
     public GameObject motionBrushModel;
+    public GameObject soundBrushModel;
     public MyOutline outline;
+    public MyOutline soundOutline;
 
     public bool ready = false;
 
@@ -38,8 +40,9 @@ public class PathFollower : MonoBehaviour
     void Update()
     {
         if(outline == null) outline = motionBrushModel.GetComponent<MyOutline>();
+        if (soundOutline == null) soundOutline = soundBrushModel.GetComponent<MyOutline>();
 
-        if (ready && canvas.curBrush == "PathButton" && !outline.isActiveAndEnabled && OVRInput.GetDown(OVRInput.Button.One))
+        if (ready && canvas.curBrush == "PathButton" && !outline.isActiveAndEnabled && !soundOutline.isActiveAndEnabled && OVRInput.GetDown(OVRInput.Button.One))
         {
             _createNewPath();
             state = PathSetState.DRAW;

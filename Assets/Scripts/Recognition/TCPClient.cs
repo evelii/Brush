@@ -49,7 +49,6 @@ public class TCPClient : MonoBehaviour
 		{
 			Debug.LogWarning("Current sketch is done!");
 			SendMessage();
-			tubes.FinishSketch();
 		}
 
 		if (result != "")
@@ -77,6 +76,7 @@ public class TCPClient : MonoBehaviour
         {
 			curObjectForRecognition.ObjectIdentity(userChoice);
 			userChoice = "";
+			tubes.FinishSketch();
 		}
 	}
 

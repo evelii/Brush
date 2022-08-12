@@ -20,21 +20,29 @@ public class SoundBrush : MonoBehaviour
 
     private bool showSketchDone = false;
 
+    public GameObject motionBrushModel;
+    public MyOutline outline;
+
     // Start is called before the first frame update
     void Start()
     {
         state = PathSetState.WAITING;
+        showSketchDone = SketchManager.curEditingObject.soundFrameShown;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(SketchManager.curEditingObject) showSketchDone = SketchManager.curEditingObject.soundFrameShown;
+
+        if (outline == null) outline = motionBrushModel.GetComponent<MyOutline>();
+
         if (!showSketchDone && controllerMode.readyForSketch && canvas.curBrush == "SoundButton" && OVRInput.GetDown(OVRInput.Button.One))
         {
 
         }
 
-        else if (ready && canvas.curBrush == "SoundButton" && OVRInput.GetDown(OVRInput.Button.One))
+        else if (ready && canvas.curBrush == "SoundButton" && !outline.isActiveAndEnabled && OVRInput.GetDown(OVRInput.Button.One))
         {
             _createNewPath();
             state = PathSetState.DRAW;
@@ -44,16 +52,6 @@ public class SoundBrush : MonoBehaviour
         {
             state = PathSetState.WAITING;
         }
-    }
-
-    public bool isSketchShown()
-    {
-        return showSketchDone;
-    }
-
-    public void sketchSwitch(bool val)
-    {
-        showSketchDone = val;
     }
 
     private void _createNewPath()
