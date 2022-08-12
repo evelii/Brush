@@ -175,6 +175,7 @@ public class SketchEntity : MonoBehaviour
                     // for the demo purpose
                     if (dependencies[0].depSketch.identity == "cow" && !dependencies[0].depSketch.selfSound.isPlaying)
                     {
+                        dependencies[0].depSketch.gameObject.tag = "cow";
                         dependencies[0].depSketch.selfSound.Play();
                     }
 
@@ -192,7 +193,7 @@ public class SketchEntity : MonoBehaviour
             }
 
             // Check if there is user defined path
-            if(!checkPathDone)
+            if (!checkPathDone)
             {
                 if (trajectory == null)
                 {
@@ -204,7 +205,7 @@ public class SketchEntity : MonoBehaviour
             // 1. There is a customized movement path, just follow the path
             if (trajectory != null)
             {
-                if(pathObject == null) pathObject = path.GetPathObject();
+                if (pathObject == null) pathObject = path.GetPathObject();
                 MovementInit();
                 FollowMovementPath();
             }
@@ -249,6 +250,16 @@ public class SketchEntity : MonoBehaviour
             if (distance <= 0.2f)
             {
                 selfSound.Play();
+
+                if(identity == "ambulance")
+                {
+                    GameObject cow = GameObject.FindWithTag("cow");
+                    if(cow)
+                    {
+                        cow.GetComponent<SketchEntity>().selfSound.Stop();
+                        cow.SetActive(false);
+                    }                    
+                }
             }
         }
 
