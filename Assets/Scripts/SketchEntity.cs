@@ -190,6 +190,9 @@ public class SketchEntity : MonoBehaviour
                 gameObject.AddComponent<Rigidbody>();
                 gameObject.GetComponent<Rigidbody>().useGravity = false;
                 rigidBodyAdded = true;
+
+                // turn off the outline
+                gameObject.GetComponent<PointerEvent>().selected = false;
             }
 
             // Check if there is user defined path

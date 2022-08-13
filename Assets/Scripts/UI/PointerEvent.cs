@@ -20,6 +20,7 @@ public class PointerEvent : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public MyOutline outline;
 
     bool outlineAdded = false;
+    public bool selected = false;
 
     string oldBrush;
 
@@ -59,7 +60,12 @@ public class PointerEvent : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             if(DrawTubes.buttonOneIsDown)
             {
                 SketchManager.curSelected = gameObject.GetComponent<SketchEntity>();
+                selected = true;
             }
+        }
+        else if(selected)
+        {
+            outline.enabled = true;
         }
         else
         {
