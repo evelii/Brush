@@ -16,6 +16,8 @@ public class CreateFloor : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F))
         {
+            Debug.LogWarning("Create floor.");
+            Vector3 offset = new Vector3(0f, 0.0f, 0f);
             floor.position = transform.position;
             floor.rotation = transform.rotation;
             floor.forward = -transform.forward;
