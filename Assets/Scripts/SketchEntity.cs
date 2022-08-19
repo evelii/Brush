@@ -198,6 +198,7 @@ public class SketchEntity : MonoBehaviour
             // Check if there is user defined path
             if (!checkPathDone)
             {
+                movingSound.Play();
                 if (trajectory == null)
                 {
                     trajectory = path.GetPathPoints();
@@ -235,10 +236,10 @@ public class SketchEntity : MonoBehaviour
 
             }
 
-            if (!movingSound.isPlaying && !inCollision)
-            {
-                movingSound.Play();
-            }
+            //if (!movingSound.isPlaying && !inCollision)
+            //{
+            //    movingSound.Play();
+            //}
         }
 
         // guardian start moving, so I need to start too
@@ -351,7 +352,15 @@ public class SketchEntity : MonoBehaviour
         {
             currentPosHolder = trajectory[curIdx];
         }
-        else reachEnd = true;
+        else
+        {
+            reachEnd = true;
+            // for the demo
+            if (identity == "flying saucer" && movingSound.isPlaying)
+            {
+                movingSound.Stop();
+            }
+        }
         //else
         //{
         //    ResetPath();
@@ -377,7 +386,7 @@ public class SketchEntity : MonoBehaviour
         float distance = Vector3.Distance(currentPosHolder, gameObject.transform.position);
         tarPos = currentPosHolder;  // TODO: tarpos and change moveSpeed*Time.deltaTime to moveSpeed
 
-        gameObject.transform.right = Vector3.RotateTowards(gameObject.transform.right, tarPos - gameObject.transform.position, rotationSpeed * Time.deltaTime, 0.0f);
+        //gameObject.transform.right = Vector3.RotateTowards(gameObject.transform.right, tarPos - gameObject.transform.position, rotationSpeed * Time.deltaTime, 0.0f);
         gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, tarPos, moveSpeed * Time.deltaTime);
 
         Vector3 relativePos = - cam.position + gameObject.transform.position;
@@ -508,8 +517,10 @@ public class SketchEntity : MonoBehaviour
         inCollision = true;
         movingSound.Stop();
         selfSound.Stop();
-        //Debug.LogWarning("collide!");
-        
+        Debug.LogWarning("collide!");
+
+        Debug.LogWarning(collision.gameObject.name);
+
         if (softness == "soft")
             collisionSoft.Play();
         else collisionHard.Play();  // play the hard sound by default
