@@ -3018,7 +3018,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!64 &1010034379
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -3759,7 +3759,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1119645467}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c2dcf8bd5477ede4988a4154a389ef6c, type: 3}
   m_Name: 
@@ -5626,7 +5626,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   curSketch: {fileID: 0}
   cursor: {fileID: 858342272}
-  strokeColor: {r: 0.2862745, g: 0.4473176, b: 0.83137256, a: 0}
+  strokeColor: {r: 1, g: 0.8727649, b: 0, a: 0}
   CP: {fileID: 0}
   strokeRadius: 0.006
   updateLineInterval: 0.01
