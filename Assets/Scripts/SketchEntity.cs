@@ -101,7 +101,7 @@ public class SketchEntity : MonoBehaviour
 
         if (identity == "police car" || identity == "ambulance")
         {
-            moveSpeed = 0.7f;
+            moveSpeed = 0.45f;
         }
         else if (identity == "airplane")
         {

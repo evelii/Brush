@@ -50,8 +50,9 @@ public class RecognitionResult : MonoBehaviour
         sprite = Resources.Load<Sprite>(path);
         imageB.sprite = sprite;
 
-        Vector3 offset = new Vector3(0.40f, 0.10f, 0.5f);
-        canvas.transform.position = cam.position + offset;
+        //Vector3 offset = new Vector3(0.60f, 0.10f, 0.0f);
+        Vector3 offset = new Vector3(0.10f, 0.10f, 0.5f);
+        canvas.transform.position = SketchManager.curEditingObject.gameObject.transform.position;
         //canvas.transform.RotateAround(canvas.transform.position, Vector3.up, 180);
         canvas.SetActive(true);
     }

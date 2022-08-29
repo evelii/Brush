@@ -60,9 +60,10 @@ public class PathFollower : MonoBehaviour
         lastPos = transform.position;
         newPath = new GameObject("New Path");
         _currLine = newPath.AddComponent<LineRenderer>();
-        _currLine.startWidth = .03f;
-        _currLine.endWidth = .03f;
-        _currLine.material.color = Color.white;
+        _currLine.startWidth = .02f;
+        _currLine.endWidth = .02f;
+        Color purple = new Color32(186, 127, 231, 1);
+        _currLine.material.color = purple;
         
         numClicks = 0;
     }
